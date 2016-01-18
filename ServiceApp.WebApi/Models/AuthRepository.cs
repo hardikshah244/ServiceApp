@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
+using ServiceApp.Domain.Abstract;
 using ServiceApp.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -14,23 +15,24 @@ namespace ServiceApp.WebApi.Models
     public class AuthRepository : IDisposable
     {
         private OwinAuthDbContext _ctx;
-
         private UserManager<IdentityUser> _userManager;
-
+        
         public AuthRepository()
         {
             _ctx = new OwinAuthDbContext();
-            _userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(_ctx));
+            _userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(_ctx));            
         }
 
         public async Task<IdentityResult> RegisterUser(User userModel)
         {
             IdentityUser user = new IdentityUser
             {
-                UserName = userModel.UserName
+                UserName = userModel.UserName,
+                Email = userModel.Email,
+                PhoneNumber = userModel.PhoneNumber
             };
 
-            var result = await _userManager.CreateAsync(user, userModel.Password);
+            var result = await _userManager.CreateAsync(user, userModel.Password);                        
 
             return result;
         }

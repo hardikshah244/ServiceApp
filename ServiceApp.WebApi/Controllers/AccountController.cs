@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using ServiceApp.Domain.Abstract;
 using ServiceApp.Domain.Entities;
 using ServiceApp.WebApi.Models;
 using System;
@@ -15,29 +17,58 @@ namespace ServiceApp.WebApi.Controllers
     public class AccountController : ApiController
     {
         private AuthRepository _repo = null;
+        private IUserDetailRepository _userRepo = null;
 
-        public AccountController()
+        public AccountController(IUserDetailRepository userRepo)
         {
             _repo = new AuthRepository();
+            _userRepo = userRepo;
         }
 
         // POST api/Account/Register
         [AllowAnonymous]
         [Route("Register")]
-        public async Task<IHttpActionResult> Register(User userModel)
+        public async Task<IHttpActionResult> Register(UserRegisterDetails userModel)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                IdentityResult result = await _repo.RegisterUser(userModel.User);
+
+                if (result.Succeeded)
+                {
+                    IdentityUser user = await _repo.FindUser(userModel.User.UserName, userModel.User.Password);
+
+                    if (user != null)
+                    {
+                        UserDetails userDetail = new UserDetails
+                        {
+                            UserID = user.Id,
+                            FirstName = userModel.UserDetails.FirstName,
+                            LastName = userModel.UserDetails.LastName,
+                            Latitude = userModel.UserDetails.Latitude,
+                            Longitude = userModel.UserDetails.Longitude
+                        };
+
+                        _userRepo.AddUserDetail(userDetail);
+                    }
+                }
+
+                IHttpActionResult errorResult = GetErrorResult(result);
+
+                if (errorResult != null)
+                {
+                    return errorResult;
+                }
+
             }
-
-            IdentityResult result = await _repo.RegisterUser(userModel);
-
-            IHttpActionResult errorResult = GetErrorResult(result);
-
-            if (errorResult != null)
+            catch (Exception ex)
             {
-                return errorResult;
+                throw;
             }
 
             return Ok();
