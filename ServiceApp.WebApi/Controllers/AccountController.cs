@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using ServiceApp.Domain.Abstract;
+using ServiceApp.Domain.Common;
 using ServiceApp.Domain.Entities;
 using ServiceApp.WebApi.Models;
 using System;
@@ -18,6 +19,7 @@ namespace ServiceApp.WebApi.Controllers
     {
         private AuthRepository _repo = null;
         private IUserDetailRepository _userRepo = null;
+
 
         public AccountController(IUserDetailRepository userRepo)
         {
@@ -66,10 +68,33 @@ namespace ServiceApp.WebApi.Controllers
                 }
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
+
+            return Ok();
+        }
+
+
+        // POST api/Account/ChangePassword
+        [AllowAnonymous]
+        [Route("ChangePassword")]
+        public async Task<IHttpActionResult> ChangePassword(ChangePassword chnagePassword)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            IdentityResult result = await _repo.ChangePassword(chnagePassword);
+
+            if (!result.Succeeded)
+            {
+                return GetErrorResult(result);
+            }
+
+            //Email.SendEmail("hardik.shah.244@gmail.com", "hardik.shah.244@gmail.com", "ChangePassword", "Your password successfully Changed!.");
 
             return Ok();
         }

@@ -27,7 +27,7 @@ namespace ServiceApp.Domain.Concrete
                     this.context.SaveChanges();
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
