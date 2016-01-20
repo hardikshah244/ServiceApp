@@ -10,6 +10,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 
+
 namespace ServiceApp.WebApi.Models
 {
     public class AuthRepository : IDisposable
@@ -26,47 +27,98 @@ namespace ServiceApp.WebApi.Models
         // In this application UserName consider as Email
         public async Task<IdentityResult> RegisterUser(User userModel)
         {
-            IdentityUser user = new IdentityUser
+            try
             {
-                UserName = userModel.Email,
-                Email = userModel.Email,
-                PhoneNumber = userModel.PhoneNumber
-            };
+                IdentityUser user = new IdentityUser
+                {
+                    UserName = userModel.Email,
+                    Email = userModel.Email,
+                    PhoneNumber = userModel.PhoneNumber
+                };
 
-            var result = await _userManager.CreateAsync(user, userModel.Password);
+                var result = await _userManager.CreateAsync(user, userModel.Password);
 
-            return result;
+                return result;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         // In this application UserName consider as Email
         public async Task<IdentityResult> ChangePassword(ChangePassword changePasswordModel)
         {
-            IdentityResult result = null;
-
-            IdentityUser user = await FindUserByName(changePasswordModel.Email);
-
-            if (user != null)
+            try
             {
-                result = await _userManager.ChangePasswordAsync(user.Id, changePasswordModel.OldPassword,
-                changePasswordModel.NewPassword);
-            }
+                IdentityResult result = null;
 
-            return result;
+                IdentityUser user = await FindUserByName(changePasswordModel.Email);
+
+                if (user != null)
+                {
+                    result = await _userManager.ChangePasswordAsync(user.Id, changePasswordModel.OldPassword,
+                    changePasswordModel.NewPassword);
+                }
+
+                return result;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
-        
+
+        public async Task<IdentityResult> ResetPassword(ResetPassword resetPasswordModel, string Password)
+        {
+            try
+            {
+                IdentityResult result = null;
+
+                IdentityUser user = await FindUserByName(resetPasswordModel.Email);
+
+                if (user != null)
+                {
+                    _userManager.RemovePassword(user.Id);
+
+                    result = await _userManager.AddPasswordAsync(user.Id, Password);
+                }
+
+                return result;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public async Task<IdentityUser> FindUser(string userName, string password)
         {
-            IdentityUser user = await _userManager.FindAsync(userName, password);
+            try
+            {
+                IdentityUser user = await _userManager.FindAsync(userName, password);
 
-            return user;
+                return user;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         // In this application UserName consider as Email
         public async Task<IdentityUser> FindUserByName(string Email)
         {
-            IdentityUser user = await _userManager.FindByNameAsync(Email);
+            try
+            {
+                IdentityUser user = await _userManager.FindByNameAsync(Email);
 
-            return user;
+                return user;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public void Dispose()

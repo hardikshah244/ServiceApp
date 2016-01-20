@@ -55,6 +55,7 @@
     <Compile Include="Concrete\OwinAuthDbContext.cs" />
     <Compile Include="Concrete\UserDetailRepository.cs" />
     <Compile Include="Entities\ChangePassword.cs" />
+    <Compile Include="Entities\ResetPassword.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Entities\UserDetails.cs" />
     <Compile Include="Entities\UserRegisterDetails.cs" />
