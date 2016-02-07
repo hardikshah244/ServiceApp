@@ -14,15 +14,13 @@ namespace ServiceApp.Domain.Concrete
 {
     public class AuthRepository : IDisposable
     {
-        private OwinAuthDbContext _ctx;
-        private UserManager<ApplicationUser> _userManager;
-        private RoleManager<IdentityRole> _userRoleManager;
+        private ApplicationUserManager _userManager;
+        private ApplicationRoleManager _userRoleManager;
 
-        public AuthRepository()
+        public AuthRepository(ApplicationUserManager UserManager, ApplicationRoleManager RoleManager)
         {
-            _ctx = new OwinAuthDbContext();
-            _userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(_ctx));
-            _userRoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(_ctx));
+            _userManager = UserManager;
+            _userRoleManager = RoleManager;
         }
 
         // In this application UserName consider as Email
@@ -158,8 +156,8 @@ namespace ServiceApp.Domain.Concrete
 
         public void Dispose()
         {
-            _ctx.Dispose();
             _userManager.Dispose();
+            _userRoleManager.Dispose();
 
         }
     }

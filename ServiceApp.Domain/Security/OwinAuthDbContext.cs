@@ -15,5 +15,10 @@ namespace ServiceApp.Domain.Security
             //Database.SetInitializer(new CreateDatabaseIfNotExists<OwinAuthDbContext>());
 
         }
+
+        public static OwinAuthDbContext Create()
+        {
+            return new OwinAuthDbContext();
+        }
     }
 }

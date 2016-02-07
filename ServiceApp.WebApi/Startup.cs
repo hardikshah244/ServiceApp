@@ -4,6 +4,7 @@ using Owin;
 using Microsoft.Owin.Security.OAuth;
 using ServiceApp.WebApi.Providers;
 using System.Web.Http;
+using ServiceApp.Domain.Security;
 
 [assembly: OwinStartup(typeof(ServiceApp.WebApi.Startup))]
 namespace ServiceApp.WebApi
@@ -22,6 +23,11 @@ namespace ServiceApp.WebApi
 
         public void ConfigureOAuth(IAppBuilder app)
         {
+            //// Configure the db context and user manager to use a single instance per request
+            app.CreatePerOwinContext(OwinAuthDbContext.Create);
+            app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
+            app.CreatePerOwinContext<ApplicationRoleManager>(ApplicationRoleManager.Create);
+
             OAuthAuthorizationServerOptions OAuthServerOptions = new OAuthAuthorizationServerOptions()
             {
                 AllowInsecureHttp = true,

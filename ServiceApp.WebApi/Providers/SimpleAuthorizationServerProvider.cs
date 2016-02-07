@@ -12,6 +12,7 @@ using Microsoft.Owin.Security.OAuth;
 using ServiceApp.Domain.Security;
 using ServiceApp.Domain.Concrete;
 using ServiceApp.Domain.Entities;
+using System.Web;
 
 namespace ServiceApp.WebApi.Providers
 {
@@ -26,7 +27,13 @@ namespace ServiceApp.WebApi.Providers
         {
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
 
-            using (AuthRepository _repo = new AuthRepository())
+            var userManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var roleManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationRoleManager>();
+
+            //var userManager = context.OwinContext.GetUserManager<ApplicationUserManager>();
+            //var roleManager = context.OwinContext.GetUserManager<ApplicationRoleManager>();
+
+            using (AuthRepository _repo = new AuthRepository(userManager, roleManager))
             {
                 ApplicationUser user = await _repo.FindUser(context.UserName, context.Password);
 

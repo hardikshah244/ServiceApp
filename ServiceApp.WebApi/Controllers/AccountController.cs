@@ -14,6 +14,8 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Security;
+using System.Web;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace ServiceApp.WebApi.Controllers
 {
@@ -23,10 +25,29 @@ namespace ServiceApp.WebApi.Controllers
         private AuthRepository _repo = null;
         private IUserDetailRepository _userRepo = null;
 
+        private ApplicationUserManager _userManager = null;
+        private ApplicationRoleManager _userRoleManager = null;
+
         public AccountController(IUserDetailRepository userRepo)
         {
-            _repo = new AuthRepository();
+            _repo = new AuthRepository(AppUserManager, AppRoleManager);
             _userRepo = userRepo;
+        }
+
+        protected ApplicationUserManager AppUserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+        }
+
+        protected ApplicationRoleManager AppRoleManager
+        {
+            get
+            {
+                return _userRoleManager ?? HttpContext.Current.GetOwinContext().GetUserManager<ApplicationRoleManager>();
+            }
         }
 
         // POST api/Account/Register
@@ -78,7 +99,7 @@ namespace ServiceApp.WebApi.Controllers
             }
             catch (Exception ex)
             {
-                if(!IsUserRegistered)
+                if (!IsUserRegistered)
                 {
                     IdentityResult result = await _repo.DeleteUser(user);
                 }
@@ -86,7 +107,7 @@ namespace ServiceApp.WebApi.Controllers
                 Elmah.ErrorSignal.FromCurrentContext().Raise(new Exception(ex.Message, ex.InnerException));
 
                 return BadRequest();
-            }            
+            }
         }
 
         // POST api/Account/ChangePassword
@@ -115,7 +136,7 @@ namespace ServiceApp.WebApi.Controllers
                 Elmah.ErrorSignal.FromCurrentContext().Raise(new Exception(ex.Message, ex.InnerException));
 
                 return BadRequest();
-            }            
+            }
         }
 
         [AllowAnonymous]
@@ -154,7 +175,7 @@ namespace ServiceApp.WebApi.Controllers
                 Elmah.ErrorSignal.FromCurrentContext().Raise(new Exception(ex.Message, ex.InnerException));
 
                 return BadRequest();
-            }            
+            }
         }
 
         protected override void Dispose(bool disposing)
