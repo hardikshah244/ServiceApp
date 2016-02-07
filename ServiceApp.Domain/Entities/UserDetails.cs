@@ -10,11 +10,11 @@ namespace ServiceApp.Domain.Entities
     public class UserDetails
     {        
         [Key]
-        public string UserID { get; set; }        
+        public string UserID { get; set; }     
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
-        [Required]
+        [Required]        
         public decimal Latitude { get; set; }
 
         [Required]

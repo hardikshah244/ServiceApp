@@ -5,29 +5,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ServiceApp.Domain.Entities;
+using ServiceApp.Domain.DataModel;
 
 namespace ServiceApp.Domain.Concrete
 {
     public class UserDetailRepository : IUserDetailRepository, IDisposable
     {
-        private OwinAuthDbContext context;
+        private ServiceAppDBContext context;
 
         public UserDetailRepository()
         {
-            this.context = new OwinAuthDbContext();
+            this.context = new ServiceAppDBContext();
         }
 
-        public void AddUserDetail(UserDetails userDetails)
+        public void AddUserDetail(UserDetail userDetails)
         {
             try
             {
                 if (this.context != null)
                 {
-                    this.context.UserDetail.Add(userDetails);
+                    this.context.UserDetails.Add(userDetails);
                     this.context.SaveChanges();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw;
             }

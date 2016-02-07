@@ -4,10 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ServiceApp.Domain.Entities
 {
-    public class User
+    [NotMapped]
+    public class RegisterUser
     {
         [Required]
         [Display(Name = "User name")]
@@ -32,5 +35,8 @@ namespace ServiceApp.Domain.Entities
         [Display(Name = "Email")]
         public string Email { get; set; }
 
+        public DateTime BirthDate { get; set; }
+
     }
+
 }

@@ -1,4 +1,5 @@
-﻿using ServiceApp.Domain.Entities;
+﻿using ServiceApp.Domain.DataModel;
+using ServiceApp.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace ServiceApp.Domain.Abstract
 {
     public interface IUserDetailRepository : IDisposable
     {
-        void AddUserDetail(UserDetails userDetails);
+        void AddUserDetail(UserDetail userDetails);
     }
 }

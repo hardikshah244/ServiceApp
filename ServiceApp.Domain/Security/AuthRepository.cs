@@ -1,45 +1,52 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.Owin.Security;
-using ServiceApp.Domain.Abstract;
+using ServiceApp.Domain.DataModel;
 using ServiceApp.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
-using System.Web;
+using System.Data.Entity;
+using ServiceApp.Domain.Security;
 
-
-namespace ServiceApp.WebApi.Models
+namespace ServiceApp.Domain.Concrete
 {
     public class AuthRepository : IDisposable
     {
         private OwinAuthDbContext _ctx;
-        private UserManager<IdentityUser> _userManager;
+        private UserManager<ApplicationUser> _userManager;
         private RoleManager<IdentityRole> _userRoleManager;
-        
 
         public AuthRepository()
         {
             _ctx = new OwinAuthDbContext();
-            _userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(_ctx));
-            _userRoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(_ctx));            
+            _userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(_ctx));
+            _userRoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(_ctx));
         }
 
         // In this application UserName consider as Email
-        public async Task<IdentityResult> RegisterUser(User userModel)
+        public async Task<IdentityResult> RegisterUser(RegisterUser userModel)
         {
             try
             {
-                IdentityUser user = new IdentityUser
+                ApplicationUser user = new ApplicationUser
                 {
                     UserName = userModel.Email,
                     Email = userModel.Email,
-                    PhoneNumber = userModel.PhoneNumber
+                    PhoneNumber = userModel.PhoneNumber,
+                    BirthDate = Convert.ToDateTime(userModel.BirthDate)
                 };
 
                 var result = await _userManager.CreateAsync(user, userModel.Password);
+
+                //if (result.Succeeded)
+                //{
+                //    _userRoleManager.Create(new IdentityRole("Admin"));
+
+                //    if (_userRoleManager.RoleExists("Admin"))
+                //        _userManager.AddToRole(user.Id, "Admin");
+                //}
 
                 return result;
             }
@@ -56,7 +63,7 @@ namespace ServiceApp.WebApi.Models
             {
                 IdentityResult result = null;
 
-                IdentityUser user = await FindUserByName(changePasswordModel.Email);
+                ApplicationUser user = await FindUserByName(changePasswordModel.Email);
 
                 if (user != null)
                 {
@@ -78,7 +85,7 @@ namespace ServiceApp.WebApi.Models
             {
                 IdentityResult result = null;
 
-                IdentityUser user = await FindUserByName(resetPasswordModel.Email);
+                ApplicationUser user = await FindUserByName(resetPasswordModel.Email);
 
                 if (user != null)
                 {
@@ -95,11 +102,11 @@ namespace ServiceApp.WebApi.Models
             }
         }
 
-        public async Task<IdentityUser> FindUser(string userName, string password)
+        public async Task<ApplicationUser> FindUser(string userName, string password)
         {
             try
             {
-                IdentityUser user = await _userManager.FindAsync(userName, password);
+                ApplicationUser user = await _userManager.FindAsync(userName, password);
 
                 return user;
             }
@@ -109,7 +116,7 @@ namespace ServiceApp.WebApi.Models
             }
         }
 
-        public async Task<IdentityResult> DeleteUser(IdentityUser userModel)
+        public async Task<IdentityResult> DeleteUser(ApplicationUser userModel)
         {
             try
             {
@@ -124,11 +131,11 @@ namespace ServiceApp.WebApi.Models
         }
 
         // In this application UserName consider as Email
-        public async Task<IdentityUser> FindUserByName(string Email)
+        public async Task<ApplicationUser> FindUserByName(string Email)
         {
             try
             {
-                IdentityUser user = await _userManager.FindByNameAsync(Email);
+                ApplicationUser user = await _userManager.FindByNameAsync(Email);
 
                 return user;
             }
@@ -140,7 +147,7 @@ namespace ServiceApp.WebApi.Models
 
         #region RoleManager
 
-        public IQueryable<IdentityUser> GetUsersInRole(string userId)
+        public IQueryable<ApplicationUser> GetUsersInRole(string userId)
         {
             return from user in _userManager.Users
                    where user.Roles.Any(r => r.UserId == userId)
@@ -156,4 +163,6 @@ namespace ServiceApp.WebApi.Models
 
         }
     }
+
+
 }

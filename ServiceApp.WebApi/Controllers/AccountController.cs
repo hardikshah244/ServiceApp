@@ -2,8 +2,10 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using ServiceApp.Domain.Abstract;
 using ServiceApp.Domain.Common;
+using ServiceApp.Domain.Concrete;
+using ServiceApp.Domain.DataModel;
 using ServiceApp.Domain.Entities;
-using ServiceApp.WebApi.Models;
+using ServiceApp.Domain.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +34,9 @@ namespace ServiceApp.WebApi.Controllers
         [Route("Register")]
         public async Task<IHttpActionResult> Register(UserRegisterDetails userModel)
         {
+            bool IsUserRegistered = false;
+            ApplicationUser user = null;
+
             try
             {
                 if (!ModelState.IsValid)
@@ -43,11 +48,11 @@ namespace ServiceApp.WebApi.Controllers
 
                 if (result.Succeeded)
                 {
-                    IdentityUser user = await _repo.FindUser(userModel.User.Email, userModel.User.Password);
+                    user = await _repo.FindUser(userModel.User.Email, userModel.User.Password);
 
                     if (user != null)
                     {
-                        UserDetails userDetail = new UserDetails
+                        UserDetail userDetail = new UserDetail
                         {
                             UserID = user.Id,
                             FirstName = userModel.UserDetails.FirstName,
@@ -57,6 +62,8 @@ namespace ServiceApp.WebApi.Controllers
                         };
 
                         _userRepo.AddUserDetail(userDetail);
+
+                        IsUserRegistered = true;
                     }
                 }
 
@@ -67,13 +74,19 @@ namespace ServiceApp.WebApi.Controllers
                     return errorResult;
                 }
 
+                return Ok();
             }
             catch (Exception ex)
             {
-                Elmah.ErrorSignal.FromCurrentContext().Raise(new Exception(ex.Message, ex.InnerException));
-            }
+                if(!IsUserRegistered)
+                {
+                    IdentityResult result = await _repo.DeleteUser(user);
+                }
 
-            return Ok();
+                Elmah.ErrorSignal.FromCurrentContext().Raise(new Exception(ex.Message, ex.InnerException));
+
+                return BadRequest();
+            }            
         }
 
         // POST api/Account/ChangePassword
@@ -95,13 +108,14 @@ namespace ServiceApp.WebApi.Controllers
                     return GetErrorResult(result);
                 }
 
+                return Ok();
             }
             catch (Exception ex)
             {
                 Elmah.ErrorSignal.FromCurrentContext().Raise(new Exception(ex.Message, ex.InnerException));
-            }
 
-            return Ok();
+                return BadRequest();
+            }            
         }
 
         [AllowAnonymous]
@@ -132,13 +146,15 @@ namespace ServiceApp.WebApi.Controllers
                     Email.SendEmail("hardik.shah.244@gmail.com", "hardik.shah.244@gmail.com", "ResetPassword", "Your password successfully reset. Please use below password to login <br/> Password : " + strPassword);
                 }
 
+                return Ok();
+
             }
             catch (Exception ex)
             {
                 Elmah.ErrorSignal.FromCurrentContext().Raise(new Exception(ex.Message, ex.InnerException));
-            }
 
-            return Ok();
+                return BadRequest();
+            }            
         }
 
         protected override void Dispose(bool disposing)

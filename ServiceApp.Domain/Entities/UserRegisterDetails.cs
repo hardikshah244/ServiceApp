@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServiceApp.Domain.DataModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace ServiceApp.Domain.Entities
 {
     public class UserRegisterDetails
     {
-        public User User { get; set; }
-        public UserDetails UserDetails { get; set; }
+        public RegisterUser User { get; set; }
+        public UserDetail UserDetails { get; set; }
     }
 }
