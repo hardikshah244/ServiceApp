@@ -18,6 +18,15 @@ namespace ServiceApp.Web
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             System.Web.Optimization.BundleTable.EnableOptimizations = false;
+
+            Application["TotalVisitors"] = 0;
+        }
+
+        protected void Session_Start()
+        {
+            Application.Lock();
+            Application["TotalVisitors"] = (int)Application["TotalVisitors"] + 1;
+            Application.UnLock();
         }
     }
 }

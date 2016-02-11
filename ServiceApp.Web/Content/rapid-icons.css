@@ -2,8 +2,8 @@
 
 @font-face {
     font-family: "rapid-icon-font";
-    src: url("/fonts/rapid-icon-font.eot");
-    src: url("/fonts/rapid-icon-font.eot?#iefix") format("embedded-opentype"), url("/fonts/rapid-icon-font.woff") format("woff"), url("/fonts/rapid-icon-font.ttf") format("truetype"), url("/fonts/rapid-icon-font.svg#rapid-icon-font") format("svg");
+    src: url("../fonts/rapid-icon-font.eot");
+    src: url("../fonts/rapid-icon-font.eot?#iefix") format("embedded-opentype"), url("../fonts/rapid-icon-font.woff") format("woff"), url("../fonts/rapid-icon-font.ttf") format("truetype"), url("../fonts/rapid-icon-font.svg#rapid-icon-font") format("svg");
     font-weight: normal;
     font-style: normal;
 }
