@@ -65,8 +65,7 @@ namespace ServiceApp.WebApi.App_Start
         /// </summary>
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
-        {
-            kernel.Bind<IUserDetailRepository>().To<UserDetailRepository>();
+        {            
             kernel.Bind<IEngineerRepository>().To<EngineerRepository>();
         }
     }

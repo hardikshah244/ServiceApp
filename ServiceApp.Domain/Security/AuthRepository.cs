@@ -1,13 +1,8 @@
 ﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using ServiceApp.Domain.DataModel;
 using ServiceApp.Domain.Entities;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Data.Entity;
 using ServiceApp.Domain.Security;
 
 namespace ServiceApp.Domain.Concrete
@@ -33,18 +28,29 @@ namespace ServiceApp.Domain.Concrete
                     UserName = userModel.Email,
                     Email = userModel.Email,
                     PhoneNumber = userModel.PhoneNumber,
-                    BirthDate = Convert.ToDateTime(userModel.BirthDate)
+                    FirstName = userModel.FirstName,
+                    LastName = userModel.LastName,
+                    BirthDate = Convert.ToDateTime(userModel.BirthDate),
+                    Address = userModel.Address,
+                    Area = userModel.Area,
+                    SubArea = userModel.SubArea,
+                    City = userModel.City,
+                    State = userModel.State,
+                    Pincode = userModel.Pincode,
+                    Latitude = userModel.Latitude,
+                    Longitude = userModel.Longitude,
+                    DeviceID = userModel.DeviceID
                 };
 
                 var result = await _userManager.CreateAsync(user, userModel.Password);
 
-                //if (result.Succeeded)
-                //{
-                //    _userRoleManager.Create(new IdentityRole("Admin"));
+                if (result.Succeeded)
+                {
+                    //_userRoleManager.Create(new IdentityRole("Admin"));
 
-                //    if (_userRoleManager.RoleExists("Admin"))
-                //        _userManager.AddToRole(user.Id, "Admin");
-                //}
+                    if (_userRoleManager.RoleExists("Engineer"))
+                        _userManager.AddToRole(user.Id, "Engineer");
+                }
 
                 return result;
             }

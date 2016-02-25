@@ -12,13 +12,15 @@ namespace ServiceApp.Domain.DataModel
     using System;
     using System.Collections.Generic;
     
-    public partial class UserDetail
+    public partial class EngineerMembership
     {
-        public string UserID { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public decimal Latitude { get; set; }
-        public decimal Longitude { get; set; }
+        public int MembershipID { get; set; }
+        public string UserId { get; set; }
+        public string MembershipType { get; set; }
+        public System.DateTime CreationDate { get; set; }
+        public System.DateTime StartDate { get; set; }
+        public Nullable<System.DateTime> EndDate { get; set; }
+        public Nullable<decimal> Amount { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
     }

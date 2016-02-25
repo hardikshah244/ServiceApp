@@ -357,10 +357,10 @@ Author:         Mat Przegietka
     }
 
 .social_icons ul, .social_icons ul li {
-    display: inline-block;
+    /*display: inline-block;
     list-style: none;
     padding: 0;
-    height: 2rem;
+    height: 2rem*/;
 }
 
     .social_icons ul li {

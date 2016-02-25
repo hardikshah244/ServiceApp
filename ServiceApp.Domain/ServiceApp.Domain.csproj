@@ -89,13 +89,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstract\IEngineerRepository.cs" />
-    <Compile Include="Abstract\IUserDetailRepository.cs" />
     <Compile Include="Common\Email.cs" />
+    <Compile Include="DataModel\EngineerMembership.cs">
+      <DependentUpon>ServiceAppDbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Security\ApplicationRoleManager.cs" />
     <Compile Include="Security\ApplicationUserManager.cs" />
     <Compile Include="Security\AuthRepository.cs" />
     <Compile Include="Concrete\EngineerRepository.cs" />
-    <Compile Include="Concrete\UserDetailRepository.cs" />
     <Compile Include="DataModel\AspNetRole.cs">
       <DependentUpon>ServiceAppDbModel.tt</DependentUpon>
     </Compile>
@@ -132,13 +133,9 @@
     <Compile Include="DataModel\ServiceTypeMaster.cs">
       <DependentUpon>ServiceAppDbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\UserDetail.cs">
-      <DependentUpon>ServiceAppDbModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Entities\ChangePassword.cs" />
     <Compile Include="Entities\ResetPassword.cs" />
-    <Compile Include="Entities\User.cs" />
-    <Compile Include="Entities\UserRegisterDetails.cs" />
+    <Compile Include="Entities\RegisterUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\ApplicationUser.cs" />
     <Compile Include="Security\OwinAuthDbContext.cs" />

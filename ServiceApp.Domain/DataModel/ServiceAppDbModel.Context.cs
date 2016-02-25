@@ -9,32 +9,29 @@
 
 namespace ServiceApp.Domain.DataModel
 {
-    using Microsoft.AspNet.Identity.EntityFramework;
-    using Entities;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-
+    
     public partial class ServiceAppDBContext : DbContext
     {
         public ServiceAppDBContext()
             : base("name=ServiceAppDBContext")
         {
-
         }
-
+    
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
         }
-
+    
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<Engineer> Engineers { get; set; }
         public virtual DbSet<ServiceTypeMaster> ServiceTypeMasters { get; set; }
-        public virtual DbSet<UserDetail> UserDetails { get; set; }
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual DbSet<ELMAH_Error> ELMAH_Error { get; set; }
+        public virtual DbSet<EngineerMembership> EngineerMemberships { get; set; }
     }
 }
