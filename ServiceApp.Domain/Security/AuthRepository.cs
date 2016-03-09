@@ -19,7 +19,7 @@ namespace ServiceApp.Domain.Concrete
         }
 
         // In this application UserName consider as Email
-        public async Task<IdentityResult> RegisterUser(RegisterUser userModel)
+        public IdentityResult RegisterUser(RegisterUser userModel)
         {
             try
             {
@@ -42,7 +42,7 @@ namespace ServiceApp.Domain.Concrete
                     DeviceID = userModel.DeviceID
                 };
 
-                var result = await _userManager.CreateAsync(user, userModel.Password);
+                var result = _userManager.Create(user, userModel.Password);
 
                 if (result.Succeeded)
                 {

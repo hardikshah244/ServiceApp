@@ -35,7 +35,7 @@ namespace ServiceApp.Domain.Concrete
             }
             catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 

@@ -17,7 +17,10 @@ namespace ServiceApp.Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            System.Web.Optimization.BundleTable.EnableOptimizations = false;
+            //for Development
+            BundleTable.EnableOptimizations = false;
+            //for Porduction
+            //BundleTable.EnableOptimizations = true;
 
             Application["TotalVisitors"] = 0;
         }

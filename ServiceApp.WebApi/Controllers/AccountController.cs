@@ -10,6 +10,9 @@ using System.Web.Http;
 using System.Web.Security;
 using System.Web;
 using Microsoft.AspNet.Identity.Owin;
+using System.Collections.Generic;
+using ServiceApp.WebApi.ErrorHelper;
+using System.Net;
 
 namespace ServiceApp.WebApi.Controllers
 {
@@ -45,38 +48,51 @@ namespace ServiceApp.WebApi.Controllers
         // POST api/Account/Register
         [AllowAnonymous]
         [Route("Register")]
-        public async Task<IHttpActionResult> Register(RegisterUser userModel)
+        public HttpResponseMessage Register(RegisterUser userModel)
         {
+            HttpResponseMessage ObjHttpResponseMessage = new HttpResponseMessage();
+            string ResponseMessage = "";
+
             try
             {
                 if (!ModelState.IsValid)
                 {
-                    return BadRequest(ModelState);
+                    foreach (var state in ModelState)
+                    {
+                        if (!string.IsNullOrEmpty((state.Value.Errors[0]).ErrorMessage))
+                            ResponseMessage += (state.Value.Errors[0]).ErrorMessage + ((state.Value.Errors[0]).Exception).Message + "|";
+
+                        if (!string.IsNullOrEmpty(((state.Value.Errors[0]).Exception).Message))
+                            ResponseMessage += ((state.Value.Errors[0]).Exception).Message + "|";
+                    }
+
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ResponseMessage.Substring(0, ResponseMessage.Length - 1));
                 }
 
-                IdentityResult result = await _repo.RegisterUser(userModel);
+                IdentityResult result = _repo.RegisterUser(userModel);
 
                 if (result.Succeeded)
                 {
-                    return Ok("User successfully registered");
+                    ResponseMessage = "User successfully registered";
+                    return Request.CreateErrorResponse(HttpStatusCode.OK, ResponseMessage);
                 }
                 else
                 {
-                    IHttpActionResult errorResult = GetErrorResult(result);
+                    ResponseMessage = GetErrorResultStr(result);
 
-                    if (errorResult != null)
+                    if (!string.IsNullOrEmpty(ResponseMessage))
                     {
-                        return errorResult;
+                        return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ResponseMessage);
                     }
 
-                    return BadRequest();
-                }                
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Error occurred on register user");
+                }
             }
             catch (Exception ex)
             {
                 Elmah.ErrorSignal.FromCurrentContext().Raise(new Exception(ex.Message, ex.InnerException));
 
-                return BadRequest();
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "");
             }
         }
 
@@ -156,6 +172,26 @@ namespace ServiceApp.WebApi.Controllers
             }
 
             base.Dispose(disposing);
+        }
+
+        private string GetErrorResultStr(IdentityResult result)
+        {
+            string ResponseMessage = "";
+
+            if (!result.Succeeded)
+            {
+                if (result.Errors != null)
+                {
+                    foreach (string error in result.Errors)
+                    {
+                        ResponseMessage += error + "|";
+                    }
+                }
+
+                return ResponseMessage.Substring(0, ResponseMessage.Length - 1);
+            }
+
+            return null;
         }
 
         private IHttpActionResult GetErrorResult(IdentityResult result)
