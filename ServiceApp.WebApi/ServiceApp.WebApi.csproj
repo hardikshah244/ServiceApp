@@ -252,10 +252,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
-    <Compile Include="ErrorHelper\ApiBusinessException.cs" />
-    <Compile Include="ErrorHelper\ApiDataException.cs" />
-    <Compile Include="ErrorHelper\ApiException.cs" />
-    <Compile Include="ErrorHelper\IApiExceptions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

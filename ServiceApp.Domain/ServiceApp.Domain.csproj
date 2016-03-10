@@ -90,49 +90,56 @@
   <ItemGroup>
     <Compile Include="Abstract\IEngineerRepository.cs" />
     <Compile Include="Common\Email.cs" />
+    <Compile Include="DataModel\AspNetRole.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AspNetUser.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AspNetUserClaim.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AspNetUserLogin.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Engineer.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataModel\EngineerMembership.cs">
-      <DependentUpon>ServiceAppDbModel.tt</DependentUpon>
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Model1.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Model1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\ServiceAppDBModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ServiceAppDBModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\ServiceAppDBModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\ServiceAppDBModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ServiceAppDBModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\ServiceTypeMaster.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Security\ApplicationRoleManager.cs" />
     <Compile Include="Security\ApplicationUserManager.cs" />
     <Compile Include="Security\AuthRepository.cs" />
     <Compile Include="Concrete\EngineerRepository.cs" />
-    <Compile Include="DataModel\AspNetRole.cs">
-      <DependentUpon>ServiceAppDbModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\AspNetUser.cs">
-      <DependentUpon>ServiceAppDbModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\AspNetUserClaim.cs">
-      <DependentUpon>ServiceAppDbModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\AspNetUserLogin.cs">
-      <DependentUpon>ServiceAppDbModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\ELMAH_Error.cs">
-      <DependentUpon>ServiceAppDbModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\Engineer.cs">
-      <DependentUpon>ServiceAppDbModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\ServiceAppDbModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ServiceAppDbModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\ServiceAppDbModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ServiceAppDbModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\ServiceAppDbModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ServiceAppDbModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\ServiceTypeMaster.cs">
-      <DependentUpon>ServiceAppDbModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Entities\ChangePassword.cs" />
     <Compile Include="Entities\ResetPassword.cs" />
     <Compile Include="Entities\RegisterUser.cs" />
@@ -142,28 +149,39 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <EntityDeploy Include="DataModel\ServiceAppDbModel.edmx">
+    <EntityDeploy Include="DataModel\ServiceAppDBModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ServiceAppDbModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>ServiceAppDBModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="DataModel\ServiceAppDbModel.edmx.diagram">
-      <DependentUpon>ServiceAppDbModel.edmx</DependentUpon>
+    <None Include="DataModel\ServiceAppDBModel.edmx.diagram">
+      <DependentUpon>ServiceAppDBModel.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Content Include="DataModel\ServiceAppDbModel.Context.tt">
+    <Content Include="DataModel\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ServiceAppDbModel.edmx</DependentUpon>
-      <LastGenOutput>ServiceAppDbModel.Context.cs</LastGenOutput>
+      <LastGenOutput>Model1.Context.cs</LastGenOutput>
+      <DependentUpon>ServiceAppDBModel.edmx</DependentUpon>
     </Content>
-    <Content Include="DataModel\ServiceAppDbModel.tt">
+    <Content Include="DataModel\Model1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ServiceAppDbModel.edmx</DependentUpon>
-      <LastGenOutput>ServiceAppDbModel.cs</LastGenOutput>
+      <LastGenOutput>Model1.cs</LastGenOutput>
+      <DependentUpon>ServiceAppDBModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="DataModel\ServiceAppDBModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ServiceAppDBModel.edmx</DependentUpon>
+      <LastGenOutput>ServiceAppDBModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DataModel\ServiceAppDBModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ServiceAppDBModel.edmx</DependentUpon>
+      <LastGenOutput>ServiceAppDBModel.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

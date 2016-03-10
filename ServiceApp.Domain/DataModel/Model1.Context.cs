@@ -13,10 +13,10 @@ namespace ServiceApp.Domain.DataModel
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class ServiceAppDBContext : DbContext
+    public partial class ServiceAppDBEntities : DbContext
     {
-        public ServiceAppDBContext()
-            : base("name=ServiceAppDBContext")
+        public ServiceAppDBEntities()
+            : base("name=ServiceAppDBEntities")
         {
         }
     

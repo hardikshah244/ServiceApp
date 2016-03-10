@@ -10,8 +10,6 @@ using System.Web.Http;
 using System.Web.Security;
 using System.Web;
 using Microsoft.AspNet.Identity.Owin;
-using System.Collections.Generic;
-using ServiceApp.WebApi.ErrorHelper;
 using System.Net;
 
 namespace ServiceApp.WebApi.Controllers
@@ -60,7 +58,7 @@ namespace ServiceApp.WebApi.Controllers
                     foreach (var state in ModelState)
                     {
                         if (!string.IsNullOrEmpty((state.Value.Errors[0]).ErrorMessage))
-                            ResponseMessage += (state.Value.Errors[0]).ErrorMessage + ((state.Value.Errors[0]).Exception).Message + "|";
+                            ResponseMessage += (state.Value.Errors[0]).ErrorMessage + "|";
 
                         if (!string.IsNullOrEmpty(((state.Value.Errors[0]).Exception).Message))
                             ResponseMessage += ((state.Value.Errors[0]).Exception).Message + "|";
@@ -92,7 +90,7 @@ namespace ServiceApp.WebApi.Controllers
             {
                 Elmah.ErrorSignal.FromCurrentContext().Raise(new Exception(ex.Message, ex.InnerException));
 
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "");
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Message :- " + ex.Message + "| InnerException :- " + ex.InnerException);
             }
         }
 
