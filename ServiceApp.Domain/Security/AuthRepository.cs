@@ -28,10 +28,7 @@ namespace ServiceApp.Domain.Concrete
                     UserName = userModel.Email,
                     Email = userModel.Email,
                     PhoneNumber = userModel.PhoneNumber,
-                    FirstName = userModel.FirstName,
-                    LastName = userModel.LastName,
-                    BirthDate = Convert.ToDateTime(userModel.BirthDate),
-                    Address = userModel.Address,
+                    Name = userModel.Name,
                     Area = userModel.Area,
                     SubArea = userModel.SubArea,
                     City = userModel.City,
@@ -61,17 +58,17 @@ namespace ServiceApp.Domain.Concrete
         }
 
         // In this application UserName consider as Email
-        public async Task<IdentityResult> ChangePassword(ChangePassword changePasswordModel)
+        public IdentityResult ChangePassword(ChangePassword changePasswordModel)
         {
             try
             {
                 IdentityResult result = null;
 
-                ApplicationUser user = await FindUserByName(changePasswordModel.Email);
+                ApplicationUser user = FindUserByEmail(changePasswordModel.Email);
 
                 if (user != null)
                 {
-                    result = await _userManager.ChangePasswordAsync(user.Id, changePasswordModel.OldPassword,
+                    result = _userManager.ChangePassword(user.Id, changePasswordModel.OldPassword,
                     changePasswordModel.NewPassword);
                 }
 
@@ -83,19 +80,19 @@ namespace ServiceApp.Domain.Concrete
             }
         }
 
-        public async Task<IdentityResult> ResetPassword(ResetPassword resetPasswordModel, string Password)
+        public IdentityResult ResetPassword(ResetPassword resetPasswordModel, string Password)
         {
             try
             {
                 IdentityResult result = null;
 
-                ApplicationUser user = await FindUserByName(resetPasswordModel.Email);
+                ApplicationUser user = FindUserByEmail(resetPasswordModel.Email);
 
                 if (user != null)
                 {
                     _userManager.RemovePassword(user.Id);
 
-                    result = await _userManager.AddPasswordAsync(user.Id, Password);
+                    result = _userManager.AddPassword(user.Id, Password);
                 }
 
                 return result;
@@ -135,11 +132,11 @@ namespace ServiceApp.Domain.Concrete
         }
 
         // In this application UserName consider as Email
-        public async Task<ApplicationUser> FindUserByName(string Email)
+        public ApplicationUser FindUserByEmail(string Email)
         {
             try
             {
-                ApplicationUser user = await _userManager.FindByNameAsync(Email);
+                ApplicationUser user = _userManager.FindByEmail(Email);
 
                 return user;
             }

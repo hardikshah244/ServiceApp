@@ -35,9 +35,8 @@ namespace ServiceApp.Domain.DataModel
         public bool LockoutEnabled { get; set; }
         public int AccessFailedCount { get; set; }
         public string UserName { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public System.DateTime BirthDate { get; set; }
+        public string Name { get; set; }
+        public Nullable<System.DateTime> BirthDate { get; set; }
         public string Address { get; set; }
         public string Area { get; set; }
         public string SubArea { get; set; }

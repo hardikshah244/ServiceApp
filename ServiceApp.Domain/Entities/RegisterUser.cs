@@ -23,6 +23,7 @@ namespace ServiceApp.Domain.Entities
         public string ConfirmPassword { get; set; }
 
         [Required]
+        [RegularExpression(@"^(\d{10})$", ErrorMessage = "Please enter valid phone number")]        
         [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
 
@@ -30,22 +31,9 @@ namespace ServiceApp.Domain.Entities
         public string Email { get; set; }
 
         [Required]
-        [Display(Name = "First Name")]
+        [Display(Name = "Name123")]
         [MaxLength(50)]
-        public string FirstName { get; set; }
-
-        [Required]
-        [Display(Name = "Last Name")]
-        [MaxLength(50)]
-        public string LastName { get; set; }
-
-        [Required]
-        [Display(Name = "Birth Date")]
-        [DataType(DataType.Date)]
-        public DateTime BirthDate { get; set; }
-
-        [Required]
-        public string Address { get; set; }
+        public string Name { get; set; }
 
         [MaxLength(100)]
         public string Area { get; set; }

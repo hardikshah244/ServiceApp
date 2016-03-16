@@ -11,6 +11,8 @@ using System.Web.Security;
 using System.Web;
 using Microsoft.AspNet.Identity.Owin;
 using System.Net;
+using ServiceApp.WebApi.Helpers;
+using System.Configuration;
 
 namespace ServiceApp.WebApi.Controllers
 {
@@ -18,9 +20,10 @@ namespace ServiceApp.WebApi.Controllers
     public class AccountController : ApiController
     {
         private AuthRepository _repo = null;
-
         private ApplicationUserManager _userManager = null;
         private ApplicationRoleManager _userRoleManager = null;
+
+        private string strFromEmail = ConfigurationManager.AppSettings["FromEmail"].ToString();
 
         public AccountController()
         {
@@ -55,16 +58,7 @@ namespace ServiceApp.WebApi.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    foreach (var state in ModelState)
-                    {
-                        if (!string.IsNullOrEmpty((state.Value.Errors[0]).ErrorMessage))
-                            ResponseMessage += (state.Value.Errors[0]).ErrorMessage + "|";
-
-                        if (!string.IsNullOrEmpty(((state.Value.Errors[0]).Exception).Message))
-                            ResponseMessage += ((state.Value.Errors[0]).Exception).Message + "|";
-                    }
-
-                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ResponseMessage.Substring(0, ResponseMessage.Length - 1));
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState.ValidateModelState());
                 }
 
                 IdentityResult result = _repo.RegisterUser(userModel);
@@ -72,6 +66,9 @@ namespace ServiceApp.WebApi.Controllers
                 if (result.Succeeded)
                 {
                     ResponseMessage = "User successfully registered";
+
+                    Email.SendEmail(strFromEmail, userModel.Email, "RegisterUser", "You are successfully registered");
+
                     return Request.CreateErrorResponse(HttpStatusCode.OK, ResponseMessage);
                 }
                 else
@@ -97,41 +94,58 @@ namespace ServiceApp.WebApi.Controllers
         // POST api/Account/ChangePassword
         [Authorize]
         [Route("ChangePassword")]
-        public async Task<IHttpActionResult> ChangePassword(ChangePassword chnagePassword)
+        public HttpResponseMessage ChangePassword(ChangePassword chnagePassword)
         {
+            HttpResponseMessage ObjHttpResponseMessage = new HttpResponseMessage();
+            string ResponseMessage = "";
             try
             {
                 if (!ModelState.IsValid)
                 {
-                    return BadRequest(ModelState);
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState.ValidateModelState());
                 }
 
-                IdentityResult result = await _repo.ChangePassword(chnagePassword);
+                IdentityResult result = _repo.ChangePassword(chnagePassword);
 
                 if (!result.Succeeded)
                 {
-                    return GetErrorResult(result);
+                    ResponseMessage = GetErrorResultStr(result);
+
+                    if (!string.IsNullOrEmpty(ResponseMessage))
+                    {
+                        return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ResponseMessage);
+                    }
+
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Error occurred on change password");
+                }
+                else if (result.Succeeded)
+                {
+                    Email.SendEmail(strFromEmail, chnagePassword.Email, "ChangePassword", "Your password successfully changed");
                 }
 
-                return Ok();
+                ResponseMessage = "Password successfully changed";
+                return Request.CreateErrorResponse(HttpStatusCode.OK, ResponseMessage);
             }
             catch (Exception ex)
             {
                 Elmah.ErrorSignal.FromCurrentContext().Raise(new Exception(ex.Message, ex.InnerException));
 
-                return BadRequest();
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Message :- " + ex.Message + "| InnerException :- " + ex.InnerException);
             }
         }
 
         [AllowAnonymous]
         [Route("ResetPassword")]
-        public async Task<IHttpActionResult> ResetPassword(ResetPassword resetPassword)
+        public HttpResponseMessage ResetPassword(ResetPassword resetPassword)
         {
+            HttpResponseMessage ObjHttpResponseMessage = new HttpResponseMessage();
+            string ResponseMessage = "";
+
             try
             {
                 if (!ModelState.IsValid)
                 {
-                    return BadRequest(ModelState);
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState.ValidateModelState());
                 }
 
                 string strPassword = Membership.GeneratePassword(8, 0);
@@ -139,26 +153,34 @@ namespace ServiceApp.WebApi.Controllers
 
                 if (!string.IsNullOrEmpty(strPassword))
                 {
-                    result = await _repo.ResetPassword(resetPassword, strPassword);
+                    result = _repo.ResetPassword(resetPassword, strPassword);
                 }
 
                 if (!result.Succeeded)
                 {
-                    return GetErrorResult(result);
+                    ResponseMessage = GetErrorResultStr(result);
+
+                    if (!string.IsNullOrEmpty(ResponseMessage))
+                    {
+                        return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ResponseMessage);
+                    }
+
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Error occurred on reset password");
                 }
                 else if (result.Succeeded)
                 {
-                    Email.SendEmail("hardik.shah.244@gmail.com", "hardik.shah.244@gmail.com", "ResetPassword", "Your password successfully reset. Please use below password to login <br/> Password : " + strPassword);
+                    Email.SendEmail(strFromEmail, resetPassword.Email, "ResetPassword", "Your password successfully reset. Please use below password to login <br/> Password : " + strPassword);
                 }
 
-                return Ok();
+                ResponseMessage = "Password successfully reset";
+                return Request.CreateErrorResponse(HttpStatusCode.OK, ResponseMessage);
 
             }
             catch (Exception ex)
             {
                 Elmah.ErrorSignal.FromCurrentContext().Raise(new Exception(ex.Message, ex.InnerException));
 
-                return BadRequest();
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Message :- " + ex.Message + "| InnerException :- " + ex.InnerException);
             }
         }
 
