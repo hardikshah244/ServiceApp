@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using ServiceApp.Domain.Security;
+using System.Collections.Generic;
 
 namespace ServiceApp.Domain.Concrete
 {
@@ -21,32 +22,40 @@ namespace ServiceApp.Domain.Concrete
         // In this application UserName consider as Email
         public IdentityResult RegisterUser(RegisterUser userModel)
         {
+            IdentityResult result;
             try
             {
-                ApplicationUser user = new ApplicationUser
+                if (!ValidatePhoneNumberExists(userModel.PhoneNumber))
                 {
-                    UserName = userModel.Email,
-                    Email = userModel.Email,
-                    PhoneNumber = userModel.PhoneNumber,
-                    Name = userModel.Name,
-                    Area = userModel.Area,
-                    SubArea = userModel.SubArea,
-                    City = userModel.City,
-                    State = userModel.State,
-                    Pincode = userModel.Pincode,
-                    Latitude = userModel.Latitude,
-                    Longitude = userModel.Longitude,
-                    DeviceID = userModel.DeviceID
-                };
+                    ApplicationUser user = new ApplicationUser
+                    {
+                        UserName = userModel.Email,
+                        Email = userModel.Email,
+                        PhoneNumber = userModel.PhoneNumber,
+                        Name = userModel.Name,
+                        Area = userModel.Area,
+                        SubArea = userModel.SubArea,
+                        City = userModel.City,
+                        State = userModel.State,
+                        Pincode = userModel.Pincode,
+                        Latitude = userModel.Latitude,
+                        Longitude = userModel.Longitude,
+                        DeviceID = userModel.DeviceID
+                    };
 
-                var result = _userManager.Create(user, userModel.Password);
+                    result = _userManager.Create(user, userModel.Password);
 
-                if (result.Succeeded)
+                    if (result.Succeeded)
+                    {
+                        //_userRoleManager.Create(new IdentityRole("Admin"));
+
+                        if (_userRoleManager.RoleExists("Customer"))
+                            _userManager.AddToRole(user.Id, "Customer");
+                    }
+                }
+                else
                 {
-                    //_userRoleManager.Create(new IdentityRole("Admin"));
-
-                    if (_userRoleManager.RoleExists("Engineer"))
-                        _userManager.AddToRole(user.Id, "Engineer");
+                    result = IdentityResult.Failed("Phone Number already exists");
                 }
 
                 return result;
@@ -146,13 +155,56 @@ namespace ServiceApp.Domain.Concrete
             }
         }
 
+        public Dictionary<string, string> GetUserInfo(ApplicationUser user)
+        {
+            Dictionary<string, string> dicUserInfo = new Dictionary<string, string>();
+
+            dicUserInfo.Add("Id", user.Id);
+            dicUserInfo.Add("UserName", user.Name);
+            dicUserInfo.Add("Email", user.Email);
+            dicUserInfo.Add("PhoneNumber", user.PhoneNumber);
+            dicUserInfo.Add("Name", user.Name);
+
+            if (!string.IsNullOrEmpty(user.Address))
+                dicUserInfo.Add("Address", user.Address);
+
+            dicUserInfo.Add("Area", user.Area);
+            dicUserInfo.Add("SubArea", user.SubArea);
+            dicUserInfo.Add("City", user.City);
+            dicUserInfo.Add("State", user.State);
+            dicUserInfo.Add("Pincode", user.Pincode);
+            dicUserInfo.Add("Role", GetUsersRole(user.Id));
+
+            return dicUserInfo;
+        }
+
+        public bool ValidatePhoneNumberExists(string PhoneNumber)
+        {
+            bool IsPhoneNumberExists = false;
+            try
+            {
+                int PhoneNumberExistsCount = (from user in _userManager.Users
+                                              where user.PhoneNumber == PhoneNumber
+                                              select user.PhoneNumber).Count();
+
+                if (PhoneNumberExistsCount > 0)
+                    IsPhoneNumberExists = true;
+
+                return IsPhoneNumberExists;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         #region RoleManager
 
-        public IQueryable<ApplicationUser> GetUsersInRole(string userId)
+        public string GetUsersRole(string userId)
         {
-            return from user in _userManager.Users
-                   where user.Roles.Any(r => r.UserId == userId)
-                   select user;
+            var userRole = _userManager.GetRoles(userId).FirstOrDefault();
+
+            return userRole;
         }
 
         #endregion

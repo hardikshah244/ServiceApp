@@ -12,16 +12,16 @@ namespace ServiceApp.Domain.DataModel
     using System;
     using System.Collections.Generic;
     
-    public partial class ServiceTypeMaster
+    public partial class StatusTypeMaster
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ServiceTypeMaster()
+        public StatusTypeMaster()
         {
             this.ServiceRequests = new HashSet<ServiceRequest>();
         }
     
-        public int ServiceTypeID { get; set; }
-        public string ServiceTypeName { get; set; }
+        public int StatusTypeID { get; set; }
+        public string StatusTypeName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ServiceRequest> ServiceRequests { get; set; }

@@ -102,9 +102,6 @@
     <Compile Include="DataModel\AspNetUserLogin.cs">
       <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\Engineer.cs">
-      <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataModel\EngineerMembership.cs">
       <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
     </Compile>
@@ -123,9 +120,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ServiceAppDBModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="DataModel\ServiceRequest.cs">
+      <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataModel\ServiceTypeMaster.cs">
       <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataModel\StatusTypeMaster.cs">
+      <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\RaiseRequest.cs" />
+    <Compile Include="Entities\RaiseRequestResponse.cs" />
     <Compile Include="Security\ApplicationRoleManager.cs" />
     <Compile Include="Security\ApplicationUserManager.cs" />
     <Compile Include="Security\AuthRepository.cs" />
@@ -138,7 +143,9 @@
     <Compile Include="Security\OwinAuthDbContext.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <EntityDeploy Include="DataModel\ServiceAppDBModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ServiceAppDBModel.Designer.cs</LastGenOutput>

@@ -8,15 +8,19 @@
         <EntityTypeShape EntityType="ServiceAppDBModel.AspNetRole" Width="1.5" PointX="0.75" PointY="4.375" IsExpanded="true" />
         <EntityTypeShape EntityType="ServiceAppDBModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
         <EntityTypeShape EntityType="ServiceAppDBModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="ServiceAppDBModel.Engineer" Width="1.5" PointX="10" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="ServiceAppDBModel.EngineerMembership" Width="1.5" PointX="5.25" PointY="6.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ServiceAppDBModel.ServiceTypeMaster" Width="1.5" PointX="7.75" PointY="2.875" IsExpanded="true" />
-        <AssociationConnector Association="ServiceAppDBModel.FK_Engineer_ServiceTypeMaster" ManuallyRouted="false" />
         <EntityTypeShape EntityType="ServiceAppDBModel.AspNetUser" Width="1.5" PointX="3" PointY="1.625" />
         <AssociationConnector Association="ServiceAppDBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="ServiceAppDBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="ServiceAppDBModel.FK_EngineerMembership_AspNetUsers" />
         <AssociationConnector Association="ServiceAppDBModel.AspNetUserRoles" />
+        <EntityTypeShape EntityType="ServiceAppDBModel.ServiceRequest" Width="1.5" PointX="9.875" PointY="0.5" />
+        <EntityTypeShape EntityType="ServiceAppDBModel.ServiceTypeMaster" Width="1.5" PointX="7.5" PointY="3.875" />
+        <EntityTypeShape EntityType="ServiceAppDBModel.StatusTypeMaster" Width="1.5" PointX="7.625" PointY="1.5" />
+        <AssociationConnector Association="ServiceAppDBModel.FK_ServiceRequest_ServiceTypeMaster" />
+        <AssociationConnector Association="ServiceAppDBModel.FK_ServiceRequest_StatusTypeMaster" />
+        <AssociationConnector Association="ServiceAppDBModel.FK_ServiceRequest_AspNetUsers" />
+        <AssociationConnector Association="ServiceAppDBModel.FK_ServiceRequest_AspNetUsers1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

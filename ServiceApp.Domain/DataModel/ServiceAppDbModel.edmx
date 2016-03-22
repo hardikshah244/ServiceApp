@@ -54,7 +54,7 @@
           <Property Name="LockoutEndDateUtc" Type="datetime" />
           <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
-          <Property Name="UserName" Type="nvarchar" MaxLength="256" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="BirthDate" Type="date" />
           <Property Name="Address" Type="nvarchar(max)" />
@@ -72,32 +72,6 @@
           <Property Name="CreationDate" Type="date" Nullable="false" />
           <Property Name="ModifiedDate" Type="date" />
         </EntityType>
-        <EntityType Name="Engineer">
-          <Key>
-            <PropertyRef Name="EngineerID" />
-          </Key>
-          <Property Name="EngineerID" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="BirthDate" Type="date" Nullable="false" />
-          <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Locality" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="SubLocality" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="City" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="State" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Pincode" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="MobileNo" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Latitude" Type="decimal" Precision="12" Scale="9" Nullable="false" />
-          <Property Name="Longitude" Type="decimal" Precision="12" Scale="9" Nullable="false" />
-          <Property Name="IsActive" Type="bit" />
-          <Property Name="CreatedDate" Type="datetime" />
-          <Property Name="ModifiedDate" Type="datetime" />
-          <Property Name="Fare" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="NoOfCustAttain" Type="int" />
-          <Property Name="AvgRating" Type="int" />
-          <Property Name="ServiceTypeID" Type="int" Nullable="false" />
-        </EntityType>
         <EntityType Name="EngineerMembership">
           <Key>
             <PropertyRef Name="MembershipID" />
@@ -110,12 +84,35 @@
           <Property Name="EndDate" Type="date" />
           <Property Name="Amount" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
+        <EntityType Name="ServiceRequest">
+          <Key>
+            <PropertyRef Name="ServiceRequestID" />
+          </Key>
+          <Property Name="ServiceRequestID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServiceTypeID" Type="int" Nullable="false" />
+          <Property Name="StatusTypeID" Type="int" Nullable="false" />
+          <Property Name="Landmark" Type="nvarchar(max)" />
+          <Property Name="Remark" Type="nvarchar(max)" />
+          <Property Name="ServiceRequestRemark" Type="nvarchar(max)" />
+          <Property Name="CreatedDateTime" Type="datetime" Nullable="false" />
+          <Property Name="CreatedUserID" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UpdatedDateTime" Type="datetime" />
+          <Property Name="UpdatedUserID" Type="nvarchar" MaxLength="128" />
+          <Property Name="EngineerConfirmDateTime" Type="datetime" />
+        </EntityType>
         <EntityType Name="ServiceTypeMaster">
           <Key>
             <PropertyRef Name="ServiceTypeID" />
           </Key>
           <Property Name="ServiceTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ServiceTypeName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StatusTypeMaster">
+          <Key>
+            <PropertyRef Name="StatusTypeID" />
+          </Key>
+          <Property Name="StatusTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StatusTypeName" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
@@ -173,18 +170,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Engineer_ServiceTypeMaster">
-          <End Role="ServiceTypeMaster" Type="Self.ServiceTypeMaster" Multiplicity="1" />
-          <End Role="Engineer" Type="Self.Engineer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ServiceTypeMaster">
-              <PropertyRef Name="ServiceTypeID" />
-            </Principal>
-            <Dependent Role="Engineer">
-              <PropertyRef Name="ServiceTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_EngineerMembership_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -199,15 +184,64 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ServiceRequest_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="ServiceRequest" Type="Self.ServiceRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceRequest">
+              <PropertyRef Name="CreatedUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceRequest_AspNetUsers1">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="ServiceRequest" Type="Self.ServiceRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceRequest">
+              <PropertyRef Name="UpdatedUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceRequest_ServiceTypeMaster">
+          <End Role="ServiceTypeMaster" Type="Self.ServiceTypeMaster" Multiplicity="1" />
+          <End Role="ServiceRequest" Type="Self.ServiceRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceTypeMaster">
+              <PropertyRef Name="ServiceTypeID" />
+            </Principal>
+            <Dependent Role="ServiceRequest">
+              <PropertyRef Name="ServiceTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceRequest_StatusTypeMaster">
+          <End Role="StatusTypeMaster" Type="Self.StatusTypeMaster" Multiplicity="1" />
+          <End Role="ServiceRequest" Type="Self.ServiceRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusTypeMaster">
+              <PropertyRef Name="StatusTypeID" />
+            </Principal>
+            <Dependent Role="ServiceRequest">
+              <PropertyRef Name="StatusTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="ServiceAppDBModelStoreContainer">
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Engineer" EntityType="Self.Engineer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EngineerMembership" EntityType="Self.EngineerMembership" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServiceRequest" EntityType="Self.ServiceRequest" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ServiceTypeMaster" EntityType="Self.ServiceTypeMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StatusTypeMaster" EntityType="Self.StatusTypeMaster" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -224,13 +258,25 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
-          <AssociationSet Name="FK_Engineer_ServiceTypeMaster" Association="Self.FK_Engineer_ServiceTypeMaster">
-            <End Role="ServiceTypeMaster" EntitySet="ServiceTypeMaster" />
-            <End Role="Engineer" EntitySet="Engineer" />
-          </AssociationSet>
           <AssociationSet Name="FK_EngineerMembership_AspNetUsers" Association="Self.FK_EngineerMembership_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="EngineerMembership" EntitySet="EngineerMembership" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceRequest_AspNetUsers" Association="Self.FK_ServiceRequest_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ServiceRequest" EntitySet="ServiceRequest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceRequest_AspNetUsers1" Association="Self.FK_ServiceRequest_AspNetUsers1">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ServiceRequest" EntitySet="ServiceRequest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceRequest_ServiceTypeMaster" Association="Self.FK_ServiceRequest_ServiceTypeMaster">
+            <End Role="ServiceTypeMaster" EntitySet="ServiceTypeMaster" />
+            <End Role="ServiceRequest" EntitySet="ServiceRequest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceRequest_StatusTypeMaster" Association="Self.FK_ServiceRequest_StatusTypeMaster">
+            <End Role="StatusTypeMaster" EntitySet="StatusTypeMaster" />
+            <End Role="ServiceRequest" EntitySet="ServiceRequest" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -266,33 +312,6 @@
           <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="AspNetUser" Relationship="ServiceAppDBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogin" ToRole="AspNetUser" />
         </EntityType>
-        <EntityType Name="Engineer">
-          <Key>
-            <PropertyRef Name="EngineerID" />
-          </Key>
-          <Property Name="EngineerID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="BirthDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Locality" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="SubLocality" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="City" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="State" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Pincode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="MobileNo" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Latitude" Type="Decimal" Precision="12" Scale="9" Nullable="false" />
-          <Property Name="Longitude" Type="Decimal" Precision="12" Scale="9" Nullable="false" />
-          <Property Name="IsActive" Type="Boolean" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="Fare" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="NoOfCustAttain" Type="Int32" />
-          <Property Name="AvgRating" Type="Int32" />
-          <Property Name="ServiceTypeID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="ServiceTypeMaster" Relationship="Self.FK_Engineer_ServiceTypeMaster" FromRole="Engineer" ToRole="ServiceTypeMaster" />
-        </EntityType>
         <EntityType Name="EngineerMembership">
           <Key>
             <PropertyRef Name="MembershipID" />
@@ -306,37 +325,11 @@
           <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
           <NavigationProperty Name="AspNetUser" Relationship="ServiceAppDBModel.FK_EngineerMembership_AspNetUsers" FromRole="EngineerMembership" ToRole="AspNetUser" />
         </EntityType>
-        <EntityType Name="ServiceTypeMaster">
-          <Key>
-            <PropertyRef Name="ServiceTypeID" />
-          </Key>
-          <Property Name="ServiceTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ServiceTypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Engineers" Relationship="Self.FK_Engineer_ServiceTypeMaster" FromRole="ServiceTypeMaster" ToRole="Engineer" />
-        </EntityType>
-        <Association Name="FK_Engineer_ServiceTypeMaster">
-          <End Role="ServiceTypeMaster" Type="Self.ServiceTypeMaster" Multiplicity="1" />
-          <End Role="Engineer" Type="Self.Engineer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ServiceTypeMaster">
-              <PropertyRef Name="ServiceTypeID" />
-            </Principal>
-            <Dependent Role="Engineer">
-              <PropertyRef Name="ServiceTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="ServiceAppDBContext" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
-          <EntitySet Name="Engineers" EntityType="Self.Engineer" />
           <EntitySet Name="EngineerMemberships" EntityType="Self.EngineerMembership" />
-          <EntitySet Name="ServiceTypeMasters" EntityType="Self.ServiceTypeMaster" />
-          <AssociationSet Name="FK_Engineer_ServiceTypeMaster" Association="Self.FK_Engineer_ServiceTypeMaster">
-            <End Role="ServiceTypeMaster" EntitySet="ServiceTypeMasters" />
-            <End Role="Engineer" EntitySet="Engineers" />
-          </AssociationSet>
           <EntitySet Name="AspNetUsers" EntityType="ServiceAppDBModel.AspNetUser" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="ServiceAppDBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
@@ -354,6 +347,25 @@
             <End Role="AspNetRole" EntitySet="AspNetRoles" />
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
           </AssociationSet>
+          <EntitySet Name="ServiceRequests" EntityType="ServiceAppDBModel.ServiceRequest" />
+          <EntitySet Name="ServiceTypeMasters" EntityType="ServiceAppDBModel.ServiceTypeMaster" />
+          <EntitySet Name="StatusTypeMasters" EntityType="ServiceAppDBModel.StatusTypeMaster" />
+          <AssociationSet Name="FK_ServiceRequest_ServiceTypeMaster" Association="ServiceAppDBModel.FK_ServiceRequest_ServiceTypeMaster">
+            <End Role="ServiceTypeMaster" EntitySet="ServiceTypeMasters" />
+            <End Role="ServiceRequest" EntitySet="ServiceRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceRequest_StatusTypeMaster" Association="ServiceAppDBModel.FK_ServiceRequest_StatusTypeMaster">
+            <End Role="StatusTypeMaster" EntitySet="StatusTypeMasters" />
+            <End Role="ServiceRequest" EntitySet="ServiceRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceRequest_AspNetUsers" Association="ServiceAppDBModel.FK_ServiceRequest_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="ServiceRequest" EntitySet="ServiceRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceRequest_AspNetUsers1" Association="ServiceAppDBModel.FK_ServiceRequest_AspNetUsers1">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="ServiceRequest" EntitySet="ServiceRequests" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="AspNetUser">
           <Key>
@@ -370,7 +382,7 @@
           <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
           <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
           <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
-          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="BirthDate" Type="DateTime" Precision="0" />
           <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -391,6 +403,8 @@
           <NavigationProperty Name="AspNetUserLogins" Relationship="ServiceAppDBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
           <NavigationProperty Name="EngineerMemberships" Relationship="ServiceAppDBModel.FK_EngineerMembership_AspNetUsers" FromRole="AspNetUser" ToRole="EngineerMembership" />
           <NavigationProperty Name="AspNetRoles" Relationship="ServiceAppDBModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
+          <NavigationProperty Name="ServiceRequests" Relationship="ServiceAppDBModel.FK_ServiceRequest_AspNetUsers" FromRole="AspNetUser" ToRole="ServiceRequest" />
+          <NavigationProperty Name="ServiceRequests1" Relationship="ServiceAppDBModel.FK_ServiceRequest_AspNetUsers1" FromRole="AspNetUser" ToRole="ServiceRequest" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Type="ServiceAppDBModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
@@ -438,6 +452,90 @@
           <End Type="ServiceAppDBModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
           <End Type="ServiceAppDBModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
         </Association>
+        <EntityType Name="ServiceRequest">
+          <Key>
+            <PropertyRef Name="ServiceRequestID" />
+          </Key>
+          <Property Name="ServiceRequestID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceTypeID" Type="Int32" Nullable="false" />
+          <Property Name="StatusTypeID" Type="Int32" Nullable="false" />
+          <Property Name="Landmark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ServiceRequestRemark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDateTime" Type="DateTime" Precision="3" Nullable="false" />
+          <Property Name="CreatedUserID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedDateTime" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedUserID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="EngineerConfirmDateTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ServiceTypeMaster" Relationship="ServiceAppDBModel.FK_ServiceRequest_ServiceTypeMaster" FromRole="ServiceRequest" ToRole="ServiceTypeMaster" />
+          <NavigationProperty Name="StatusTypeMaster" Relationship="ServiceAppDBModel.FK_ServiceRequest_StatusTypeMaster" FromRole="ServiceRequest" ToRole="StatusTypeMaster" />
+          <NavigationProperty Name="AspNetUser" Relationship="ServiceAppDBModel.FK_ServiceRequest_AspNetUsers" FromRole="ServiceRequest" ToRole="AspNetUser" />
+          <NavigationProperty Name="AspNetUser1" Relationship="ServiceAppDBModel.FK_ServiceRequest_AspNetUsers1" FromRole="ServiceRequest" ToRole="AspNetUser" />
+        </EntityType>
+        <EntityType Name="ServiceTypeMaster">
+          <Key>
+            <PropertyRef Name="ServiceTypeID" />
+          </Key>
+          <Property Name="ServiceTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceTypeName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ServiceRequests" Relationship="ServiceAppDBModel.FK_ServiceRequest_ServiceTypeMaster" FromRole="ServiceTypeMaster" ToRole="ServiceRequest" />
+        </EntityType>
+        <EntityType Name="StatusTypeMaster">
+          <Key>
+            <PropertyRef Name="StatusTypeID" />
+          </Key>
+          <Property Name="StatusTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StatusTypeName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ServiceRequests" Relationship="ServiceAppDBModel.FK_ServiceRequest_StatusTypeMaster" FromRole="StatusTypeMaster" ToRole="ServiceRequest" />
+        </EntityType>
+        <Association Name="FK_ServiceRequest_ServiceTypeMaster">
+          <End Type="ServiceAppDBModel.ServiceTypeMaster" Role="ServiceTypeMaster" Multiplicity="1" />
+          <End Type="ServiceAppDBModel.ServiceRequest" Role="ServiceRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceTypeMaster">
+              <PropertyRef Name="ServiceTypeID" />
+            </Principal>
+            <Dependent Role="ServiceRequest">
+              <PropertyRef Name="ServiceTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceRequest_StatusTypeMaster">
+          <End Type="ServiceAppDBModel.StatusTypeMaster" Role="StatusTypeMaster" Multiplicity="1" />
+          <End Type="ServiceAppDBModel.ServiceRequest" Role="ServiceRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusTypeMaster">
+              <PropertyRef Name="StatusTypeID" />
+            </Principal>
+            <Dependent Role="ServiceRequest">
+              <PropertyRef Name="StatusTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceRequest_AspNetUsers">
+          <End Type="ServiceAppDBModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="ServiceAppDBModel.ServiceRequest" Role="ServiceRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceRequest">
+              <PropertyRef Name="CreatedUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceRequest_AspNetUsers1">
+          <End Type="ServiceAppDBModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="ServiceAppDBModel.ServiceRequest" Role="ServiceRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceRequest">
+              <PropertyRef Name="UpdatedUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -471,33 +569,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Engineers">
-            <EntityTypeMapping TypeName="ServiceAppDBModel.Engineer">
-              <MappingFragment StoreEntitySet="Engineer">
-                <ScalarProperty Name="EngineerID" ColumnName="EngineerID" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="Locality" ColumnName="Locality" />
-                <ScalarProperty Name="SubLocality" ColumnName="SubLocality" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="Pincode" ColumnName="Pincode" />
-                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
-                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="Fare" ColumnName="Fare" />
-                <ScalarProperty Name="NoOfCustAttain" ColumnName="NoOfCustAttain" />
-                <ScalarProperty Name="AvgRating" ColumnName="AvgRating" />
-                <ScalarProperty Name="ServiceTypeID" ColumnName="ServiceTypeID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="EngineerMemberships">
             <EntityTypeMapping TypeName="ServiceAppDBModel.EngineerMembership">
               <MappingFragment StoreEntitySet="EngineerMembership">
@@ -508,14 +579,6 @@
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />
                 <ScalarProperty Name="EndDate" ColumnName="EndDate" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ServiceTypeMasters">
-            <EntityTypeMapping TypeName="ServiceAppDBModel.ServiceTypeMaster">
-              <MappingFragment StoreEntitySet="ServiceTypeMaster">
-                <ScalarProperty Name="ServiceTypeID" ColumnName="ServiceTypeID" />
-                <ScalarProperty Name="ServiceTypeName" ColumnName="ServiceTypeName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -561,6 +624,39 @@
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="ServiceRequests">
+            <EntityTypeMapping TypeName="ServiceAppDBModel.ServiceRequest">
+              <MappingFragment StoreEntitySet="ServiceRequest">
+                <ScalarProperty Name="EngineerConfirmDateTime" ColumnName="EngineerConfirmDateTime" />
+                <ScalarProperty Name="UpdatedUserID" ColumnName="UpdatedUserID" />
+                <ScalarProperty Name="UpdatedDateTime" ColumnName="UpdatedDateTime" />
+                <ScalarProperty Name="CreatedUserID" ColumnName="CreatedUserID" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="ServiceRequestRemark" ColumnName="ServiceRequestRemark" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="Landmark" ColumnName="Landmark" />
+                <ScalarProperty Name="StatusTypeID" ColumnName="StatusTypeID" />
+                <ScalarProperty Name="ServiceTypeID" ColumnName="ServiceTypeID" />
+                <ScalarProperty Name="ServiceRequestID" ColumnName="ServiceRequestID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceTypeMasters">
+            <EntityTypeMapping TypeName="ServiceAppDBModel.ServiceTypeMaster">
+              <MappingFragment StoreEntitySet="ServiceTypeMaster">
+                <ScalarProperty Name="ServiceTypeName" ColumnName="ServiceTypeName" />
+                <ScalarProperty Name="ServiceTypeID" ColumnName="ServiceTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StatusTypeMasters">
+            <EntityTypeMapping TypeName="ServiceAppDBModel.StatusTypeMaster">
+              <MappingFragment StoreEntitySet="StatusTypeMaster">
+                <ScalarProperty Name="StatusTypeName" ColumnName="StatusTypeName" />
+                <ScalarProperty Name="StatusTypeID" ColumnName="StatusTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

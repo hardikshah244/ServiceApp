@@ -21,6 +21,8 @@ namespace ServiceApp.Domain.DataModel
             this.AspNetUserLogins = new HashSet<AspNetUserLogin>();
             this.EngineerMemberships = new HashSet<EngineerMembership>();
             this.AspNetRoles = new HashSet<AspNetRole>();
+            this.ServiceRequests = new HashSet<ServiceRequest>();
+            this.ServiceRequests1 = new HashSet<ServiceRequest>();
         }
     
         public string Id { get; set; }
@@ -60,5 +62,9 @@ namespace ServiceApp.Domain.DataModel
         public virtual ICollection<EngineerMembership> EngineerMemberships { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetRole> AspNetRoles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ServiceRequest> ServiceRequests { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ServiceRequest> ServiceRequests1 { get; set; }
     }
 }

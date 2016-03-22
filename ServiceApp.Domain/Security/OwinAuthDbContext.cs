@@ -13,7 +13,7 @@ namespace ServiceApp.Domain.Security
             : base("name=OwinAuthDbContext")
         {
             //Database.SetInitializer(new CreateDatabaseIfNotExists<OwinAuthDbContext>());
-
+            this.Configuration.ProxyCreationEnabled = false;
         }
 
         public static OwinAuthDbContext Create()

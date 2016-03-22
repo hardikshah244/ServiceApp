@@ -1,4 +1,5 @@
 ﻿using ServiceApp.Domain.DataModel;
+using ServiceApp.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,7 @@ namespace ServiceApp.Domain.Abstract
 {
     public interface IEngineerRepository : IDisposable
     {
-        IEnumerable<Engineer> GetEngineerDetailsByLocality(string Locality, string SubLocality, string City, string State, string Pincode,
-            decimal Latitude, decimal Longitude);
+        RaiseRequestResponse RaiseRequest(RaiseRequest raiseRequest);
     }
 }
 

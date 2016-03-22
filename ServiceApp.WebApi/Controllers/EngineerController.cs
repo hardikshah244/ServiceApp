@@ -1,5 +1,6 @@
 ﻿using ServiceApp.Domain.Abstract;
 using ServiceApp.Domain.DataModel;
+using ServiceApp.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,28 +20,25 @@ namespace ServiceApp.WebApi.Controllers
             _engineerRepo = engineerRepo;
         }
 
-        [Route("GetEngineerDetailsByLocality")]
-        [HttpPost]
-        public HttpResponseMessage GetEngineerDetailsByLocality(Engineer engineerModel)
+        [Route("RaiseRequest")]
+        public HttpResponseMessage RaiseRequest(RaiseRequest raiseRequest)
         {
-            //string Locality, string SubLocality, string City, string State, string Pincode, decimal Latitude, decimal Longitude   
             HttpResponseMessage ObjHttpResponseMessage = new HttpResponseMessage();
+
             try
             {
-                IEnumerable<Engineer> lstEngineer = _engineerRepo.GetEngineerDetailsByLocality(engineerModel.Locality, engineerModel.SubLocality, engineerModel.City, engineerModel.State, engineerModel.Pincode, engineerModel.Latitude, engineerModel.Longitude);
+                ObjHttpResponseMessage = Request.CreateResponse<RaiseRequestResponse>(HttpStatusCode.OK, _engineerRepo.RaiseRequest(raiseRequest));
 
-                if (lstEngineer.Count() == 0)
-                    ObjHttpResponseMessage = Request.CreateResponse<IEnumerable<Engineer>>(HttpStatusCode.NotFound, lstEngineer);
-                else
-                    ObjHttpResponseMessage = Request.CreateResponse<IEnumerable<Engineer>>(HttpStatusCode.OK, lstEngineer);
+                return ObjHttpResponseMessage;
             }
             catch (Exception ex)
             {
                 Elmah.ErrorSignal.FromCurrentContext().Raise(new Exception(ex.Message, ex.InnerException));
-                ObjHttpResponseMessage = Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Error occurred on get engineer details");
+
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Message :- " + ex.Message + "| InnerException :- " + ex.InnerException);
             }
-            return ObjHttpResponseMessage;
         }
+
 
     }
 }

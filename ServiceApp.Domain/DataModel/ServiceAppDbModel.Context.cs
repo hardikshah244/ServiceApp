@@ -28,9 +28,10 @@ namespace ServiceApp.Domain.DataModel
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
-        public virtual DbSet<Engineer> Engineers { get; set; }
         public virtual DbSet<EngineerMembership> EngineerMemberships { get; set; }
-        public virtual DbSet<ServiceTypeMaster> ServiceTypeMasters { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
+        public virtual DbSet<ServiceRequest> ServiceRequests { get; set; }
+        public virtual DbSet<ServiceTypeMaster> ServiceTypeMasters { get; set; }
+        public virtual DbSet<StatusTypeMaster> StatusTypeMasters { get; set; }
     }
 }

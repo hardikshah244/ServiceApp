@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ServiceApp.Domain.DataModel;
+using ServiceApp.Domain.Entities;
 
 namespace ServiceApp.Domain.Concrete
 {
@@ -17,27 +18,34 @@ namespace ServiceApp.Domain.Concrete
             this.context = new ServiceAppDBContext();
         }
 
-        public IEnumerable<Engineer> GetEngineerDetailsByLocality(string Locality, string SubLocality, string City, string State, string Pincode, decimal Latitude, decimal Longitude)
+        public RaiseRequestResponse RaiseRequest(RaiseRequest raiseRequest)
         {
+            RaiseRequestResponse ObjRaiseRequestResponse = new RaiseRequestResponse();
+
             try
             {
-                IEnumerable<Engineer> lstEngineer = null;
+                ServiceRequest ObjServiceRequest = new ServiceRequest();
+                ObjServiceRequest.ServiceTypeID = raiseRequest.ServiceTypeID;
+                ObjServiceRequest.StatusTypeID = raiseRequest.StatusTypeID;
+                ObjServiceRequest.Landmark = raiseRequest.Landmark;
+                ObjServiceRequest.Remark = raiseRequest.Remark;
+                ObjServiceRequest.CreatedUserID = raiseRequest.CreatedUserID;
+                ObjServiceRequest.CreatedDateTime = DateTime.Now;
 
-                if (this.context != null)
-                {
-                    lstEngineer = (from engineer in context.Engineers
-                                   where engineer.Locality == Locality && engineer.SubLocality == SubLocality
-                                      && engineer.City == City && engineer.State == State && engineer.Pincode == Pincode
-                                   select engineer).ToList();
-                }
+                context.ServiceRequests.Add(ObjServiceRequest);
+                context.SaveChanges();
 
-                return lstEngineer;
+                ObjRaiseRequestResponse.ServiceRequestID = ObjServiceRequest.ServiceRequestID;
+                ObjRaiseRequestResponse.Message = "Success";
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw;
             }
+
+            return ObjRaiseRequestResponse;
         }
+
 
         private bool disposed = false;
         protected virtual void Dispose(bool disposing)
@@ -58,5 +66,6 @@ namespace ServiceApp.Domain.Concrete
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+
     }
 }

@@ -31,7 +31,7 @@ namespace ServiceApp.Domain.Entities
         public string Email { get; set; }
 
         [Required]
-        [Display(Name = "Name123")]
+        [Display(Name = "Name")]
         [MaxLength(50)]
         public string Name { get; set; }
 
