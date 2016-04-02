@@ -26,9 +26,9 @@ namespace ServiceApp.Domain.DataModel
         public string UpdatedUserID { get; set; }
         public Nullable<System.DateTime> EngineerConfirmDateTime { get; set; }
     
-        public virtual ServiceTypeMaster ServiceTypeMaster { get; set; }
-        public virtual StatusTypeMaster StatusTypeMaster { get; set; }
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual AspNetUser AspNetUser1 { get; set; }
+        public virtual ServiceTypeMaster ServiceTypeMaster { get; set; }
+        public virtual StatusTypeMaster StatusTypeMaster { get; set; }
     }
 }

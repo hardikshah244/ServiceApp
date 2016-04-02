@@ -80,6 +80,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -103,6 +104,9 @@
       <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\EngineerMembership.cs">
+      <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\GETENGINEERDETAILS_Result.cs">
       <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\ServiceAppDBModel.Context.cs">
@@ -131,6 +135,7 @@
     </Compile>
     <Compile Include="Entities\RaiseRequest.cs" />
     <Compile Include="Entities\RaiseRequestResponse.cs" />
+    <Compile Include="Entities\RegisterEngineer.cs" />
     <Compile Include="Security\ApplicationRoleManager.cs" />
     <Compile Include="Security\ApplicationUserManager.cs" />
     <Compile Include="Security\AuthRepository.cs" />

@@ -13,5 +13,6 @@ namespace ServiceApp.Domain.Entities
         public string Landmark { get; set; }
         public string Remark { get; set; }
         public string CreatedUserID { get; set; }
+        public string Pincode { get; set; }
     }
 }

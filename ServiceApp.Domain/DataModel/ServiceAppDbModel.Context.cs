@@ -12,6 +12,8 @@ namespace ServiceApp.Domain.DataModel
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class ServiceAppDBContext : DbContext
     {
@@ -28,10 +30,19 @@ namespace ServiceApp.Domain.DataModel
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
-        public virtual DbSet<EngineerMembership> EngineerMemberships { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
+        public virtual DbSet<EngineerMembership> EngineerMemberships { get; set; }
         public virtual DbSet<ServiceRequest> ServiceRequests { get; set; }
         public virtual DbSet<ServiceTypeMaster> ServiceTypeMasters { get; set; }
         public virtual DbSet<StatusTypeMaster> StatusTypeMasters { get; set; }
+    
+        public virtual ObjectResult<GETENGINEERDETAILS_Result> GETENGINEERDETAILS(Nullable<int> pPINCODE)
+        {
+            var pPINCODEParameter = pPINCODE.HasValue ?
+                new ObjectParameter("PPINCODE", pPINCODE) :
+                new ObjectParameter("PPINCODE", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GETENGINEERDETAILS_Result>("GETENGINEERDETAILS", pPINCODEParameter);
+        }
     }
 }

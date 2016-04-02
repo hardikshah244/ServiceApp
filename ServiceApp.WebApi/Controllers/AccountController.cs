@@ -91,6 +91,51 @@ namespace ServiceApp.WebApi.Controllers
             }
         }
 
+        // POST api/Account/Register
+        [AllowAnonymous]
+        [Route("RegisterEngineer")]
+        public HttpResponseMessage RegisterEngineer(RegisterEngineer userModel)
+        {
+            HttpResponseMessage ObjHttpResponseMessage = new HttpResponseMessage();
+            string ResponseMessage = "";
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState.ValidateModelState());
+                }
+
+                IdentityResult result = _repo.RegisterEngineer(userModel);
+
+                if (result.Succeeded)
+                {
+                    ResponseMessage = "User successfully registered";
+
+                    Email.SendEmail(strFromEmail, userModel.Email, "RegisterUser", "You are successfully registered");
+
+                    return Request.CreateErrorResponse(HttpStatusCode.OK, ResponseMessage);
+                }
+                else
+                {
+                    ResponseMessage = GetErrorResultStr(result);
+
+                    if (!string.IsNullOrEmpty(ResponseMessage))
+                    {
+                        return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ResponseMessage);
+                    }
+
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Error occurred on register user");
+                }
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(new Exception(ex.Message, ex.InnerException));
+
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Message :- " + ex.Message + "| InnerException :- " + ex.InnerException);
+            }
+        }
+
         // POST api/Account/ChangePassword
         [Authorize]
         [Route("ChangePassword")]

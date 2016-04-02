@@ -18,7 +18,7 @@ namespace ServiceApp.Domain.DataModel
         public string UserId { get; set; }
         public string MembershipType { get; set; }
         public System.DateTime CreationDate { get; set; }
-        public System.DateTime StartDate { get; set; }
+        public Nullable<System.DateTime> StartDate { get; set; }
         public Nullable<System.DateTime> EndDate { get; set; }
         public Nullable<decimal> Amount { get; set; }
     

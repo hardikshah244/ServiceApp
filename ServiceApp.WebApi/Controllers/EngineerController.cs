@@ -6,12 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace ServiceApp.WebApi.Controllers
 {
     [RoutePrefix("api/Engineer")]
-    [Authorize]
+    //[Authorize]
     public class EngineerController : ApiController
     {
         private IEngineerRepository _engineerRepo = null;

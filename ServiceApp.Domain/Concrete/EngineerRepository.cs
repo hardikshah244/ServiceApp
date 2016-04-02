@@ -21,7 +21,6 @@ namespace ServiceApp.Domain.Concrete
         public RaiseRequestResponse RaiseRequest(RaiseRequest raiseRequest)
         {
             RaiseRequestResponse ObjRaiseRequestResponse = new RaiseRequestResponse();
-
             try
             {
                 ServiceRequest ObjServiceRequest = new ServiceRequest();
@@ -35,8 +34,24 @@ namespace ServiceApp.Domain.Concrete
                 context.ServiceRequests.Add(ObjServiceRequest);
                 context.SaveChanges();
 
-                ObjRaiseRequestResponse.ServiceRequestID = ObjServiceRequest.ServiceRequestID;
-                ObjRaiseRequestResponse.Message = "Success";
+                var GETENGINEERDETAILS_Result = context.GETENGINEERDETAILS(Convert.ToInt32(raiseRequest.Pincode)).ToList();
+
+                if (GETENGINEERDETAILS_Result.Count > 0)
+                {
+                    //if (!string.IsNullOrEmpty((GETENGINEERDETAILS_Result[0]).Name) && !string.IsNullOrEmpty((GETENGINEERDETAILS_Result[0]).Email))
+                    ObjRaiseRequestResponse.ServiceRequestID = ObjServiceRequest.ServiceRequestID;
+                    ObjRaiseRequestResponse.Name = (GETENGINEERDETAILS_Result[0]).Name;
+                    ObjRaiseRequestResponse.Email = (GETENGINEERDETAILS_Result[0]).Email;
+                    ObjRaiseRequestResponse.Message = "Success";
+
+                }
+                else
+                {
+                    ObjRaiseRequestResponse.ServiceRequestID = ObjServiceRequest.ServiceRequestID;
+                    ObjRaiseRequestResponse.Name = "";
+                    ObjRaiseRequestResponse.Email = "";
+                    ObjRaiseRequestResponse.Message = "Failed";
+                }
             }
             catch (Exception)
             {

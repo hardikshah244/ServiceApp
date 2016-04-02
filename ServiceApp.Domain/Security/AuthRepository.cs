@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using ServiceApp.Domain.Security;
 using System.Collections.Generic;
+using ServiceApp.Domain.DataModel;
+using System.Transactions;
 
 namespace ServiceApp.Domain.Concrete
 {
@@ -23,11 +25,12 @@ namespace ServiceApp.Domain.Concrete
         public IdentityResult RegisterUser(RegisterUser userModel)
         {
             IdentityResult result;
+            ApplicationUser user = null;
             try
             {
                 if (!ValidatePhoneNumberExists(userModel.PhoneNumber))
                 {
-                    ApplicationUser user = new ApplicationUser
+                    user = new ApplicationUser
                     {
                         UserName = userModel.Email,
                         Email = userModel.Email,
@@ -62,6 +65,79 @@ namespace ServiceApp.Domain.Concrete
             }
             catch (Exception)
             {
+                _userManager.Delete(user);
+
+                throw;
+            }
+        }
+
+        // In this application UserName consider as Email
+        public IdentityResult RegisterEngineer(RegisterEngineer userModel)
+        {
+            IdentityResult result;
+            ApplicationUser user = null;
+            try
+            {
+                if (userModel.MembershipType == "Paid")
+                {
+                    if (userModel.StartDate == null && userModel.Amount == 0)
+                        return IdentityResult.Failed("Startdate can't be null or amount greater than zero");
+                }
+
+                if (!ValidatePhoneNumberExists(userModel.PhoneNumber))
+                {
+                    user = new ApplicationUser
+                    {
+                        UserName = userModel.Email,
+                        Email = userModel.Email,
+                        PhoneNumber = userModel.PhoneNumber,
+                        Name = userModel.Name,
+                        Area = userModel.Area,
+                        SubArea = userModel.SubArea,
+                        City = userModel.City,
+                        State = userModel.State,
+                        Pincode = userModel.Pincode,
+                        Latitude = userModel.Latitude,
+                        Longitude = userModel.Longitude,
+                        DeviceID = userModel.DeviceID
+                    };
+
+                    result = _userManager.Create(user, userModel.Password);
+
+                    if (result.Succeeded)
+                    {
+                        ServiceAppDBContext dbContext = new ServiceAppDBContext();
+
+                        EngineerMembership ObjEngineerMembership = new EngineerMembership();
+                        ObjEngineerMembership.MembershipType = userModel.MembershipType;
+                        ObjEngineerMembership.CreationDate = DateTime.Now;
+                        ObjEngineerMembership.UserId = user.Id;
+
+                        if (ObjEngineerMembership.MembershipType == "Paid")
+                        {
+                            ObjEngineerMembership.StartDate = userModel.StartDate;
+                            ObjEngineerMembership.EndDate = userModel.StartDate?.AddDays(30);
+                            ObjEngineerMembership.Amount = userModel.Amount;
+                        }
+
+                        dbContext.EngineerMemberships.Add(ObjEngineerMembership);
+                        dbContext.SaveChanges();
+
+                        if (_userRoleManager.RoleExists("Engineer"))
+                            _userManager.AddToRole(user.Id, "Engineer");
+                    }
+                }
+                else
+                {
+                    result = IdentityResult.Failed("Phone Number already exists");
+                }
+
+                return result;
+            }
+            catch (Exception)
+            {
+                _userManager.Delete(user);
+
                 throw;
             }
         }
