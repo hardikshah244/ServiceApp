@@ -231,6 +231,8 @@ namespace ServiceApp.Domain.Concrete
             }
         }
 
+
+
         public Dictionary<string, string> GetUserInfo(ApplicationUser user)
         {
             Dictionary<string, string> dicUserInfo = new Dictionary<string, string>();
@@ -250,6 +252,50 @@ namespace ServiceApp.Domain.Concrete
             dicUserInfo.Add("State", user.State);
             dicUserInfo.Add("Pincode", user.Pincode);
             dicUserInfo.Add("Role", GetUsersRole(user.Id));
+
+            return dicUserInfo;
+        }
+
+        public Dictionary<string, string> GetUserInfoByServiceRequestID(int ServiceRequestID)
+        {
+            Dictionary<string, string> dicUserInfo = null;
+
+            ServiceAppDBContext context = new ServiceAppDBContext();
+
+            var RequestResult = (from user in context.AspNetUsers
+                                 join servicerequest in context.ServiceRequests on user.Id equals servicerequest.CreatedUserID
+                                 where servicerequest.ServiceRequestID == ServiceRequestID
+                                 select new
+                                 {
+                                     user.Name,
+                                     user.Email,
+                                     user.PhoneNumber,
+                                     user.Address,
+                                     user.Area,
+                                     user.SubArea,
+                                     user.City,
+                                     user.State,
+                                     user.Pincode,
+                                     servicerequest.Landmark,
+                                     servicerequest.Remark
+                                 }).FirstOrDefault();
+
+            if (RequestResult != null)
+            {
+                dicUserInfo = new Dictionary<string, string>();
+
+                dicUserInfo.Add("Name", RequestResult.Name);
+                dicUserInfo.Add("Email", RequestResult.Email);
+                dicUserInfo.Add("PhoneNumber", RequestResult.PhoneNumber);
+                dicUserInfo.Add("Address", RequestResult.Address);
+                dicUserInfo.Add("Area", RequestResult.Area);
+                dicUserInfo.Add("SubArea", RequestResult.SubArea);
+                dicUserInfo.Add("City", RequestResult.City);
+                dicUserInfo.Add("State", RequestResult.State);
+                dicUserInfo.Add("Pincode", RequestResult.Pincode);
+                dicUserInfo.Add("Landmark", RequestResult.Landmark);
+                dicUserInfo.Add("Remark", RequestResult.Remark);
+            }
 
             return dicUserInfo;
         }

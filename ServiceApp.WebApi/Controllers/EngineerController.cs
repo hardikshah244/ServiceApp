@@ -25,7 +25,6 @@ namespace ServiceApp.WebApi.Controllers
         public HttpResponseMessage RaiseRequest(RaiseRequest raiseRequest)
         {
             HttpResponseMessage ObjHttpResponseMessage = new HttpResponseMessage();
-
             try
             {
                 ObjHttpResponseMessage = Request.CreateResponse<RaiseRequestResponse>(HttpStatusCode.OK, _engineerRepo.RaiseRequest(raiseRequest));
@@ -40,6 +39,42 @@ namespace ServiceApp.WebApi.Controllers
             }
         }
 
+        [Route("CancelRequest")]
+        public HttpResponseMessage CancelRequestByEngineer(CancelRequest cancelRequest)
+        {
+            HttpResponseMessage ObjHttpResponseMessage = new HttpResponseMessage();
 
+            try
+            {
+                ObjHttpResponseMessage = Request.CreateResponse<RequestResponse>(HttpStatusCode.OK, _engineerRepo.CancelRequestByEngineer(cancelRequest));
+
+                return ObjHttpResponseMessage;
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(new Exception(ex.Message, ex.InnerException));
+
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Message :- " + ex.Message + "| InnerException :- " + ex.InnerException);
+            }
+        }
+
+        [Route("CloseRequest")]
+        public HttpResponseMessage CloseRequestByEngineer(CloseRequest closeRequest)
+        {
+            HttpResponseMessage ObjHttpResponseMessage = new HttpResponseMessage();
+
+            try
+            {
+                ObjHttpResponseMessage = Request.CreateResponse<RequestResponse>(HttpStatusCode.OK, _engineerRepo.CloseRequestByEngineer(closeRequest));
+
+                return ObjHttpResponseMessage;
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(new Exception(ex.Message, ex.InnerException));
+
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Message :- " + ex.Message + "| InnerException :- " + ex.InnerException);
+            }
+        }
     }
 }

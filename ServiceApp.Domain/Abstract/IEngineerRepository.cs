@@ -11,6 +11,10 @@ namespace ServiceApp.Domain.Abstract
     public interface IEngineerRepository : IDisposable
     {
         RaiseRequestResponse RaiseRequest(RaiseRequest raiseRequest);
+
+        RequestResponse CancelRequestByEngineer(CancelRequest cancelRequest);
+
+        RequestResponse CloseRequestByEngineer(CloseRequest closeRequest);
     }
 }
 

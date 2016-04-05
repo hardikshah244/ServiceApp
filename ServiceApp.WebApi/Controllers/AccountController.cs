@@ -13,6 +13,7 @@ using Microsoft.AspNet.Identity.Owin;
 using System.Net;
 using ServiceApp.WebApi.Helpers;
 using System.Configuration;
+using System.Collections.Generic;
 
 namespace ServiceApp.WebApi.Controllers
 {
@@ -220,6 +221,38 @@ namespace ServiceApp.WebApi.Controllers
                 ResponseMessage = "Password successfully reset";
                 return Request.CreateErrorResponse(HttpStatusCode.OK, ResponseMessage);
 
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(new Exception(ex.Message, ex.InnerException));
+
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Message :- " + ex.Message + "| InnerException :- " + ex.InnerException);
+            }
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("GetUserInfoByServiceRequestID/{ServiceRequestID}")]
+        public HttpResponseMessage GetUserInfoByServiceRequestID(int ServiceRequestID)
+        {
+            HttpResponseMessage ObjHttpResponseMessage = new HttpResponseMessage();
+            try
+            {
+                if (ServiceRequestID > 0)
+                {
+                    Dictionary<string, string> dicUserInfo = _repo.GetUserInfoByServiceRequestID(ServiceRequestID);
+
+                    if (dicUserInfo != null)
+                        ObjHttpResponseMessage = Request.CreateResponse<Dictionary<string, string>>(HttpStatusCode.OK, dicUserInfo);
+                    else
+                        return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Data not found!");
+                }
+                else
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Service request id not valid");
+                }
+
+                return ObjHttpResponseMessage;
             }
             catch (Exception ex)
             {

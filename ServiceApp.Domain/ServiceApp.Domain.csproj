@@ -133,9 +133,12 @@
     <Compile Include="DataModel\StatusTypeMaster.cs">
       <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\CancelRequest.cs" />
+    <Compile Include="Entities\CloseRequest.cs" />
     <Compile Include="Entities\RaiseRequest.cs" />
     <Compile Include="Entities\RaiseRequestResponse.cs" />
     <Compile Include="Entities\RegisterEngineer.cs" />
+    <Compile Include="Entities\RequestResponse.cs" />
     <Compile Include="Security\ApplicationRoleManager.cs" />
     <Compile Include="Security\ApplicationUserManager.cs" />
     <Compile Include="Security\AuthRepository.cs" />

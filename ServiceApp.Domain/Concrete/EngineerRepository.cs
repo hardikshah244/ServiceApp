@@ -23,23 +23,24 @@ namespace ServiceApp.Domain.Concrete
             RaiseRequestResponse ObjRaiseRequestResponse = new RaiseRequestResponse();
             try
             {
-                ServiceRequest ObjServiceRequest = new ServiceRequest();
-                ObjServiceRequest.ServiceTypeID = raiseRequest.ServiceTypeID;
-                ObjServiceRequest.StatusTypeID = raiseRequest.StatusTypeID;
-                ObjServiceRequest.Landmark = raiseRequest.Landmark;
-                ObjServiceRequest.Remark = raiseRequest.Remark;
-                ObjServiceRequest.CreatedUserID = raiseRequest.CreatedUserID;
-                ObjServiceRequest.CreatedDateTime = DateTime.Now;
+                //ServiceRequest ObjServiceRequest = new ServiceRequest();
+                //ObjServiceRequest.ServiceTypeID = raiseRequest.ServiceTypeID;
+                //ObjServiceRequest.StatusTypeID = raiseRequest.StatusTypeID;
+                //ObjServiceRequest.Landmark = raiseRequest.Landmark;
+                //ObjServiceRequest.Remark = raiseRequest.Remark;
+                //ObjServiceRequest.CreatedUserID = raiseRequest.CreatedUserID;
+                //ObjServiceRequest.CreatedDateTime = DateTime.Now;
 
-                context.ServiceRequests.Add(ObjServiceRequest);
-                context.SaveChanges();
+                //context.ServiceRequests.Add(ObjServiceRequest);
+                //context.SaveChanges();
 
-                var GETENGINEERDETAILS_Result = context.GETENGINEERDETAILS(Convert.ToInt32(raiseRequest.Pincode)).ToList();
+                var GETENGINEERDETAILS_Result = context.GETENGINEERDETAILS(raiseRequest.ServiceTypeID, raiseRequest.StatusTypeID,
+                                                                            raiseRequest.Landmark, raiseRequest.Remark, raiseRequest.CreatedUserID,
+                                                                            Convert.ToInt32(raiseRequest.Pincode)).ToList();
 
-                if (GETENGINEERDETAILS_Result.Count > 0)
+                if (!string.IsNullOrEmpty((GETENGINEERDETAILS_Result[0]).Name) && !string.IsNullOrEmpty((GETENGINEERDETAILS_Result[0]).Email))
                 {
-                    //if (!string.IsNullOrEmpty((GETENGINEERDETAILS_Result[0]).Name) && !string.IsNullOrEmpty((GETENGINEERDETAILS_Result[0]).Email))
-                    ObjRaiseRequestResponse.ServiceRequestID = ObjServiceRequest.ServiceRequestID;
+                    ObjRaiseRequestResponse.ServiceRequestID = (GETENGINEERDETAILS_Result[0]).ServiceRequestID.GetValueOrDefault(0);
                     ObjRaiseRequestResponse.Name = (GETENGINEERDETAILS_Result[0]).Name;
                     ObjRaiseRequestResponse.Email = (GETENGINEERDETAILS_Result[0]).Email;
                     ObjRaiseRequestResponse.Message = "Success";
@@ -47,7 +48,7 @@ namespace ServiceApp.Domain.Concrete
                 }
                 else
                 {
-                    ObjRaiseRequestResponse.ServiceRequestID = ObjServiceRequest.ServiceRequestID;
+                    ObjRaiseRequestResponse.ServiceRequestID = (GETENGINEERDETAILS_Result[0]).ServiceRequestID.GetValueOrDefault(0);
                     ObjRaiseRequestResponse.Name = "";
                     ObjRaiseRequestResponse.Email = "";
                     ObjRaiseRequestResponse.Message = "Failed";
@@ -60,6 +61,75 @@ namespace ServiceApp.Domain.Concrete
 
             return ObjRaiseRequestResponse;
         }
+
+        public RequestResponse CancelRequestByEngineer(CancelRequest cancelRequest)
+        {
+            RequestResponse ObjRequestResponse = new RequestResponse();
+            try
+            {
+                var RequestResult = context.ServiceRequests.FirstOrDefault(cr => cr.ServiceRequestID == cancelRequest.ServiceRequestID);
+
+                if (RequestResult != null)
+                {
+                    RequestResult.StatusTypeID = cancelRequest.StatusTypeID;
+                    RequestResult.ServiceRequestRemark = cancelRequest.ServiceRequestRemark;
+                    RequestResult.UpdatedUserID = null;
+                    RequestResult.UpdatedDateTime = DateTime.Now;
+
+                    int Cnt = context.SaveChanges();
+
+                    if (Cnt > 0)
+                        ObjRequestResponse.Message = "Success";
+                    else
+                        ObjRequestResponse.Message = "Failed";
+                }
+                else
+                {
+                    ObjRequestResponse.Message = "Failed";
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return ObjRequestResponse;
+        }
+
+        public RequestResponse CloseRequestByEngineer(CloseRequest closeRequest)
+        {
+            RequestResponse ObjRequestResponse = new RequestResponse();
+
+            try
+            {
+                var RequestResult = context.ServiceRequests.FirstOrDefault(cr => cr.ServiceRequestID == closeRequest.ServiceRequestID);
+
+                if (RequestResult != null)
+                {
+                    RequestResult.StatusTypeID = closeRequest.StatusTypeID;
+                    RequestResult.UpdatedDateTime = DateTime.Now;
+
+                    int Cnt = context.SaveChanges();
+
+                    if (Cnt > 0)
+                        ObjRequestResponse.Message = "Success";
+                    else
+                        ObjRequestResponse.Message = "Failed";
+                }
+                else
+                {
+                    ObjRequestResponse.Message = "Failed";
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return ObjRequestResponse;
+        }
+
+
 
 
         private bool disposed = false;

@@ -195,7 +195,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ServiceRequest_AspNetUsers1">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="ServiceRequest" Type="Self.ServiceRequest" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
@@ -231,7 +233,12 @@
           </ReferentialConstraint>
         </Association>
         <Function Name="GETENGINEERDETAILS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="PPINCODE" Type="int" Mode="In" />
+          <Parameter Name="PServiceTypeID" Type="int" Mode="In" />
+          <Parameter Name="PStatusTypeID" Type="int" Mode="In" />
+          <Parameter Name="PLandmark" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="PRemark" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="PCreatedUserID" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="PPincode" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="ServiceAppDBModelStoreContainer">
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
@@ -535,12 +542,18 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
           <FunctionImport Name="GETENGINEERDETAILS" ReturnType="Collection(ServiceAppDBModel.GETENGINEERDETAILS_Result)" >
-            <Parameter Name="PPINCODE" Mode="In" Type="Int32" />
+            <Parameter Name="PServiceTypeID" Mode="In" Type="Int32" />
+            <Parameter Name="PStatusTypeID" Mode="In" Type="Int32" />
+            <Parameter Name="PLandmark" Mode="In" Type="String" />
+            <Parameter Name="PRemark" Mode="In" Type="String" />
+            <Parameter Name="PCreatedUserID" Mode="In" Type="String" />
+            <Parameter Name="PPincode" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GETENGINEERDETAILS_Result">
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Email" Nullable="false" MaxLength="256" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="ServiceRequestID" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -668,6 +681,7 @@
               <ComplexTypeMapping TypeName="ServiceAppDBModel.GETENGINEERDETAILS_Result">
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ServiceRequestID" ColumnName="ServiceRequestID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

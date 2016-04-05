@@ -36,13 +36,33 @@ namespace ServiceApp.Domain.DataModel
         public virtual DbSet<ServiceTypeMaster> ServiceTypeMasters { get; set; }
         public virtual DbSet<StatusTypeMaster> StatusTypeMasters { get; set; }
     
-        public virtual ObjectResult<GETENGINEERDETAILS_Result> GETENGINEERDETAILS(Nullable<int> pPINCODE)
+        public virtual ObjectResult<GETENGINEERDETAILS_Result> GETENGINEERDETAILS(Nullable<int> pServiceTypeID, Nullable<int> pStatusTypeID, string pLandmark, string pRemark, string pCreatedUserID, Nullable<int> pPincode)
         {
-            var pPINCODEParameter = pPINCODE.HasValue ?
-                new ObjectParameter("PPINCODE", pPINCODE) :
-                new ObjectParameter("PPINCODE", typeof(int));
+            var pServiceTypeIDParameter = pServiceTypeID.HasValue ?
+                new ObjectParameter("PServiceTypeID", pServiceTypeID) :
+                new ObjectParameter("PServiceTypeID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GETENGINEERDETAILS_Result>("GETENGINEERDETAILS", pPINCODEParameter);
+            var pStatusTypeIDParameter = pStatusTypeID.HasValue ?
+                new ObjectParameter("PStatusTypeID", pStatusTypeID) :
+                new ObjectParameter("PStatusTypeID", typeof(int));
+    
+            var pLandmarkParameter = pLandmark != null ?
+                new ObjectParameter("PLandmark", pLandmark) :
+                new ObjectParameter("PLandmark", typeof(string));
+    
+            var pRemarkParameter = pRemark != null ?
+                new ObjectParameter("PRemark", pRemark) :
+                new ObjectParameter("PRemark", typeof(string));
+    
+            var pCreatedUserIDParameter = pCreatedUserID != null ?
+                new ObjectParameter("PCreatedUserID", pCreatedUserID) :
+                new ObjectParameter("PCreatedUserID", typeof(string));
+    
+            var pPincodeParameter = pPincode.HasValue ?
+                new ObjectParameter("PPincode", pPincode) :
+                new ObjectParameter("PPincode", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GETENGINEERDETAILS_Result>("GETENGINEERDETAILS", pServiceTypeIDParameter, pStatusTypeIDParameter, pLandmarkParameter, pRemarkParameter, pCreatedUserIDParameter, pPincodeParameter);
         }
     }
 }
