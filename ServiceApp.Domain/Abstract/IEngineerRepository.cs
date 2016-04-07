@@ -15,6 +15,8 @@ namespace ServiceApp.Domain.Abstract
         RequestResponse CancelRequestByEngineer(CancelRequest cancelRequest);
 
         RequestResponse CloseRequestByEngineer(CloseRequest closeRequest);
+
+        RequestResponse CancelRequestByUser(CancelRequestByUser cancelRequestByUser);
     }
 }
 

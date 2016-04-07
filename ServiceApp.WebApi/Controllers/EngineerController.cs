@@ -76,5 +76,24 @@ namespace ServiceApp.WebApi.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Message :- " + ex.Message + "| InnerException :- " + ex.InnerException);
             }
         }
+
+        [Route("CancelRequestByUser")]
+        public HttpResponseMessage CancelRequestByUser(CancelRequestByUser cancelRequestByUser)
+        {
+            HttpResponseMessage ObjHttpResponseMessage = new HttpResponseMessage();
+
+            try
+            {
+                ObjHttpResponseMessage = Request.CreateResponse<RequestResponse>(HttpStatusCode.OK, _engineerRepo.CancelRequestByUser(cancelRequestByUser));
+
+                return ObjHttpResponseMessage;
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(new Exception(ex.Message, ex.InnerException));
+
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Message :- " + ex.Message + "| InnerException :- " + ex.InnerException);
+            }
+        }
     }
 }

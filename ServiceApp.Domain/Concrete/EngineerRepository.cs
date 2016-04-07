@@ -129,8 +129,40 @@ namespace ServiceApp.Domain.Concrete
             return ObjRequestResponse;
         }
 
+        public RequestResponse CancelRequestByUser(CancelRequestByUser cancelRequestByUser)
+        {
+            RequestResponse ObjRequestResponse = new RequestResponse();
+            try
+            {
+                var RequestResult = context.ServiceRequests.FirstOrDefault(cr => cr.ServiceRequestID == cancelRequestByUser.ServiceRequestID);
 
+                if (RequestResult != null)
+                {
+                    RequestResult.StatusTypeID = cancelRequestByUser.StatusTypeID;
+                    RequestResult.ServiceRequestRemark = cancelRequestByUser.ServiceRequestRemark;
+                    RequestResult.UpdatedUserID = null;
+                    RequestResult.UpdatedDateTime = DateTime.Now;
+                    RequestResult.EngineerConfirmDateTime = null;
 
+                    int Cnt = context.SaveChanges();
+
+                    if (Cnt > 0)
+                        ObjRequestResponse.Message = "Success";
+                    else
+                        ObjRequestResponse.Message = "Failed";
+                }
+                else
+                {
+                    ObjRequestResponse.Message = "Failed";
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return ObjRequestResponse;
+        }
 
         private bool disposed = false;
         protected virtual void Dispose(bool disposing)

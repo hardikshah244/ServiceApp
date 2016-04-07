@@ -134,6 +134,7 @@
       <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\CancelRequest.cs" />
+    <Compile Include="Entities\CancelRequestByUser.cs" />
     <Compile Include="Entities\CloseRequest.cs" />
     <Compile Include="Entities\RaiseRequest.cs" />
     <Compile Include="Entities\RaiseRequestResponse.cs" />
