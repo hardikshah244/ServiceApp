@@ -164,6 +164,65 @@ namespace ServiceApp.Domain.Concrete
             return ObjRequestResponse;
         }
 
+        public IEnumerable<UserRequestResponse> GetUserRequests(string CreatedUserID)
+        {
+            try
+            {
+                IEnumerable<UserRequestResponse> lstUserRequestResponse = (from SR in context.ServiceRequests
+                                                                           join STM in context.ServiceTypeMasters on SR.ServiceTypeID equals STM.ServiceTypeID
+                                                                           join STTM in context.StatusTypeMasters on SR.StatusTypeID equals STTM.StatusTypeID
+                                                                           join USERS in context.AspNetUsers on SR.UpdatedUserID equals USERS.Id into CREATEDUSERS
+                                                                           from USERSD in CREATEDUSERS.DefaultIfEmpty()
+                                                                           where SR.CreatedUserID == CreatedUserID
+                                                                           select new UserRequestResponse()
+                                                                           {
+                                                                               ServiceRequestID = SR.ServiceRequestID,
+                                                                               CreatedDateTime = SR.CreatedDateTime,
+                                                                               Landmark = SR.Landmark,
+                                                                               Remark = SR.Remark,
+                                                                               ServiceTypeName = STM.ServiceTypeName,
+                                                                               StatusTypeName = STTM.StatusTypeName,
+                                                                               Name = USERSD.Name
+                                                                           }).AsEnumerable<UserRequestResponse>();
+
+                return lstUserRequestResponse;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public IEnumerable<EngineerRequestResponse> GetEngineerRequests(string UpdatedUserID)
+        {
+            try
+            {
+                IEnumerable<EngineerRequestResponse> lstEngineerRequestResponse = (from SR in context.ServiceRequests
+                                                                           join STM in context.ServiceTypeMasters on SR.ServiceTypeID equals STM.ServiceTypeID
+                                                                           join STTM in context.StatusTypeMasters on SR.StatusTypeID equals STTM.StatusTypeID
+                                                                           join USERS in context.AspNetUsers on SR.CreatedUserID equals USERS.Id into CREATEDUSERS
+                                                                           from USERSD in CREATEDUSERS.DefaultIfEmpty()
+                                                                           where SR.UpdatedUserID == UpdatedUserID
+                                                                           select new EngineerRequestResponse()
+                                                                           {
+                                                                               ServiceRequestID = SR.ServiceRequestID,
+                                                                               CreatedDateTime = SR.CreatedDateTime,
+                                                                               Landmark = SR.Landmark,
+                                                                               Remark = SR.Remark,
+                                                                               ServiceTypeName = STM.ServiceTypeName,
+                                                                               StatusTypeName = STTM.StatusTypeName,
+                                                                               Name = USERSD.Name,
+                                                                               UpdatedDateTime = SR.UpdatedDateTime
+                                                                           }).AsEnumerable<EngineerRequestResponse>();
+
+                return lstEngineerRequestResponse;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         private bool disposed = false;
         protected virtual void Dispose(bool disposing)
         {

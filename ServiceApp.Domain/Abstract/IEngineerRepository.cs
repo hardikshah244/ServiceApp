@@ -17,6 +17,10 @@ namespace ServiceApp.Domain.Abstract
         RequestResponse CloseRequestByEngineer(CloseRequest closeRequest);
 
         RequestResponse CancelRequestByUser(CancelRequestByUser cancelRequestByUser);
+
+        IEnumerable<UserRequestResponse> GetUserRequests(string CreatedUserID);
+
+        IEnumerable<EngineerRequestResponse> GetEngineerRequests(string UpdatedUserID);
     }
 }
 

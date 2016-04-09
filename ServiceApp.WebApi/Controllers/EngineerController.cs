@@ -95,5 +95,67 @@ namespace ServiceApp.WebApi.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Message :- " + ex.Message + "| InnerException :- " + ex.InnerException);
             }
         }
+
+        [HttpGet]        
+        [Route("GetUserRequests/{CreatedUserID}")]
+        public HttpResponseMessage GetUserRequestByCreatedUserID(string CreatedUserID)
+        {
+            HttpResponseMessage ObjHttpResponseMessage = new HttpResponseMessage();
+            try
+            {
+                if (!string.IsNullOrEmpty(CreatedUserID))
+                {
+                    IEnumerable<UserRequestResponse> iEnumUserRequestResponse = _engineerRepo.GetUserRequests(CreatedUserID);
+
+                    if (iEnumUserRequestResponse.Count() > 0)
+                        ObjHttpResponseMessage = Request.CreateResponse<IEnumerable<UserRequestResponse>>(HttpStatusCode.OK, iEnumUserRequestResponse);
+                    else
+                        return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Data not found!");
+                }
+                else
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Userid is not valid");
+                }
+
+                return ObjHttpResponseMessage;
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(new Exception(ex.Message, ex.InnerException));
+
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Message :- " + ex.Message + "| InnerException :- " + ex.InnerException);
+            }
+        }
+
+        [HttpGet]
+        [Route("GetEngineerRequests/{UpdatedUserID}")]
+        public HttpResponseMessage GetEngineerRequestByUpdatedUserID(string UpdatedUserID)
+        {
+            HttpResponseMessage ObjHttpResponseMessage = new HttpResponseMessage();
+            try
+            {
+                if (!string.IsNullOrEmpty(UpdatedUserID))
+                {
+                    IEnumerable<EngineerRequestResponse> iEnumEngineerRequestResponse = _engineerRepo.GetEngineerRequests(UpdatedUserID);
+
+                    if (iEnumEngineerRequestResponse.Count() > 0)
+                        ObjHttpResponseMessage = Request.CreateResponse<IEnumerable<EngineerRequestResponse>>(HttpStatusCode.OK, iEnumEngineerRequestResponse);
+                    else
+                        return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Data not found!");
+                }
+                else
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Userid is not valid");
+                }
+
+                return ObjHttpResponseMessage;
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(new Exception(ex.Message, ex.InnerException));
+
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Message :- " + ex.Message + "| InnerException :- " + ex.InnerException);
+            }
+        }
     }
 }
