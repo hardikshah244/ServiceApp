@@ -231,8 +231,6 @@ namespace ServiceApp.Domain.Concrete
             }
         }
 
-
-
         public Dictionary<string, string> GetUserInfo(ApplicationUser user)
         {
             Dictionary<string, string> dicUserInfo = new Dictionary<string, string>();

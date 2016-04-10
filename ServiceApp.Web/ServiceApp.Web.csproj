@@ -44,11 +44,58 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.2.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.2.1.0\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.2.1.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ServiceApp.Domain">
+      <HintPath>..\ServiceApp.Domain\bin\Debug\ServiceApp.Domain.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -123,11 +170,13 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AccountController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Models\Login.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Assets\global\css\components-md.css" />
@@ -157,6 +206,12 @@
     <Content Include="Areas\Assets\global\img\remove-icon-small.png" />
     <Content Include="Areas\Assets\global\img\syncfusion-icons-white.png" />
     <Content Include="Areas\Assets\global\img\syncfusion-icons.png" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-hover-dropdown\bootstrap-hover-dropdown.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-hover-dropdown\bootstrap-hover-dropdown.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-switch\css\bootstrap-switch.css" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-switch\css\bootstrap-switch.min.css" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-switch\js\bootstrap-switch.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-switch\js\bootstrap-switch.min.js" />
     <Content Include="Areas\Assets\global\plugins\bootstrap\css\bootstrap.css" />
     <Content Include="Areas\Assets\global\plugins\bootstrap\css\bootstrap.min.css" />
     <Content Include="Areas\Assets\global\plugins\bootstrap\fonts\bootstrap\glyphicons-halflings-regular.svg" />
@@ -292,6 +347,48 @@
     <Content Include="Areas\Assets\global\plugins\js.cookie.min.js" />
     <Content Include="Areas\Assets\global\plugins\livecss.js" />
     <Content Include="Areas\Assets\global\plugins\moment.min.js" />
+    <Content Include="Areas\Assets\global\plugins\morris\examples\area-as-line.html" />
+    <Content Include="Areas\Assets\global\plugins\morris\examples\area.html" />
+    <Content Include="Areas\Assets\global\plugins\morris\examples\bar-colors.html" />
+    <Content Include="Areas\Assets\global\plugins\morris\examples\bar-no-axes.html" />
+    <Content Include="Areas\Assets\global\plugins\morris\examples\bar.html" />
+    <Content Include="Areas\Assets\global\plugins\morris\examples\days.html" />
+    <Content Include="Areas\Assets\global\plugins\morris\examples\decimal-custom-hover.html" />
+    <Content Include="Areas\Assets\global\plugins\morris\examples\diagonal-xlabels-bar.html" />
+    <Content Include="Areas\Assets\global\plugins\morris\examples\diagonal-xlabels.html" />
+    <Content Include="Areas\Assets\global\plugins\morris\examples\donut-colors.html" />
+    <Content Include="Areas\Assets\global\plugins\morris\examples\donut-formatter.html" />
+    <Content Include="Areas\Assets\global\plugins\morris\examples\donut.html" />
+    <Content Include="Areas\Assets\global\plugins\morris\examples\dst.html" />
+    <Content Include="Areas\Assets\global\plugins\morris\examples\events.html" />
+    <Content Include="Areas\Assets\global\plugins\morris\examples\goals.html" />
+    <Content Include="Areas\Assets\global\plugins\morris\examples\lib\example.css" />
+    <Content Include="Areas\Assets\global\plugins\morris\examples\lib\example.js" />
+    <Content Include="Areas\Assets\global\plugins\morris\examples\months-no-smooth.html" />
+    <Content Include="Areas\Assets\global\plugins\morris\examples\negative.html" />
+    <Content Include="Areas\Assets\global\plugins\morris\examples\no-grid.html" />
+    <Content Include="Areas\Assets\global\plugins\morris\examples\non-continuous.html" />
+    <Content Include="Areas\Assets\global\plugins\morris\examples\non-date.html" />
+    <Content Include="Areas\Assets\global\plugins\morris\examples\quarters.html" />
+    <Content Include="Areas\Assets\global\plugins\morris\examples\resize.html" />
+    <Content Include="Areas\Assets\global\plugins\morris\examples\stacked_bars.html" />
+    <Content Include="Areas\Assets\global\plugins\morris\examples\timestamps.html" />
+    <Content Include="Areas\Assets\global\plugins\morris\examples\updating.html" />
+    <Content Include="Areas\Assets\global\plugins\morris\examples\weeks.html" />
+    <Content Include="Areas\Assets\global\plugins\morris\examples\years.html" />
+    <Content Include="Areas\Assets\global\plugins\morris\examples\_template.html" />
+    <Content Include="Areas\Assets\global\plugins\morris\morris.css" />
+    <Content Include="Areas\Assets\global\plugins\morris\morris.js" />
+    <Content Include="Areas\Assets\global\plugins\morris\morris.min.js" />
+    <Content Include="Areas\Assets\global\plugins\morris\raphael-min.js" />
+    <Content Include="Areas\Assets\global\plugins\morris\spec\specs.html" />
+    <Content Include="Areas\Assets\global\plugins\morris\spec\viz\examples.js" />
+    <Content Include="Areas\Assets\global\plugins\morris\spec\viz\exemplary\area0.png" />
+    <Content Include="Areas\Assets\global\plugins\morris\spec\viz\exemplary\bar0.png" />
+    <Content Include="Areas\Assets\global\plugins\morris\spec\viz\exemplary\line0.png" />
+    <Content Include="Areas\Assets\global\plugins\morris\spec\viz\exemplary\stacked_bar0.png" />
+    <Content Include="Areas\Assets\global\plugins\morris\spec\viz\test.html" />
+    <Content Include="Areas\Assets\global\plugins\morris\spec\viz\visual_specs.js" />
     <Content Include="Areas\Assets\global\plugins\respond.min.js" />
     <Content Include="Areas\Assets\global\plugins\select2\css\select2-bootstrap.min.css" />
     <Content Include="Areas\Assets\global\plugins\select2\css\select2.css" />
@@ -358,6 +455,59 @@
     <Content Include="Areas\Assets\global\plugins\uniform\jquery.uniform.min.js" />
     <Content Include="Areas\Assets\global\scripts\app.js" />
     <Content Include="Areas\Assets\global\scripts\app.min.js" />
+    <Content Include="Areas\Assets\layouts\global\scripts\quick-sidebar.js" />
+    <Content Include="Areas\Assets\layouts\global\scripts\quick-sidebar.min.js" />
+    <Content Include="Areas\Assets\layouts\layout4\css\custom.css" />
+    <Content Include="Areas\Assets\layouts\layout4\css\custom.min.css" />
+    <Content Include="Areas\Assets\layouts\layout4\css\layout.css" />
+    <Content Include="Areas\Assets\layouts\layout4\css\layout.min.css" />
+    <Content Include="Areas\Assets\layouts\layout4\css\themes\default.css" />
+    <Content Include="Areas\Assets\layouts\layout4\css\themes\default.min.css" />
+    <Content Include="Areas\Assets\layouts\layout4\css\themes\light.css" />
+    <Content Include="Areas\Assets\layouts\layout4\css\themes\light.min.css" />
+    <Content Include="Areas\Assets\layouts\layout4\img\ajax-loading.gif" />
+    <Content Include="Areas\Assets\layouts\layout4\img\ajax-modal-loading.gif" />
+    <Content Include="Areas\Assets\layouts\layout4\img\arrow-down.png" />
+    <Content Include="Areas\Assets\layouts\layout4\img\avatar.png" />
+    <Content Include="Areas\Assets\layouts\layout4\img\avatar1.jpg" />
+    <Content Include="Areas\Assets\layouts\layout4\img\avatar10.jpg" />
+    <Content Include="Areas\Assets\layouts\layout4\img\avatar11.jpg" />
+    <Content Include="Areas\Assets\layouts\layout4\img\avatar1_small.jpg" />
+    <Content Include="Areas\Assets\layouts\layout4\img\avatar2.jpg" />
+    <Content Include="Areas\Assets\layouts\layout4\img\avatar3.jpg" />
+    <Content Include="Areas\Assets\layouts\layout4\img\avatar3_small.jpg" />
+    <Content Include="Areas\Assets\layouts\layout4\img\avatar4.jpg" />
+    <Content Include="Areas\Assets\layouts\layout4\img\avatar5.jpg" />
+    <Content Include="Areas\Assets\layouts\layout4\img\avatar6.jpg" />
+    <Content Include="Areas\Assets\layouts\layout4\img\avatar7.jpg" />
+    <Content Include="Areas\Assets\layouts\layout4\img\avatar8.jpg" />
+    <Content Include="Areas\Assets\layouts\layout4\img\avatar9.jpg" />
+    <Content Include="Areas\Assets\layouts\layout4\img\hor-menu-red-arrow.png" />
+    <Content Include="Areas\Assets\layouts\layout4\img\icon-color-close.png" />
+    <Content Include="Areas\Assets\layouts\layout4\img\icon-color.png" />
+    <Content Include="Areas\Assets\layouts\layout4\img\icon-img-down.png" />
+    <Content Include="Areas\Assets\layouts\layout4\img\icon-img-up.png" />
+    <Content Include="Areas\Assets\layouts\layout4\img\inbox-nav-arrow-blue.png" />
+    <Content Include="Areas\Assets\layouts\layout4\img\loading-spinner-blue.gif" />
+    <Content Include="Areas\Assets\layouts\layout4\img\loading-spinner-default.gif" />
+    <Content Include="Areas\Assets\layouts\layout4\img\loading-spinner-grey.gif" />
+    <Content Include="Areas\Assets\layouts\layout4\img\loading.gif" />
+    <Content Include="Areas\Assets\layouts\layout4\img\logo-big-white.png" />
+    <Content Include="Areas\Assets\layouts\layout4\img\logo-big.png" />
+    <Content Include="Areas\Assets\layouts\layout4\img\logo-default.png" />
+    <Content Include="Areas\Assets\layouts\layout4\img\logo-light.png" />
+    <Content Include="Areas\Assets\layouts\layout4\img\logo.png" />
+    <Content Include="Areas\Assets\layouts\layout4\img\menu-toggler.png" />
+    <Content Include="Areas\Assets\layouts\layout4\img\photo1.jpg" />
+    <Content Include="Areas\Assets\layouts\layout4\img\photo2.jpg" />
+    <Content Include="Areas\Assets\layouts\layout4\img\remove-icon-small.png" />
+    <Content Include="Areas\Assets\layouts\layout4\img\search_icon_light.png" />
+    <Content Include="Areas\Assets\layouts\layout4\img\sidebar-toggle-dark.png" />
+    <Content Include="Areas\Assets\layouts\layout4\img\sidebar-toggle-light.png" />
+    <Content Include="Areas\Assets\layouts\layout4\scripts\demo.js" />
+    <Content Include="Areas\Assets\layouts\layout4\scripts\demo.min.js" />
+    <Content Include="Areas\Assets\layouts\layout4\scripts\layout.js" />
+    <Content Include="Areas\Assets\layouts\layout4\scripts\layout.min.js" />
     <Content Include="Areas\Assets\pages\css\login.css" />
     <Content Include="Areas\Assets\pages\css\login.min.css" />
     <Content Include="Areas\Assets\pages\img\bg-opacity.png" />
@@ -371,6 +521,8 @@
     <Content Include="Areas\Assets\pages\media\bg\4.jpg" />
     <Content Include="Areas\Assets\pages\media\bg\5.jpg" />
     <Content Include="Areas\Assets\pages\media\bg\6.jpg" />
+    <Content Include="Areas\Assets\pages\scripts\dashboard.js" />
+    <Content Include="Areas\Assets\pages\scripts\dashboard.min.js" />
     <Content Include="Areas\Assets\pages\scripts\login.js" />
     <Content Include="Areas\Assets\pages\scripts\login.min.js" />
     <Content Include="Content\animate.css" />
@@ -503,8 +655,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
@@ -535,6 +685,35 @@
     <Content Include="Areas\Assets\global\plugins\simple-line-icons\fonts\Simple-Line-Icons.woff" />
     <Content Include="Areas\Assets\global\plugins\uniform\css\uniform.default.scss" />
     <Content Include="Areas\Assets\global\plugins\uniform\README.md" />
+    <Content Include="Areas\Admin\Views\Shared\_LayoutAdmin.cshtml" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-hover-dropdown\LICENSE" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-hover-dropdown\README.md" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-switch\LICENSE" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-switch\README.md" />
+    <Content Include="Areas\Assets\global\plugins\morris\less\morris.core.less" />
+    <Content Include="Areas\Assets\global\plugins\morris\lib\morris.area.coffee" />
+    <Content Include="Areas\Assets\global\plugins\morris\lib\morris.bar.coffee" />
+    <Content Include="Areas\Assets\global\plugins\morris\lib\morris.coffee" />
+    <Content Include="Areas\Assets\global\plugins\morris\lib\morris.donut.coffee" />
+    <Content Include="Areas\Assets\global\plugins\morris\lib\morris.grid.coffee" />
+    <Content Include="Areas\Assets\global\plugins\morris\lib\morris.hover.coffee" />
+    <Content Include="Areas\Assets\global\plugins\morris\lib\morris.line.coffee" />
+    <Content Include="Areas\Assets\global\plugins\morris\README.md" />
+    <Content Include="Areas\Assets\global\plugins\morris\spec\lib\area\area_spec.coffee" />
+    <Content Include="Areas\Assets\global\plugins\morris\spec\lib\bar\bar_spec.coffee" />
+    <Content Include="Areas\Assets\global\plugins\morris\spec\lib\bar\colours.coffee" />
+    <Content Include="Areas\Assets\global\plugins\morris\spec\lib\commas_spec.coffee" />
+    <Content Include="Areas\Assets\global\plugins\morris\spec\lib\donut\donut_spec.coffee" />
+    <Content Include="Areas\Assets\global\plugins\morris\spec\lib\grid\auto_grid_lines_spec.coffee" />
+    <Content Include="Areas\Assets\global\plugins\morris\spec\lib\grid\set_data_spec.coffee" />
+    <Content Include="Areas\Assets\global\plugins\morris\spec\lib\grid\y_label_format_spec.coffee" />
+    <Content Include="Areas\Assets\global\plugins\morris\spec\lib\hover_spec.coffee" />
+    <Content Include="Areas\Assets\global\plugins\morris\spec\lib\label_series_spec.coffee" />
+    <Content Include="Areas\Assets\global\plugins\morris\spec\lib\line\line_spec.coffee" />
+    <Content Include="Areas\Assets\global\plugins\morris\spec\lib\pad_spec.coffee" />
+    <Content Include="Areas\Assets\global\plugins\morris\spec\lib\parse_time_spec.coffee" />
+    <Content Include="Areas\Assets\global\plugins\morris\spec\support\placeholder.coffee" />
+    <Content Include="Areas\Assets\global\plugins\morris\spec\viz\run.sh" />
     <None Include="Project_Readme.html" />
     <None Include="Properties\PublishProfiles\PikPot.pubxml" />
   </ItemGroup>
