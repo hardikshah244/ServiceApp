@@ -11,6 +11,7 @@ using ServiceApp.Web.Areas.Admin.Models;
 using Microsoft.Owin.Security;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Web.Security;
 
 namespace ServiceApp.Web.Areas.Admin.Controllers
 {
@@ -98,6 +99,36 @@ namespace ServiceApp.Web.Areas.Admin.Controllers
             IAuthenticationManager authenticationManager = HttpContext.GetOwinContext().Authentication;
             authenticationManager.SignOut();
             Session.Abandon();
+            return RedirectToAction("Login", "Account", new { Area = "Admin" });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ForgetPassword()
+        {            
+            var Email = Request.Form["Email"];
+
+            if(!string.IsNullOrEmpty(Email))
+            {
+                if (_userManager == null)
+                    _userManager = AppUserManager;
+
+                string strPassword = Membership.GeneratePassword(8, 0);
+
+                ApplicationUser user = _userManager.FindByEmail(Email);
+
+                if (user != null)
+                {
+                    _userManager.RemovePassword(user.Id);
+
+                    _userManager.AddPassword(user.Id, strPassword);
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("", "Enter email.");
+            }
+
             return RedirectToAction("Login", "Account", new { Area = "Admin" });
         }
     }

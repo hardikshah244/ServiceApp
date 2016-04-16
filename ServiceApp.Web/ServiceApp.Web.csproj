@@ -170,6 +170,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AccountController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserProfileController.cs" />
     <Compile Include="Areas\Admin\Models\Login.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -510,6 +511,8 @@
     <Content Include="Areas\Assets\layouts\layout4\scripts\layout.min.js" />
     <Content Include="Areas\Assets\pages\css\login.css" />
     <Content Include="Areas\Assets\pages\css\login.min.css" />
+    <Content Include="Areas\Assets\pages\css\profile-2.css" />
+    <Content Include="Areas\Assets\pages\css\profile-2.min.css" />
     <Content Include="Areas\Assets\pages\img\bg-opacity.png" />
     <Content Include="Areas\Assets\pages\img\bg-white-lock.png" />
     <Content Include="Areas\Assets\pages\img\bg-white.png" />
@@ -714,6 +717,8 @@
     <Content Include="Areas\Assets\global\plugins\morris\spec\lib\parse_time_spec.coffee" />
     <Content Include="Areas\Assets\global\plugins\morris\spec\support\placeholder.coffee" />
     <Content Include="Areas\Assets\global\plugins\morris\spec\viz\run.sh" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\UserProfile\Profile.cshtml" />
     <None Include="Project_Readme.html" />
     <None Include="Properties\PublishProfiles\PikPot.pubxml" />
   </ItemGroup>
