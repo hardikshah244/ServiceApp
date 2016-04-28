@@ -9,10 +9,11 @@ namespace ServiceApp.Web.Areas.Admin.Controllers
     [Authorize]
     public class UserProfileController : Controller
     {
-        // GET: Admin/UserProfile
+        // GET: Admin/UserProfile/Profile
         public ActionResult Profile()
         {
             return View();
         }
-    }
+
+   }
 }

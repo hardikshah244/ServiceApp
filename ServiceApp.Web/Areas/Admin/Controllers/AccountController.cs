@@ -12,6 +12,8 @@ using Microsoft.Owin.Security;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Security;
+using ServiceApp.Domain.Common;
+using System.Configuration;
 
 namespace ServiceApp.Web.Areas.Admin.Controllers
 {
@@ -20,6 +22,8 @@ namespace ServiceApp.Web.Areas.Admin.Controllers
         private AuthRepository _repo = null;
         private ApplicationUserManager _userManager = null;
         private ApplicationRoleManager _userRoleManager = null;
+
+        private string strFromEmail = ConfigurationManager.AppSettings["FromEmail"].ToString();
 
         public AccountController()
         {
@@ -105,10 +109,10 @@ namespace ServiceApp.Web.Areas.Admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult ForgetPassword()
-        {            
+        {
             var Email = Request.Form["Email"];
 
-            if(!string.IsNullOrEmpty(Email))
+            if (!string.IsNullOrEmpty(Email))
             {
                 if (_userManager == null)
                     _userManager = AppUserManager;
@@ -130,6 +134,54 @@ namespace ServiceApp.Web.Areas.Admin.Controllers
             }
 
             return RedirectToAction("Login", "Account", new { Area = "Admin" });
+        }
+
+        // GET: Admin/Account/ChangePassword
+        [HttpGet]
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        // POST: Admin/Account/ChangePassword
+        //[Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangePassword(ChangePassword chnagePassword)
+        {
+            if (ModelState.IsValid)
+            {
+                if (_userManager == null)
+                    _userManager = AppUserManager;
+
+                ApplicationUser user = _userManager.FindByEmail(User.Identity.Name);
+
+                if (user != null)
+                {
+                    IdentityResult result = _userManager.ChangePassword(user.Id, chnagePassword.OldPassword,
+                                                            chnagePassword.NewPassword);
+
+                    if (!result.Succeeded)
+                    {
+                        foreach (var error in result.Errors)
+                        {
+                            ModelState.AddModelError("", error);
+                        }
+                    }
+                    else if (result.Succeeded)
+                    {
+                        ViewBag.Message = "Your password successfully changed!";
+                        Email.SendEmail(strFromEmail, User.Identity.Name, "ChangePassword", "Your password successfully changed");
+                    }
+
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Invalid old or new password.");
+                }
+            }
+
+            return View(chnagePassword);
         }
     }
 }

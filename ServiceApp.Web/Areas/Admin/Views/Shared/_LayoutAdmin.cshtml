@@ -87,6 +87,12 @@
                                     </a>
                                 </li>
                                 <li>
+                                    <a href="@Url.Action("ChangePassword","Account")">
+ 
+                                        <i class="icon-user"></i>Change Password
+                                    </a>
+                                </li>
+                                <li>
                                     <a href="@Url.Action("LogOut","Account")">
                                         <i class="icon-key"></i> Log Out
                                     </a>
@@ -128,8 +134,11 @@
                             <span class="title">Dashboard</span>
                         </a>
                     </li>
-                    <li class="heading">
-                        <h3 class="uppercase">Features</h3>
+                    <li class="nav-item  ">
+                        <a href="@Url.Action("Index", "EngineerInfo")" class="nav-link nav-toggle">
+                            <i class="icon-info"></i>
+                            <span class="title">Engineer Information</span>
+                        </a>
                     </li>
                 </ul>
                 <!-- END SIDEBAR MENU -->
