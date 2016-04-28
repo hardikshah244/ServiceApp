@@ -137,6 +137,7 @@ namespace ServiceApp.Web.Areas.Admin.Controllers
         }
 
         // GET: Admin/Account/ChangePassword
+        [Authorize]
         [HttpGet]
         public ActionResult ChangePassword()
         {
@@ -144,7 +145,7 @@ namespace ServiceApp.Web.Areas.Admin.Controllers
         }
 
         // POST: Admin/Account/ChangePassword
-        //[Authorize]
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult ChangePassword(ChangePassword chnagePassword)
