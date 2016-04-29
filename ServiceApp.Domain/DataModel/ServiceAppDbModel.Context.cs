@@ -64,5 +64,10 @@ namespace ServiceApp.Domain.DataModel
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GETENGINEERDETAILS_Result>("GETENGINEERDETAILS", pServiceTypeIDParameter, pStatusTypeIDParameter, pLandmarkParameter, pRemarkParameter, pCreatedUserIDParameter, pPincodeParameter);
         }
+    
+        public virtual ObjectResult<EngineerInfo> GETENGINEERINFO()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EngineerInfo>("GETENGINEERINFO");
+        }
     }
 }

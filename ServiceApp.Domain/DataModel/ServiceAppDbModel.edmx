@@ -194,20 +194,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ServiceRequest_AspNetUsers1">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="ServiceRequest" Type="Self.ServiceRequest" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ServiceRequest">
-              <PropertyRef Name="UpdatedUserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ServiceRequest_ServiceTypeMaster">
           <End Role="ServiceTypeMaster" Type="Self.ServiceTypeMaster" Multiplicity="1" />
           <End Role="ServiceRequest" Type="Self.ServiceRequest" Multiplicity="*" />
@@ -240,6 +226,7 @@
           <Parameter Name="PCreatedUserID" Type="nvarchar(max)" Mode="In" />
           <Parameter Name="PPincode" Type="int" Mode="In" />
         </Function>
+        <Function Name="GETENGINEERINFO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="ServiceAppDBModelStoreContainer">
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
@@ -271,10 +258,6 @@
             <End Role="EngineerMembership" EntitySet="EngineerMembership" />
           </AssociationSet>
           <AssociationSet Name="FK_ServiceRequest_AspNetUsers" Association="Self.FK_ServiceRequest_AspNetUsers">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="ServiceRequest" EntitySet="ServiceRequest" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ServiceRequest_AspNetUsers1" Association="Self.FK_ServiceRequest_AspNetUsers1">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="ServiceRequest" EntitySet="ServiceRequest" />
           </AssociationSet>
@@ -549,11 +532,36 @@
             <Parameter Name="PCreatedUserID" Mode="In" Type="String" />
             <Parameter Name="PPincode" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="GETENGINEERINFO" ReturnType="Collection(ServiceAppDBModel.EngineerInfo)" />
         </EntityContainer>
         <ComplexType Name="GETENGINEERDETAILS_Result">
           <Property Type="String" Name="Name" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="Email" Nullable="true" MaxLength="200" />
           <Property Type="Int32" Name="ServiceRequestID" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GETENGINEERINFO_Result">
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="256" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="PhoneNumber" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="City" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="State" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Pincode" Nullable="false" MaxLength="15" />
+          <Property Type="Decimal" Name="Latitude" Nullable="false" Precision="12" Scale="9" />
+          <Property Type="Decimal" Name="Longitude" Nullable="false" Precision="12" Scale="9" />
+          <Property Type="String" Name="DeviceID" Nullable="false" MaxLength="50" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="EngineerInfo">
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="256" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="PhoneNumber" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="City" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="State" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Pincode" Nullable="false" MaxLength="15" />
+          <Property Type="Decimal" Name="Latitude" Nullable="false" Precision="12" Scale="9" />
+          <Property Type="Decimal" Name="Longitude" Nullable="false" Precision="12" Scale="9" />
+          <Property Type="String" Name="DeviceID" Nullable="false" MaxLength="50" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -682,6 +690,22 @@
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="ServiceRequestID" ColumnName="ServiceRequestID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GETENGINEERINFO" FunctionName="ServiceAppDBModel.Store.GETENGINEERINFO">
+          <ResultMapping>
+              <ComplexTypeMapping TypeName="ServiceAppDBModel.EngineerInfo">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

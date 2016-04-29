@@ -89,8 +89,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\IEngineerInfo.cs" />
     <Compile Include="Abstract\IEngineerRepository.cs" />
     <Compile Include="Common\Email.cs" />
+    <Compile Include="Concrete\EngineerInfoRepository.cs" />
     <Compile Include="DataModel\AspNetRole.cs">
       <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
     </Compile>
@@ -101,6 +103,9 @@
       <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\AspNetUserLogin.cs">
+      <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\EngineerInfo.cs">
       <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\EngineerMembership.cs">
@@ -136,6 +141,7 @@
     <Compile Include="Entities\CancelRequest.cs" />
     <Compile Include="Entities\CancelRequestByUser.cs" />
     <Compile Include="Entities\CloseRequest.cs" />
+    <Compile Include="DataModel\EngineerInfoMetadata.cs" />
     <Compile Include="Entities\EngineerRequestResponse.cs" />
     <Compile Include="Entities\RaiseRequest.cs" />
     <Compile Include="Entities\RaiseRequestResponse.cs" />
