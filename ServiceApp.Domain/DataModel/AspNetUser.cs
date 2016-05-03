@@ -45,8 +45,8 @@ namespace ServiceApp.Domain.DataModel
         public string City { get; set; }
         public string State { get; set; }
         public string Pincode { get; set; }
-        public decimal Latitude { get; set; }
-        public decimal Longitude { get; set; }
+        public Nullable<decimal> Latitude { get; set; }
+        public Nullable<decimal> Longitude { get; set; }
         public string DeviceID { get; set; }
         public bool IsActive { get; set; }
         public bool IsAuthentication { get; set; }

@@ -10,7 +10,7 @@
 namespace ServiceApp.Domain.DataModel
 {
     using System;
-
+    
     public partial class EngineerInfo
     {
         public string Email { get; set; }
@@ -19,9 +19,11 @@ namespace ServiceApp.Domain.DataModel
         public string City { get; set; }
         public string State { get; set; }
         public string Pincode { get; set; }
-        public decimal Latitude { get; set; }
-        public decimal Longitude { get; set; }
-        public string DeviceID { get; set; }
-        public bool IsActive { get; set; }
+        public string MembershipType { get; set; }
+        public System.DateTime CreationDate { get; set; }
+        public Nullable<System.DateTime> StartDate { get; set; }
+        public Nullable<System.DateTime> EndDate { get; set; }
+        public Nullable<decimal> Amount { get; set; }
+        public string Id { get; set; }
     }
 }

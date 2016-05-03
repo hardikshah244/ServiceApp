@@ -35,16 +35,23 @@ namespace ServiceApp.Domain.DataModel
         public string Pincode { get; set; }
 
         [Required]
-        public decimal Latitude { get; set; }
+        public string MembershipType { get; set; }
 
-        [Required]
-        public decimal Longitude { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}",
+               ApplyFormatInEditMode = true)]
+        public System.DateTime CreationDate { get; set; }
 
-        [Required]
-        [MaxLength(50)]
-        public string DeviceID { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}",
+             ApplyFormatInEditMode = true)]
+        public Nullable<System.DateTime> StartDate { get; set; }
 
-        public bool IsActive { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}",
+             ApplyFormatInEditMode = true)]
+        public Nullable<System.DateTime> EndDate { get; set; }
+
+        public Nullable<decimal> Amount { get; set; }
+
+        public string Id { get; set; }
     }
 
     [MetadataType(typeof(EngineerInfoMetadata))]

@@ -63,9 +63,9 @@
           <Property Name="City" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="State" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Pincode" Type="nvarchar" MaxLength="15" Nullable="false" />
-          <Property Name="Latitude" Type="decimal" Precision="12" Scale="9" Nullable="false" />
-          <Property Name="Longitude" Type="decimal" Precision="12" Scale="9" Nullable="false" />
-          <Property Name="DeviceID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Latitude" Type="decimal" Precision="12" Scale="9" />
+          <Property Name="Longitude" Type="decimal" Precision="12" Scale="9" />
+          <Property Name="DeviceID" Type="nvarchar" MaxLength="50" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="IsAuthentication" Type="bit" Nullable="false" />
           <Property Name="IDProof" Type="image" />
@@ -327,9 +327,9 @@
           <Property Name="City" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="State" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Pincode" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Latitude" Type="Decimal" Precision="12" Scale="9" Nullable="false" />
-          <Property Name="Longitude" Type="Decimal" Precision="12" Scale="9" Nullable="false" />
-          <Property Name="DeviceID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Latitude" Type="Decimal" Precision="12" Scale="9" />
+          <Property Name="Longitude" Type="Decimal" Precision="12" Scale="9" />
+          <Property Name="DeviceID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="IsAuthentication" Type="Boolean" Nullable="false" />
           <Property Name="IDProof" Type="Binary" MaxLength="Max" FixedLength="false" />
@@ -558,11 +558,13 @@
           <Property Type="String" Name="City" Nullable="false" MaxLength="100" />
           <Property Type="String" Name="State" Nullable="false" MaxLength="100" />
           <Property Type="String" Name="Pincode" Nullable="false" MaxLength="15" />
-          <Property Type="Decimal" Name="Latitude" Nullable="false" Precision="12" Scale="9" />
-          <Property Type="Decimal" Name="Longitude" Nullable="false" Precision="12" Scale="9" />
-          <Property Type="String" Name="DeviceID" Nullable="false" MaxLength="50" />
-          <Property Type="Boolean" Name="IsActive" Nullable="false" />
-        </ComplexType>
+          <Property Type="String" Name="MembershipType" Nullable="false" MaxLength="20" />
+          <Property Type="DateTime" Name="CreationDate" Nullable="false" />
+          <Property Type="DateTime" Name="StartDate" Nullable="true" />
+          <Property Type="DateTime" Name="EndDate" Nullable="true" />
+          <Property Type="Decimal" Name="Amount" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="String" Name="Id" Nullable="false" MaxLength="128" />
+          </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -702,11 +704,13 @@
                 <ScalarProperty Name="City" ColumnName="City" />
                 <ScalarProperty Name="State" ColumnName="State" />
                 <ScalarProperty Name="Pincode" ColumnName="Pincode" />
-                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
-                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
-                <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-              </ComplexTypeMapping>
+                <ScalarProperty Name="MembershipType" ColumnName="MembershipType" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
         </EntityContainerMapping>

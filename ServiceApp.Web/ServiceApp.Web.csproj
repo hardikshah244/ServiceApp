@@ -105,6 +105,14 @@
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="ServiceApp.Domain">
       <HintPath>..\ServiceApp.Domain\bin\Debug\ServiceApp.Domain.dll</HintPath>
     </Reference>
@@ -226,6 +234,78 @@
     <Content Include="Areas\Assets\global\img\remove-icon-small.png" />
     <Content Include="Areas\Assets\global\img\syncfusion-icons-white.png" />
     <Content Include="Areas\Assets\global\img\syncfusion-icons.png" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\css\bootstrap-datepicker.css" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\css\bootstrap-datepicker.min.css" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\css\bootstrap-datepicker.standalone.css" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\css\bootstrap-datepicker.standalone.min.css" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\css\bootstrap-datepicker3.css" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\css\bootstrap-datepicker3.min.css" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\css\bootstrap-datepicker3.standalone.css" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\css\bootstrap-datepicker3.standalone.min.css" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\js\bootstrap-datepicker.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\js\bootstrap-datepicker.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.ar.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.az.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.bg.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.bs.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.ca.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.cs.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.cy.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.da.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.de.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.el.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.en-GB.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.es.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.et.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.eu.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.fa.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.fi.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.fo.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.fr-CH.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.fr.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.gl.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.he.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.hr.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.hu.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.hy.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.id.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.is.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.it-CH.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.it.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.ja.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.ka.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.kh.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.kk.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.kr.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.lt.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.lv.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.me.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.mk.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.ms.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.nb.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.nl-BE.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.nl.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.no.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.pl.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.pt-BR.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.pt.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.ro.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.rs-latin.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.rs.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.ru.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.sk.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.sl.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.sq.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.sr-latin.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.sr.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.sv.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.sw.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.th.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.tr.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.uk.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.vi.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.zh-CN.min.js" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\locales\bootstrap-datepicker.zh-TW.min.js" />
     <Content Include="Areas\Assets\global\plugins\bootstrap-hover-dropdown\bootstrap-hover-dropdown.js" />
     <Content Include="Areas\Assets\global\plugins\bootstrap-hover-dropdown\bootstrap-hover-dropdown.min.js" />
     <Content Include="Areas\Assets\global\plugins\bootstrap-switch\css\bootstrap-switch.css" />
@@ -237,6 +317,25 @@
     <Content Include="Areas\Assets\global\plugins\bootstrap\fonts\bootstrap\glyphicons-halflings-regular.svg" />
     <Content Include="Areas\Assets\global\plugins\bootstrap\js\bootstrap.js" />
     <Content Include="Areas\Assets\global\plugins\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Areas\Assets\global\plugins\datatables\datatables.all.min.js" />
+    <Content Include="Areas\Assets\global\plugins\datatables\datatables.css" />
+    <Content Include="Areas\Assets\global\plugins\datatables\datatables.js" />
+    <Content Include="Areas\Assets\global\plugins\datatables\datatables.min.css" />
+    <Content Include="Areas\Assets\global\plugins\datatables\datatables.min.js" />
+    <Content Include="Areas\Assets\global\plugins\datatables\images\back_disabled.png" />
+    <Content Include="Areas\Assets\global\plugins\datatables\images\back_enabled.png" />
+    <Content Include="Areas\Assets\global\plugins\datatables\images\back_enabled_hover.png" />
+    <Content Include="Areas\Assets\global\plugins\datatables\images\favicon.ico" />
+    <Content Include="Areas\Assets\global\plugins\datatables\images\forward_disabled.png" />
+    <Content Include="Areas\Assets\global\plugins\datatables\images\forward_enabled.png" />
+    <Content Include="Areas\Assets\global\plugins\datatables\images\forward_enabled_hover.png" />
+    <Content Include="Areas\Assets\global\plugins\datatables\images\sort_asc.png" />
+    <Content Include="Areas\Assets\global\plugins\datatables\images\sort_asc_disabled.png" />
+    <Content Include="Areas\Assets\global\plugins\datatables\images\sort_both.png" />
+    <Content Include="Areas\Assets\global\plugins\datatables\images\sort_desc.png" />
+    <Content Include="Areas\Assets\global\plugins\datatables\images\sort_desc_disabled.png" />
+    <Content Include="Areas\Assets\global\plugins\datatables\plugins\bootstrap\datatables.bootstrap.css" />
+    <Content Include="Areas\Assets\global\plugins\datatables\plugins\bootstrap\datatables.bootstrap.js" />
     <Content Include="Areas\Assets\global\plugins\excanvas.min.js" />
     <Content Include="Areas\Assets\global\plugins\font-awesome\css\font-awesome.css" />
     <Content Include="Areas\Assets\global\plugins\font-awesome\css\font-awesome.min.css" />
@@ -244,6 +343,23 @@
     <Content Include="Areas\Assets\global\plugins\jquery-migrate.min.js" />
     <Content Include="Areas\Assets\global\plugins\jquery-slimscroll\jquery.slimscroll.js" />
     <Content Include="Areas\Assets\global\plugins\jquery-slimscroll\jquery.slimscroll.min.js" />
+    <Content Include="Areas\Assets\global\plugins\jquery-ui-touch-punch\jquery.ui.touch-punch.min.js" />
+    <Content Include="Areas\Assets\global\plugins\jquery-ui\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
+    <Content Include="Areas\Assets\global\plugins\jquery-ui\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
+    <Content Include="Areas\Assets\global\plugins\jquery-ui\images\ui-bg_flat_10_000000_40x100.png" />
+    <Content Include="Areas\Assets\global\plugins\jquery-ui\images\ui-bg_glass_100_f6f6f6_1x400.png" />
+    <Content Include="Areas\Assets\global\plugins\jquery-ui\images\ui-bg_glass_100_fdf5ce_1x400.png" />
+    <Content Include="Areas\Assets\global\plugins\jquery-ui\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Areas\Assets\global\plugins\jquery-ui\images\ui-bg_gloss-wave_35_f6a828_500x100.png" />
+    <Content Include="Areas\Assets\global\plugins\jquery-ui\images\ui-bg_highlight-soft_100_eeeeee_1x100.png" />
+    <Content Include="Areas\Assets\global\plugins\jquery-ui\images\ui-bg_highlight-soft_75_ffe45c_1x100.png" />
+    <Content Include="Areas\Assets\global\plugins\jquery-ui\images\ui-icons_222222_256x240.png" />
+    <Content Include="Areas\Assets\global\plugins\jquery-ui\images\ui-icons_228ef1_256x240.png" />
+    <Content Include="Areas\Assets\global\plugins\jquery-ui\images\ui-icons_ef8c08_256x240.png" />
+    <Content Include="Areas\Assets\global\plugins\jquery-ui\images\ui-icons_ffd27a_256x240.png" />
+    <Content Include="Areas\Assets\global\plugins\jquery-ui\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Areas\Assets\global\plugins\jquery-ui\jquery-ui.min.css" />
+    <Content Include="Areas\Assets\global\plugins\jquery-ui\jquery-ui.min.js" />
     <Content Include="Areas\Assets\global\plugins\jquery-validation\js\additional-methods.js" />
     <Content Include="Areas\Assets\global\plugins\jquery-validation\js\additional-methods.min.js" />
     <Content Include="Areas\Assets\global\plugins\jquery-validation\js\jquery.validate.js" />
@@ -545,8 +661,13 @@
     <Content Include="Areas\Assets\pages\media\bg\6.jpg" />
     <Content Include="Areas\Assets\pages\scripts\dashboard.js" />
     <Content Include="Areas\Assets\pages\scripts\dashboard.min.js" />
+    <Content Include="Areas\Assets\pages\scripts\form-validation-md.js" />
+    <Content Include="Areas\Assets\pages\scripts\form-validation-md.min.js" />
     <Content Include="Areas\Assets\pages\scripts\login.js" />
     <Content Include="Areas\Assets\pages\scripts\login.min.js" />
+    <Content Include="Areas\Assets\pages\scripts\modalform.js" />
+    <Content Include="Areas\Assets\pages\scripts\ui-modals.js" />
+    <Content Include="Areas\Assets\pages\scripts\ui-modals.min.js" />
     <Content Include="Content\animate.css" />
     <Content Include="Content\colors\color_palette_amber.css" />
     <Content Include="Content\colors\color_palette_blue-gray.css" />
@@ -569,6 +690,7 @@
     <Content Include="Content\color_scheme_dark.css" />
     <Content Include="Content\color_scheme_light.css" />
     <Content Include="Content\grid12.css" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="Content\typography.css" />
     <Content Include="Content\jquery.maximage.min.css" />
     <Content Include="Content\main.css" />
@@ -742,6 +864,11 @@
     <Content Include="Areas\Admin\Views\UserProfile\Profile1.cshtml" />
     <Content Include="Areas\Admin\Views\Account\ChangePassword.cshtml" />
     <Content Include="Areas\Admin\Views\EngineerInfo\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\EngineerInfo\_Create.cshtml" />
+    <Content Include="Areas\Assets\global\plugins\datatables\images\Sorting icons.psd" />
+    <Content Include="Areas\Assets\global\plugins\jquery-ui-touch-punch\README.md" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\LICENSE" />
+    <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\README.md" />
     <None Include="Project_Readme.html" />
     <None Include="Properties\PublishProfiles\PikPot.pubxml" />
   </ItemGroup>
