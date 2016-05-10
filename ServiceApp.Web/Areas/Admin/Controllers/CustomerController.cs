@@ -1,9 +1,12 @@
 ﻿using ServiceApp.Domain.Abstract;
+using ServiceApp.Domain.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace ServiceApp.Web.Areas.Admin.Controllers
 {
@@ -11,16 +14,28 @@ namespace ServiceApp.Web.Areas.Admin.Controllers
     public class CustomerController : Controller
     {
         private ICustomerRepository _customerRepo = null;
+        private IEngineerRepository _engineerRepo = null;
 
-        public CustomerController(ICustomerRepository customerRepo)
+        public CustomerController(ICustomerRepository customerRepo, IEngineerRepository engineerRepo)
         {
             _customerRepo = customerRepo;
+            _engineerRepo = engineerRepo;
         }
 
         // GET: Admin/Customer/Dashboard
         public ActionResult Dashboard()
         {
-            return View();
+            try
+            {
+                ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
+
+                return View(_engineerRepo.GetUserRequests(user.Id));
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }            
         }
 
         // GET: Admin/Customer/ProfileInfo

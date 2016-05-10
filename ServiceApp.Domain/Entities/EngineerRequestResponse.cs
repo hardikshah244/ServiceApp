@@ -16,5 +16,6 @@ namespace ServiceApp.Domain.Entities
         public DateTime CreatedDateTime { get; set; }
         public Nullable<DateTime> UpdatedDateTime { get; set; }
         public string Name { get; set; }
+        public int StatusTypeID { get; set; }
     }
 }

@@ -182,7 +182,8 @@ namespace ServiceApp.Domain.Concrete
                                                                                Remark = SR.Remark,
                                                                                ServiceTypeName = STM.ServiceTypeName,
                                                                                StatusTypeName = STTM.StatusTypeName,
-                                                                               Name = USERSD.Name
+                                                                               Name = USERSD.Name,
+                                                                               StatusTypeID = STTM.StatusTypeID
                                                                            }).AsEnumerable<UserRequestResponse>();
 
                 return lstUserRequestResponse;
@@ -212,7 +213,8 @@ namespace ServiceApp.Domain.Concrete
                                                                                        ServiceTypeName = STM.ServiceTypeName,
                                                                                        StatusTypeName = STTM.StatusTypeName,
                                                                                        Name = USERSD.Name,
-                                                                                       UpdatedDateTime = SR.UpdatedDateTime
+                                                                                       UpdatedDateTime = SR.UpdatedDateTime,
+                                                                                       StatusTypeID = STTM.StatusTypeID
                                                                                    }).AsEnumerable<EngineerRequestResponse>();
 
                 return lstEngineerRequestResponse;
@@ -228,6 +230,7 @@ namespace ServiceApp.Domain.Concrete
             try
             {
                 EngineerProfileInfo ObjEngineerProfileInfo = (from USERINFO in context.AspNetUsers
+                                                              join MEMBERSHIP in context.EngineerMemberships on USERINFO.Id equals MEMBERSHIP.UserId
                                                               where USERINFO.Email == Email
                                                               select new EngineerProfileInfo()
                                                               {
@@ -236,7 +239,11 @@ namespace ServiceApp.Domain.Concrete
                                                                   PhoneNumber = USERINFO.PhoneNumber,
                                                                   City = USERINFO.City,
                                                                   State = USERINFO.State,
-                                                                  Pincode = USERINFO.Pincode
+                                                                  Pincode = USERINFO.Pincode,
+                                                                  MembershipType = MEMBERSHIP.MembershipType,
+                                                                  StartDate = MEMBERSHIP.StartDate,
+                                                                  EndDate = MEMBERSHIP.EndDate,
+                                                                  Amount = MEMBERSHIP.Amount
                                                               }).FirstOrDefault<EngineerProfileInfo>();
 
                 return ObjEngineerProfileInfo;

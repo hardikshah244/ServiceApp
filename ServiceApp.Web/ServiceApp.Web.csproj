@@ -669,6 +669,7 @@
     <Content Include="Areas\Assets\pages\scripts\login.js" />
     <Content Include="Areas\Assets\pages\scripts\login.min.js" />
     <Content Include="Areas\Assets\pages\scripts\modalform.js" />
+    <Content Include="Areas\Assets\pages\scripts\table-datatables-buttons.js" />
     <Content Include="Areas\Assets\pages\scripts\ui-modals.js" />
     <Content Include="Areas\Assets\pages\scripts\ui-modals.min.js" />
     <Content Include="Content\animate.css" />

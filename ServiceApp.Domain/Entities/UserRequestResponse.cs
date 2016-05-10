@@ -15,5 +15,6 @@ namespace ServiceApp.Domain.Entities
         public string Remark { get; set; }
         public DateTime CreatedDateTime { get; set; }
         public string Name { get; set; }
+        public int StatusTypeID { get; set; }
     }
 }
