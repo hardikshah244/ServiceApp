@@ -59,51 +59,8 @@
             <!-- END RESPONSIVE MENU TOGGLER -->
             <!-- BEGIN PAGE TOP -->
             <div class="page-top">
-                <!-- BEGIN HEADER SEARCH BOX -->
-                <!-- DOC: Apply "search-form-expanded" right after the "search-form" class to have half expanded search box -->
-                <form class="search-form" action="page_general_search_2.html" method="GET">
-                    <div class="input-group">
-                        <input type="text" class="form-control input-sm" placeholder="Search..." name="query">
-                        <span class="input-group-btn">
-                            <a href="javascript:;" class="btn submit">
-                                <i class="icon-magnifier"></i>
-                            </a>
-                        </span>
-                    </div>
-                </form>
-                <!-- END HEADER SEARCH BOX -->
                 <!-- BEGIN TOP NAVIGATION MENU -->
-                <div class="top-menu">
-                    <ul class="nav navbar-nav pull-right">
-                        <li class="separator hide"> </li>
-                        <!-- BEGIN USER LOGIN DROPDOWN -->
-                        <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
-                        <li class="dropdown dropdown-user dropdown-dark">
-                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                <span class="username username-hide-on-mobile">@User.Identity.Name</span><i class="fa fa-user-md"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-default">
-                                <li>
-                                    <a href="@Url.Action("Profile","UserProfile")">
-                                        <i class="icon-user"></i> My Profile
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("ChangePassword","Account")">
-
-                                        <i class="icon-user"></i>Change Password
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("LogOut","Account")">
-                                        <i class="icon-key"></i> Log Out
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <!-- END USER LOGIN DROPDOWN -->
-                    </ul>
-                </div>
+                @Html.Partial("_TopNavigation")
                 <!-- END TOP NAVIGATION MENU -->
             </div>
             <!-- END PAGE TOP -->
@@ -117,46 +74,13 @@
     <!-- BEGIN CONTAINER -->
     <div class="page-container">
         <!-- BEGIN SIDEBAR -->
-        <div class="page-sidebar-wrapper">
-            <!-- BEGIN SIDEBAR -->
-            <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
-            <!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
-            <div class="page-sidebar navbar-collapse collapse">
-                <!-- BEGIN SIDEBAR MENU -->
-                <!-- DOC: Apply "page-sidebar-menu-light" class right after "page-sidebar-menu" to enable light sidebar menu style(without borders) -->
-                <!-- DOC: Apply "page-sidebar-menu-hover-submenu" class right after "page-sidebar-menu" to enable hoverable(hover vs accordion) sub menu mode -->
-                <!-- DOC: Apply "page-sidebar-menu-closed" class right after "page-sidebar-menu" to collapse("page-sidebar-closed" class must be applied to the body element) the sidebar sub menu mode -->
-                <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
-                <!-- DOC: Set data-keep-expand="true" to keep the submenues expanded -->
-                <!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
-                <ul class="page-sidebar-menu   " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
-                    <li class="nav-item start ">
-                        <a href="@Url.Action("Index","Home")" class="nav-link nav-toggle">
-                            <i class="icon-home"></i>
-                            <span class="title">Dashboard</span>
-                        </a>
-                    </li>
-                    <li class="nav-item  ">
-                        <a href="@Url.Action("Index", "EngineerInfo")" class="nav-link nav-toggle">
-                            <i class="icon-info"></i>
-                            <span class="title">Engineer Information</span>
-                        </a>
-                    </li>
-                </ul>
-                <!-- END SIDEBAR MENU -->
-            </div>
-            <!-- END SIDEBAR -->
-        </div>
+        @Html.Partial("_Sidebar")
         <!-- END SIDEBAR -->
         <!-- BEGIN CONTENT -->
         <div class="page-content-wrapper">
             <!-- BEGIN CONTENT BODY -->
             <div class="page-content">
-                <!-- BEGIN PAGE HEAD-->
-                <div class="page-head">
-                    @RenderBody()
-                </div>
-                <!-- END PAGE HEAD-->
+                @RenderBody()
             </div>
             <!-- END CONTENT BODY -->
         </div>
@@ -188,7 +112,7 @@
     <!-- END THEME GLOBAL SCRIPTS -->
     <!-- BEGIN PAGE LEVEL SCRIPTS -->
     <script src="~/Areas/Assets/pages/scripts/dashboard.min.js" type="text/javascript"></script>
-    @*<script src="~/Areas/Assets/pages/scripts/form-validation-md.min.js"></script> //For client side validation logic *@ 
+    @*<script src="~/Areas/Assets/pages/scripts/form-validation-md.min.js"></script> //For client side validation logic *@
     <!-- END PAGE LEVEL SCRIPTS -->
     <!-- BEGIN THEME LAYOUT SCRIPTS -->
     <script src="~/Areas/Assets/layouts/layout4/scripts/layout.min.js" type="text/javascript"></script>

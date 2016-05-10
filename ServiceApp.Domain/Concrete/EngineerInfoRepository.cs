@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 using ServiceApp.Domain.Abstract;
 using ServiceApp.Domain.DataModel;
 using ServiceApp.Domain.Entities;
+using ServiceApp.Domain.Common;
+using ServiceApp.Domain.Security;
+using Microsoft.AspNet.Identity;
+
 
 namespace ServiceApp.Domain.Concrete
 {

@@ -14,6 +14,5 @@ namespace ServiceApp.Web.Areas.Admin.Controllers
         {
             return View();
         }
-
-   }
+    }
 }

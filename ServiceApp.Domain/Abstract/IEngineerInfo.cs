@@ -1,4 +1,5 @@
-﻿using ServiceApp.Domain.DataModel;
+﻿using Microsoft.AspNet.Identity;
+using ServiceApp.Domain.DataModel;
 using ServiceApp.Domain.Entities;
 using System;
 using System.Collections.Generic;

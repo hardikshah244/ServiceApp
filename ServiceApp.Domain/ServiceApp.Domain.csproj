@@ -89,9 +89,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\IAdminRepository.cs" />
+    <Compile Include="Abstract\ICustomerRepository.cs" />
     <Compile Include="Abstract\IEngineerInfo.cs" />
     <Compile Include="Abstract\IEngineerRepository.cs" />
     <Compile Include="Common\Email.cs" />
+    <Compile Include="Common\Validations.cs" />
+    <Compile Include="Concrete\AdminRepository.cs" />
+    <Compile Include="Concrete\CustomerRepository.cs" />
     <Compile Include="Concrete\EngineerInfoRepository.cs" />
     <Compile Include="DataModel\AspNetRole.cs">
       <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
@@ -141,11 +146,14 @@
     <Compile Include="DataModel\StatusTypeMaster.cs">
       <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\AdminProfileInfo.cs" />
     <Compile Include="Entities\CancelRequest.cs" />
     <Compile Include="Entities\CancelRequestByUser.cs" />
     <Compile Include="Entities\CloseRequest.cs" />
     <Compile Include="DataModel\EngineerInfoMetadata.cs" />
+    <Compile Include="Entities\CustomerProfileInfo.cs" />
     <Compile Include="Entities\EngineerRequestResponse.cs" />
+    <Compile Include="Entities\EngineerProfileInfo.cs" />
     <Compile Include="Entities\RaiseRequest.cs" />
     <Compile Include="Entities\RaiseRequestResponse.cs" />
     <Compile Include="Entities\RegisterEngineer.cs" />

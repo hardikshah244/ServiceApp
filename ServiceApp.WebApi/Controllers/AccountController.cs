@@ -194,7 +194,7 @@ namespace ServiceApp.WebApi.Controllers
                     return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState.ValidateModelState());
                 }
 
-                string strPassword = Membership.GeneratePassword(8, 0);
+                string strPassword = Validations.GeneratePassword(resetPassword.Email, "");
                 IdentityResult result = null;
 
                 if (!string.IsNullOrEmpty(strPassword))

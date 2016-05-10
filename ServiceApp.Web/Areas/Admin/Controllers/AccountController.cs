@@ -28,6 +28,9 @@ namespace ServiceApp.Web.Areas.Admin.Controllers
         public AccountController()
         {
             _repo = new AuthRepository(AppUserManager, AppRoleManager);
+
+            //For Admin Users Creation
+            //AdminCreation();
         }
 
         protected ApplicationUserManager AppUserManager
@@ -67,6 +70,7 @@ namespace ServiceApp.Web.Areas.Admin.Controllers
                     _userManager = AppUserManager;
 
                 ApplicationUser user = _userManager.Find(loginModel.UserName, loginModel.Password);
+
                 if (user != null)
                 {
                     IAuthenticationManager authenticationManager = HttpContext.GetOwinContext().Authentication;
@@ -82,7 +86,18 @@ namespace ServiceApp.Web.Areas.Admin.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Home");
+                        if (User.IsInRole("Admin"))
+                        {
+                            return RedirectToAction("Dashboard", "Admin");
+                        }
+                        else if (User.IsInRole("Customer"))
+                        {
+                            return RedirectToAction("Dashboard", "Customer");
+                        }
+                        else if (User.IsInRole("Engineer"))
+                        {
+                            return RedirectToAction("Dashboard", "Engineer");
+                        }
                     }
                 }
                 else
@@ -95,9 +110,7 @@ namespace ServiceApp.Web.Areas.Admin.Controllers
         }
 
         //Post : Admin/Account/LogOut
-        //[HttpPost]
         [Authorize]
-        //[ValidateAntiForgeryToken]
         public ActionResult LogOut()
         {
             IAuthenticationManager authenticationManager = HttpContext.GetOwinContext().Authentication;
@@ -106,34 +119,67 @@ namespace ServiceApp.Web.Areas.Admin.Controllers
             return RedirectToAction("Login", "Account", new { Area = "Admin" });
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult ForgetPassword()
+        // GET: Admin/Account/ForgotPassword
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult ForgotPassword()
         {
-            var Email = Request.Form["Email"];
+            return View("ForgotPassword");
+        }
 
-            if (!string.IsNullOrEmpty(Email))
+        // POST: Admin/Account/ForgotPassword
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult ForgotPassword(ForgotPassword forgotPassword)
+        {
+            try
             {
-                if (_userManager == null)
-                    _userManager = AppUserManager;
+                string strEmail = forgotPassword.Email;
+                IdentityResult result;
 
-                string strPassword = Membership.GeneratePassword(8, 0);
-
-                ApplicationUser user = _userManager.FindByEmail(Email);
-
-                if (user != null)
+                if (ModelState.IsValid)
                 {
-                    _userManager.RemovePassword(user.Id);
+                    if (_userManager == null)
+                        _userManager = AppUserManager;
 
-                    _userManager.AddPassword(user.Id, strPassword);
+                    string strPassword = Validations.GeneratePassword(strEmail, "");
+
+                    ApplicationUser user = _userManager.FindByEmail(strEmail);
+
+                    if (user != null)
+                    {
+                        result = _userManager.RemovePassword(user.Id);
+
+                        result = _userManager.AddPassword(user.Id, strPassword);
+
+                        if (result.Succeeded)
+                        {
+                            ViewBag.Message = "Your password successfully reset!";
+
+                            Email.SendEmail(strFromEmail, strEmail, "ForgotPassword", "Your password successfully reset, Please use below information for login <br/> Password :- " + strPassword);
+                        }
+                        else
+                        {
+                            foreach (var error in result.Errors)
+                            {
+                                ModelState.AddModelError("", error);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Invalid email");
+                    }
                 }
             }
-            else
+            catch (Exception ex)
             {
-                ModelState.AddModelError("", "Enter email.");
+
+                ModelState.AddModelError("", "Error occurs on forgot password");
             }
 
-            return RedirectToAction("Login", "Account", new { Area = "Admin" });
+            return View(forgotPassword);
         }
 
         // GET: Admin/Account/ChangePassword
@@ -183,6 +229,37 @@ namespace ServiceApp.Web.Areas.Admin.Controllers
             }
 
             return View(chnagePassword);
+        }
+
+        [NonAction]
+        public void AdminCreation()
+        {
+            if (_userManager == null)
+                _userManager = AppUserManager;
+
+            if (_userRoleManager == null)
+                _userRoleManager = AppRoleManager;
+
+            var user = new ApplicationUser
+            {
+                UserName = "Admin1@gmail.com",
+                Email = "Admin1@gmail.com",
+                PhoneNumber = "9913140245",
+                Name = "Admin1",
+                City = "Surat",
+                State = "Gujarat",
+                Pincode = "395005"
+            };
+
+            string strPassword = Validations.GeneratePassword(user.Email, user.PhoneNumber);
+
+            var result = _userManager.Create(user, strPassword);
+
+            if (result.Succeeded)
+            {
+                if (_userRoleManager.RoleExists("Admin"))
+                    _userManager.AddToRole(user.Id, "Admin");
+            }
         }
     }
 }

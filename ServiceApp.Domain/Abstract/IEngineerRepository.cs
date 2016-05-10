@@ -21,6 +21,8 @@ namespace ServiceApp.Domain.Abstract
         IEnumerable<UserRequestResponse> GetUserRequests(string CreatedUserID);
 
         IEnumerable<EngineerRequestResponse> GetEngineerRequests(string UpdatedUserID);
+
+        EngineerProfileInfo GetProfileInfo(string Email);
     }
 }
 

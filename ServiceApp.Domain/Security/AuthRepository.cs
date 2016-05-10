@@ -7,6 +7,7 @@ using ServiceApp.Domain.Security;
 using System.Collections.Generic;
 using ServiceApp.Domain.DataModel;
 using System.Transactions;
+using ServiceApp.Domain.Common;
 
 namespace ServiceApp.Domain.Concrete
 {
@@ -26,9 +27,10 @@ namespace ServiceApp.Domain.Concrete
         {
             IdentityResult result;
             ApplicationUser user = null;
+            Validations ObjValidations = new Validations();
             try
             {
-                if (!ValidatePhoneNumberExists(userModel.PhoneNumber))
+                if (!ObjValidations.ValidatePhoneNumberExists(userModel.PhoneNumber))
                 {
                     user = new ApplicationUser
                     {
@@ -76,6 +78,7 @@ namespace ServiceApp.Domain.Concrete
         {
             IdentityResult result;
             ApplicationUser user = null;
+            Validations ObjValidations = new Validations();
             try
             {
                 if (userModel.MembershipType == "Paid")
@@ -84,7 +87,7 @@ namespace ServiceApp.Domain.Concrete
                         return IdentityResult.Failed("Startdate can't be null or amount greater than zero");
                 }
 
-                if (!ValidatePhoneNumberExists(userModel.PhoneNumber))
+                if (!ObjValidations.ValidatePhoneNumberExists(userModel.PhoneNumber))
                 {
                     user = new ApplicationUser
                     {
@@ -118,6 +121,73 @@ namespace ServiceApp.Domain.Concrete
                             ObjEngineerMembership.StartDate = userModel.StartDate;
                             ObjEngineerMembership.EndDate = userModel.StartDate?.AddDays(30);
                             ObjEngineerMembership.Amount = userModel.Amount;
+                        }
+
+                        dbContext.EngineerMemberships.Add(ObjEngineerMembership);
+                        dbContext.SaveChanges();
+
+                        if (_userRoleManager.RoleExists("Engineer"))
+                            _userManager.AddToRole(user.Id, "Engineer");
+                    }
+                }
+                else
+                {
+                    result = IdentityResult.Failed("Phone Number already exists");
+                }
+
+                return result;
+            }
+            catch (Exception)
+            {
+                _userManager.Delete(user);
+
+                throw;
+            }
+        }
+
+        // In this application UserName consider as Email
+        public IdentityResult RegisterEngineerWebApp(EngineerInfo engineerInfo, string Password)
+        {
+            IdentityResult result;
+            ApplicationUser user = null;
+            Validations ObjValidations = new Validations();
+            try
+            {
+                if (engineerInfo.MembershipType == "Paid")
+                {
+                    if (engineerInfo.StartDate == null || engineerInfo.Amount == null)
+                        return IdentityResult.Failed("Startdate can't be blank or amount greater than zero");
+                }
+
+                if (!ObjValidations.ValidatePhoneNumberExists(engineerInfo.PhoneNumber))
+                {
+                    user = new ApplicationUser
+                    {
+                        UserName = engineerInfo.Email,
+                        Email = engineerInfo.Email,
+                        PhoneNumber = engineerInfo.PhoneNumber,
+                        Name = engineerInfo.Name,
+                        City = engineerInfo.City,
+                        State = engineerInfo.State,
+                        Pincode = engineerInfo.Pincode
+                    };
+
+                    result = _userManager.Create(user, Password);
+
+                    if (result.Succeeded)
+                    {
+                        ServiceAppDBContext dbContext = new ServiceAppDBContext();
+
+                        EngineerMembership ObjEngineerMembership = new EngineerMembership();
+                        ObjEngineerMembership.MembershipType = engineerInfo.MembershipType;
+                        ObjEngineerMembership.CreationDate = DateTime.Now;
+                        ObjEngineerMembership.UserId = user.Id;
+
+                        if (ObjEngineerMembership.MembershipType == "Paid")
+                        {
+                            ObjEngineerMembership.StartDate = engineerInfo.StartDate;
+                            ObjEngineerMembership.EndDate = engineerInfo.StartDate?.AddDays(30);
+                            ObjEngineerMembership.Amount = engineerInfo.Amount;
                         }
 
                         dbContext.EngineerMemberships.Add(ObjEngineerMembership);
@@ -296,26 +366,6 @@ namespace ServiceApp.Domain.Concrete
             }
 
             return dicUserInfo;
-        }
-
-        public bool ValidatePhoneNumberExists(string PhoneNumber)
-        {
-            bool IsPhoneNumberExists = false;
-            try
-            {
-                int PhoneNumberExistsCount = (from user in _userManager.Users
-                                              where user.PhoneNumber == PhoneNumber
-                                              select user.PhoneNumber).Count();
-
-                if (PhoneNumberExistsCount > 0)
-                    IsPhoneNumberExists = true;
-
-                return IsPhoneNumberExists;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
         }
 
         #region RoleManager

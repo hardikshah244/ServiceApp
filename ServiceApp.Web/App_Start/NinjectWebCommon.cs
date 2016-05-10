@@ -64,6 +64,9 @@ namespace ServiceApp.Web.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             kernel.Bind<IEngineerInfo>().To<EngineerInfoRepository>();
+            kernel.Bind<IAdminRepository>().To<AdminRepository>();
+            kernel.Bind<ICustomerRepository>().To<CustomerRepository>();
+            kernel.Bind<IEngineerRepository>().To<EngineerRepository>();
         }
     }
 }

@@ -194,10 +194,13 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AccountController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CustomerController.cs" />
+    <Compile Include="Areas\Admin\Controllers\EngineerController.cs" />
     <Compile Include="Areas\Admin\Controllers\EngineerInfoController.cs" />
-    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserProfileController.cs" />
     <Compile Include="Areas\Admin\Models\ChangePassword.cs" />
+    <Compile Include="Areas\Admin\Models\ForgotPassword.cs" />
     <Compile Include="Areas\Admin\Models\Login.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -808,7 +811,6 @@
     <Content Include="Areas\Admin\Views\web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Account\Login.cshtml" />
     <Content Include="Areas\Assets\global\plugins\bootstrap\fonts\bootstrap\glyphicons-halflings-regular.eot" />
     <Content Include="Areas\Assets\global\plugins\bootstrap\fonts\bootstrap\glyphicons-halflings-regular.ttf" />
@@ -869,6 +871,16 @@
     <Content Include="Areas\Assets\global\plugins\jquery-ui-touch-punch\README.md" />
     <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\LICENSE" />
     <Content Include="Areas\Assets\global\plugins\bootstrap-datepicker\README.md" />
+    <Content Include="Areas\Admin\Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_LayoutLogin.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_TopNavigation.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Sidebar.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\Dashboard.cshtml" />
+    <Content Include="Areas\Admin\Views\Customer\Dashboard.cshtml" />
+    <Content Include="Areas\Admin\Views\Engineer\Dashboard.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\ProfileInfo.cshtml" />
+    <Content Include="Areas\Admin\Views\Engineer\ProfileInfo.cshtml" />
+    <Content Include="Areas\Admin\Views\Customer\ProfileInfo.cshtml" />
     <None Include="Project_Readme.html" />
     <None Include="Properties\PublishProfiles\PikPot.pubxml" />
   </ItemGroup>

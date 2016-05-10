@@ -13,13 +13,30 @@
     <h4 class="modal-title">Add Engineer Information</h4>
 </div>
 
+@if (ViewData.ModelState.IsValid)
+{
+    if (@ViewBag.Message != null)
+    {
+        <div class="alert alert-success">
+            <a class="close" data-dismiss="alert">×</a>
+            @ViewBag.Message
+        </div>
+    }
+}
 
 @using (Html.BeginForm())
 {
-    @Html.AntiForgeryToken()
+    @Html.AntiForgeryToken();
     <div class="modal-body">
         <div class="form-horizontal">
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @if (!ViewData.ModelState.IsValid)
+            {
+            <div class="alert alert-danger">
+                <a class="close" data-dismiss="alert">×</a>
+                <strong>Validation Errors</strong>
+                @Html.ValidationSummary()
+            </div>
+            }
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-3" })
@@ -126,6 +143,12 @@
            $("#EndDate").val(('0' + newDate.getDate()).slice(-2) + "-" + ('0' + (newDate.getMonth() + 1)).slice(-2) + "-" + newDate.getFullYear());
        });
 
+        if ($("#MembershipType option:selected").val() == "Paid") {
+            $("#dvStartDate").css("display", "block");
+            $("#dvEndDate").css("display", "block");
+            $("#dvAmount").css("display", "block");
+        }
+
         $("#MembershipType").change(function () {
             var MembershipType = $("#MembershipType option:selected").val();
             if (MembershipType == "Paid") {
@@ -142,6 +165,7 @@
                 $("#dvAmount").css("display", "none");
             }
         });
+
     });
 </script>
 

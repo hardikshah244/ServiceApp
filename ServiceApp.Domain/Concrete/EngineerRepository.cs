@@ -198,24 +198,48 @@ namespace ServiceApp.Domain.Concrete
             try
             {
                 IEnumerable<EngineerRequestResponse> lstEngineerRequestResponse = (from SR in context.ServiceRequests
-                                                                           join STM in context.ServiceTypeMasters on SR.ServiceTypeID equals STM.ServiceTypeID
-                                                                           join STTM in context.StatusTypeMasters on SR.StatusTypeID equals STTM.StatusTypeID
-                                                                           join USERS in context.AspNetUsers on SR.CreatedUserID equals USERS.Id into CREATEDUSERS
-                                                                           from USERSD in CREATEDUSERS.DefaultIfEmpty()
-                                                                           where SR.UpdatedUserID == UpdatedUserID
-                                                                           select new EngineerRequestResponse()
-                                                                           {
-                                                                               ServiceRequestID = SR.ServiceRequestID,
-                                                                               CreatedDateTime = SR.CreatedDateTime,
-                                                                               Landmark = SR.Landmark,
-                                                                               Remark = SR.Remark,
-                                                                               ServiceTypeName = STM.ServiceTypeName,
-                                                                               StatusTypeName = STTM.StatusTypeName,
-                                                                               Name = USERSD.Name,
-                                                                               UpdatedDateTime = SR.UpdatedDateTime
-                                                                           }).AsEnumerable<EngineerRequestResponse>();
+                                                                                   join STM in context.ServiceTypeMasters on SR.ServiceTypeID equals STM.ServiceTypeID
+                                                                                   join STTM in context.StatusTypeMasters on SR.StatusTypeID equals STTM.StatusTypeID
+                                                                                   join USERS in context.AspNetUsers on SR.CreatedUserID equals USERS.Id into CREATEDUSERS
+                                                                                   from USERSD in CREATEDUSERS.DefaultIfEmpty()
+                                                                                   where SR.UpdatedUserID == UpdatedUserID
+                                                                                   select new EngineerRequestResponse()
+                                                                                   {
+                                                                                       ServiceRequestID = SR.ServiceRequestID,
+                                                                                       CreatedDateTime = SR.CreatedDateTime,
+                                                                                       Landmark = SR.Landmark,
+                                                                                       Remark = SR.Remark,
+                                                                                       ServiceTypeName = STM.ServiceTypeName,
+                                                                                       StatusTypeName = STTM.StatusTypeName,
+                                                                                       Name = USERSD.Name,
+                                                                                       UpdatedDateTime = SR.UpdatedDateTime
+                                                                                   }).AsEnumerable<EngineerRequestResponse>();
 
                 return lstEngineerRequestResponse;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public EngineerProfileInfo GetProfileInfo(string Email)
+        {
+            try
+            {
+                EngineerProfileInfo ObjEngineerProfileInfo = (from USERINFO in context.AspNetUsers
+                                                              where USERINFO.Email == Email
+                                                              select new EngineerProfileInfo()
+                                                              {
+                                                                  Email = USERINFO.Email,
+                                                                  Name = USERINFO.Name,
+                                                                  PhoneNumber = USERINFO.PhoneNumber,
+                                                                  City = USERINFO.City,
+                                                                  State = USERINFO.State,
+                                                                  Pincode = USERINFO.Pincode
+                                                              }).FirstOrDefault<EngineerProfileInfo>();
+
+                return ObjEngineerProfileInfo;
             }
             catch (Exception)
             {
@@ -242,6 +266,7 @@ namespace ServiceApp.Domain.Concrete
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+
 
     }
 }
