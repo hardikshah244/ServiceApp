@@ -1,0 +1,24 @@
+  SELECT USERS.Name,USERS.Email
+	FROM AspNetUsers USERS	
+	INNER JOIN AspNetUserRoles USERROLES ON  USERROLES.UserId = USERS.Id
+	INNER JOIN AspNetRoles ROLES ON USERROLES.RoleId = ROLES.Id AND ROLES.Name = 'Engineer'
+	INNER JOIN EngineerMembership MEMBERSHIP ON MEMBERSHIP.UserId = USERS.Id	
+	WHERE USERS.IsActive = 1
+	AND ((MEMBERSHIP.StartDate IS NULL AND MEMBERSHIP.EndDate IS NULL)
+			OR MEMBERSHIP.EndDate >= GETDATE())
+	AND USERS.Id NOT IN (SELECT UpdatedUserID
+							FROM ServiceRequest
+							WHERE UpdatedUserID IS NOT NULL
+							AND StatusTypeID IN (1,2)
+							)
+	AND USERS.Pincode BETWEEN USERS.Pincode - 5 AND USERS.Pincode + 5;
+
+
+	
+
+	
+
+SELECT UpdatedUserID
+	FROM ServiceRequest
+	WHERE UpdatedUserID IS NOT NULL
+	AND StatusTypeID IN (1,2);
