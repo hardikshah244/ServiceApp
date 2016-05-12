@@ -227,6 +227,9 @@
           <Parameter Name="PPincode" Type="int" Mode="In" />
         </Function>
         <Function Name="GETENGINEERINFO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GETENGINEERREQUESTS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PUpdatedUserID" Type="nvarchar" Mode="In" />
+        </Function>
         <EntityContainer Name="ServiceAppDBModelStoreContainer">
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
@@ -533,6 +536,9 @@
             <Parameter Name="PPincode" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GETENGINEERINFO" ReturnType="Collection(ServiceAppDBModel.EngineerInfo)" />
+          <FunctionImport Name="GETENGINEERREQUESTS" ReturnType="Collection(ServiceAppDBModel.EngineerRequestResponse)">
+          <Parameter Name="PUpdatedUserID" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GETENGINEERDETAILS_Result">
           <Property Type="String" Name="Name" Nullable="true" MaxLength="200" />
@@ -565,6 +571,28 @@
           <Property Type="Decimal" Name="Amount" Nullable="true" Precision="18" Scale="2" />
           <Property Type="String" Name="Id" Nullable="false" MaxLength="128" />
           </ComplexType>
+        <ComplexType Name="GETENGINEERREQUESTS_Result">
+          <Property Type="Int32" Name="ServiceRequestID" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedDateTime" Nullable="false" Precision="23" />
+          <Property Type="String" Name="Landmark" Nullable="true" />
+          <Property Type="String" Name="Remark" Nullable="true" />
+          <Property Type="String" Name="ServiceTypeName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="StatusTypeName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="UpdatedDateTime" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="StatusTypeID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="EngineerRequestResponse">
+          <Property Type="Int32" Name="ServiceRequestID" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedDateTime" Nullable="false" Precision="23" />
+          <Property Type="String" Name="Landmark" Nullable="true" />
+          <Property Type="String" Name="Remark" Nullable="true" />
+          <Property Type="String" Name="ServiceTypeName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="StatusTypeName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="UpdatedDateTime" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="StatusTypeID" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -711,6 +739,21 @@
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GETENGINEERREQUESTS" FunctionName="ServiceAppDBModel.Store.GETENGINEERREQUESTS">
+          <ResultMapping>
+              <ComplexTypeMapping TypeName="ServiceAppDBModel.EngineerRequestResponse">
+                <ScalarProperty Name="ServiceRequestID" ColumnName="ServiceRequestID" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="Landmark" ColumnName="Landmark" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="ServiceTypeName" ColumnName="ServiceTypeName" />
+                <ScalarProperty Name="StatusTypeName" ColumnName="StatusTypeName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UpdatedDateTime" ColumnName="UpdatedDateTime" />
+                <ScalarProperty Name="StatusTypeID" ColumnName="StatusTypeID" />
+              </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
         </EntityContainerMapping>

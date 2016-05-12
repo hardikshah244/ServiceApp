@@ -56,6 +56,7 @@ namespace ServiceApp.Web.Areas.Admin.Controllers
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
+
             return View();
         }
 
@@ -64,46 +65,54 @@ namespace ServiceApp.Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(Login loginModel, string returnUrl)
         {
-            if (ModelState.IsValid)
+            try
             {
-                if (_userManager == null)
-                    _userManager = AppUserManager;
-
-                ApplicationUser user = _userManager.Find(loginModel.UserName, loginModel.Password);
-
-                if (user != null)
+                if (ModelState.IsValid)
                 {
-                    IAuthenticationManager authenticationManager = HttpContext.GetOwinContext().Authentication;
-                    authenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-                    ClaimsIdentity identity = _userManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
-                    AuthenticationProperties props = new AuthenticationProperties();
-                    props.IsPersistent = loginModel.RememberMe;
-                    authenticationManager.SignIn(props, identity);
+                    if (_userManager == null)
+                        _userManager = AppUserManager;
 
-                    if (Url.IsLocalUrl(returnUrl))
+                    ApplicationUser user = _userManager.Find(loginModel.UserName, loginModel.Password);
+
+                    if (user != null)
                     {
-                        return Redirect(returnUrl);
+                        IAuthenticationManager authenticationManager = HttpContext.GetOwinContext().Authentication;
+                        authenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
+                        ClaimsIdentity identity = _userManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
+                        AuthenticationProperties props = new AuthenticationProperties();
+                        props.IsPersistent = loginModel.RememberMe;
+                        authenticationManager.SignIn(props, identity);
+
+                        if (Url.IsLocalUrl(returnUrl))
+                        {
+                            return Redirect(returnUrl);
+                        }
+                        else
+                        {
+                            if (User.IsInRole("Admin"))
+                            {
+                                return RedirectToAction("Dashboard", "Admin");
+                            }
+                            else if (User.IsInRole("Customer"))
+                            {
+                                return RedirectToAction("Dashboard", "Customer");
+                            }
+                            else if (User.IsInRole("Engineer"))
+                            {
+                                return RedirectToAction("Dashboard", "Engineer");
+                            }
+                        }
                     }
                     else
                     {
-                        if (User.IsInRole("Admin"))
-                        {
-                            return RedirectToAction("Dashboard", "Admin");
-                        }
-                        else if (User.IsInRole("Customer"))
-                        {
-                            return RedirectToAction("Dashboard", "Customer");
-                        }
-                        else if (User.IsInRole("Engineer"))
-                        {
-                            return RedirectToAction("Dashboard", "Engineer");
-                        }
+                        ModelState.AddModelError("", "Invalid username or password.");
                     }
                 }
-                else
-                {
-                    ModelState.AddModelError("", "Invalid username or password.");
-                }
+
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(new Exception(ex.Message, ex.InnerException));
             }
 
             return View(loginModel);
@@ -113,9 +122,17 @@ namespace ServiceApp.Web.Areas.Admin.Controllers
         [Authorize]
         public ActionResult LogOut()
         {
-            IAuthenticationManager authenticationManager = HttpContext.GetOwinContext().Authentication;
-            authenticationManager.SignOut();
-            Session.Abandon();
+            try
+            {
+                IAuthenticationManager authenticationManager = HttpContext.GetOwinContext().Authentication;
+                authenticationManager.SignOut();
+                Session.Abandon();
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(new Exception(ex.Message, ex.InnerException));
+            }
+
             return RedirectToAction("Login", "Account", new { Area = "Admin" });
         }
 
@@ -175,8 +192,8 @@ namespace ServiceApp.Web.Areas.Admin.Controllers
             }
             catch (Exception ex)
             {
-
                 ModelState.AddModelError("", "Error occurs on forgot password");
+                Elmah.ErrorSignal.FromCurrentContext().Raise(new Exception(ex.Message, ex.InnerException));
             }
 
             return View(forgotPassword);
@@ -196,36 +213,43 @@ namespace ServiceApp.Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ChangePassword(ChangePassword chnagePassword)
         {
-            if (ModelState.IsValid)
+            try
             {
-                if (_userManager == null)
-                    _userManager = AppUserManager;
-
-                ApplicationUser user = _userManager.FindByEmail(User.Identity.Name);
-
-                if (user != null)
+                if (ModelState.IsValid)
                 {
-                    IdentityResult result = _userManager.ChangePassword(user.Id, chnagePassword.OldPassword,
-                                                            chnagePassword.NewPassword);
+                    if (_userManager == null)
+                        _userManager = AppUserManager;
 
-                    if (!result.Succeeded)
+                    ApplicationUser user = _userManager.FindByEmail(User.Identity.Name);
+
+                    if (user != null)
                     {
-                        foreach (var error in result.Errors)
+                        IdentityResult result = _userManager.ChangePassword(user.Id, chnagePassword.OldPassword,
+                                                                chnagePassword.NewPassword);
+
+                        if (!result.Succeeded)
                         {
-                            ModelState.AddModelError("", error);
+                            foreach (var error in result.Errors)
+                            {
+                                ModelState.AddModelError("", error);
+                            }
                         }
-                    }
-                    else if (result.Succeeded)
-                    {
-                        ViewBag.Message = "Your password successfully changed!";
-                        Email.SendEmail(strFromEmail, User.Identity.Name, "ChangePassword", "Your password successfully changed");
-                    }
+                        else if (result.Succeeded)
+                        {
+                            ViewBag.Message = "Your password successfully changed!";
+                            Email.SendEmail(strFromEmail, User.Identity.Name, "ChangePassword", "Your password successfully changed");
+                        }
 
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Invalid old or new password.");
+                    }
                 }
-                else
-                {
-                    ModelState.AddModelError("", "Invalid old or new password.");
-                }
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(new Exception(ex.Message, ex.InnerException));
             }
 
             return View(chnagePassword);
@@ -234,31 +258,38 @@ namespace ServiceApp.Web.Areas.Admin.Controllers
         [NonAction]
         public void AdminCreation()
         {
-            if (_userManager == null)
-                _userManager = AppUserManager;
-
-            if (_userRoleManager == null)
-                _userRoleManager = AppRoleManager;
-
-            var user = new ApplicationUser
+            try
             {
-                UserName = "Admin1@gmail.com",
-                Email = "Admin1@gmail.com",
-                PhoneNumber = "9913140245",
-                Name = "Admin1",
-                City = "Surat",
-                State = "Gujarat",
-                Pincode = "395005"
-            };
+                if (_userManager == null)
+                    _userManager = AppUserManager;
 
-            string strPassword = Validations.GeneratePassword(user.Email, user.PhoneNumber);
+                if (_userRoleManager == null)
+                    _userRoleManager = AppRoleManager;
 
-            var result = _userManager.Create(user, strPassword);
+                var user = new ApplicationUser
+                {
+                    UserName = "Admin1@gmail.com",
+                    Email = "Admin1@gmail.com",
+                    PhoneNumber = "9913140245",
+                    Name = "Admin1",
+                    City = "Surat",
+                    State = "Gujarat",
+                    Pincode = "395005"
+                };
 
-            if (result.Succeeded)
+                string strPassword = Validations.GeneratePassword(user.Email, user.PhoneNumber);
+
+                var result = _userManager.Create(user, strPassword);
+
+                if (result.Succeeded)
+                {
+                    if (_userRoleManager.RoleExists("Admin"))
+                        _userManager.AddToRole(user.Id, "Admin");
+                }
+            }
+            catch (Exception ex)
             {
-                if (_userRoleManager.RoleExists("Admin"))
-                    _userManager.AddToRole(user.Id, "Admin");
+                Elmah.ErrorSignal.FromCurrentContext().Raise(new Exception(ex.Message, ex.InnerException));
             }
         }
     }

@@ -73,7 +73,7 @@ namespace ServiceApp.Domain.Concrete
                 {
                     RequestResult.StatusTypeID = cancelRequest.StatusTypeID;
                     RequestResult.ServiceRequestRemark = cancelRequest.ServiceRequestRemark;
-                    RequestResult.UpdatedUserID = null;
+                    //RequestResult.UpdatedUserID = null;
                     RequestResult.UpdatedDateTime = DateTime.Now;
 
                     int Cnt = context.SaveChanges();
@@ -140,7 +140,7 @@ namespace ServiceApp.Domain.Concrete
                 {
                     RequestResult.StatusTypeID = cancelRequestByUser.StatusTypeID;
                     RequestResult.ServiceRequestRemark = cancelRequestByUser.ServiceRequestRemark;
-                    RequestResult.UpdatedUserID = null;
+                    //RequestResult.UpdatedUserID = null;
                     RequestResult.UpdatedDateTime = DateTime.Now;
                     RequestResult.EngineerConfirmDateTime = null;
 
@@ -198,24 +198,26 @@ namespace ServiceApp.Domain.Concrete
         {
             try
             {
-                IEnumerable<EngineerRequestResponse> lstEngineerRequestResponse = (from SR in context.ServiceRequests
-                                                                                   join STM in context.ServiceTypeMasters on SR.ServiceTypeID equals STM.ServiceTypeID
-                                                                                   join STTM in context.StatusTypeMasters on SR.StatusTypeID equals STTM.StatusTypeID
-                                                                                   join USERS in context.AspNetUsers on SR.CreatedUserID equals USERS.Id into CREATEDUSERS
-                                                                                   from USERSD in CREATEDUSERS.DefaultIfEmpty()
-                                                                                   where SR.UpdatedUserID == UpdatedUserID
-                                                                                   select new EngineerRequestResponse()
-                                                                                   {
-                                                                                       ServiceRequestID = SR.ServiceRequestID,
-                                                                                       CreatedDateTime = SR.CreatedDateTime,
-                                                                                       Landmark = SR.Landmark,
-                                                                                       Remark = SR.Remark,
-                                                                                       ServiceTypeName = STM.ServiceTypeName,
-                                                                                       StatusTypeName = STTM.StatusTypeName,
-                                                                                       Name = USERSD.Name,
-                                                                                       UpdatedDateTime = SR.UpdatedDateTime,
-                                                                                       StatusTypeID = STTM.StatusTypeID
-                                                                                   }).AsEnumerable<EngineerRequestResponse>();
+                //IEnumerable<EngineerRequestResponse> lstEngineerRequestResponse = (from SR in context.ServiceRequests
+                //                                                                   join STM in context.ServiceTypeMasters on SR.ServiceTypeID equals STM.ServiceTypeID
+                //                                                                   join STTM in context.StatusTypeMasters on SR.StatusTypeID equals STTM.StatusTypeID
+                //                                                                   join USERS in context.AspNetUsers on SR.CreatedUserID equals USERS.Id into CREATEDUSERS
+                //                                                                   from USERSD in CREATEDUSERS.DefaultIfEmpty()
+                //                                                                   where SR.UpdatedUserID == UpdatedUserID
+                //                                                                   select new EngineerRequestResponse()
+                //                                                                   {
+                //                                                                       ServiceRequestID = SR.ServiceRequestID,
+                //                                                                       CreatedDateTime = SR.CreatedDateTime,
+                //                                                                       Landmark = SR.Landmark,
+                //                                                                       Remark = SR.Remark,
+                //                                                                       ServiceTypeName = STM.ServiceTypeName,
+                //                                                                       StatusTypeName = STTM.StatusTypeName,
+                //                                                                       Name = USERSD.Name,
+                //                                                                       UpdatedDateTime = SR.UpdatedDateTime,
+                //                                                                       StatusTypeID = STTM.StatusTypeID
+                //                                                                   }).AsEnumerable<EngineerRequestResponse>();
+
+                IEnumerable<EngineerRequestResponse> lstEngineerRequestResponse = context.GETENGINEERREQUESTS(UpdatedUserID).ToList<EngineerRequestResponse>();
 
                 return lstEngineerRequestResponse;
             }

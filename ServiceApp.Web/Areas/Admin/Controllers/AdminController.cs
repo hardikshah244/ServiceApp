@@ -28,14 +28,8 @@ namespace ServiceApp.Web.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult ProfileInfo()
         {
-            try
-            {
-                return View(_adminRepo.GetProfileInfo(User.Identity.Name));
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+
+            return View(_adminRepo.GetProfileInfo(User.Identity.Name));
 
         }
     }

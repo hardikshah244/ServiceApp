@@ -33,7 +33,6 @@ namespace ServiceApp.Web.Areas.Admin.Controllers
             }
             catch (Exception)
             {
-
                 throw;
             }            
         }

@@ -22,3 +22,12 @@ SELECT UpdatedUserID
 	FROM ServiceRequest
 	WHERE UpdatedUserID IS NOT NULL
 	AND StatusTypeID IN (1,2);
+	
+	Elmah.ErrorSignal.FromCurrentContext().Raise(new Exception(ex.Message, ex.InnerException));
+	
+	1	2	testing	testing	NULL	2016-04-05 21:52:05.307	05d22bb6-28bd-4073-b261-42c5dfc7fede	2016-04-05 21:52:05.307	
+	
+	ENGiNEERS
+	==============
+	1aa5a2b0-379d-4ed9-be04-1c9d41c22fc1
+	fe9b9794-3189-422d-93e7-47450652de4f

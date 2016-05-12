@@ -69,5 +69,14 @@ namespace ServiceApp.Domain.DataModel
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EngineerInfo>("GETENGINEERINFO");
         }
+    
+        public virtual ObjectResult<EngineerRequestResponse> GETENGINEERREQUESTS(string pUpdatedUserID)
+        {
+            var pUpdatedUserIDParameter = pUpdatedUserID != null ?
+                new ObjectParameter("PUpdatedUserID", pUpdatedUserID) :
+                new ObjectParameter("PUpdatedUserID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EngineerRequestResponse>("GETENGINEERREQUESTS", pUpdatedUserIDParameter);
+        }
     }
 }

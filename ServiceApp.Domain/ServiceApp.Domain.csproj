@@ -116,6 +116,9 @@
     <Compile Include="DataModel\EngineerMembership.cs">
       <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataModel\EngineerRequestResponse.cs">
+      <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataModel\GETENGINEERDETAILS_Result.cs">
       <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
     </Compile>
@@ -152,7 +155,6 @@
     <Compile Include="Entities\CloseRequest.cs" />
     <Compile Include="DataModel\EngineerInfoMetadata.cs" />
     <Compile Include="Entities\CustomerProfileInfo.cs" />
-    <Compile Include="Entities\EngineerRequestResponse.cs" />
     <Compile Include="Entities\EngineerProfileInfo.cs" />
     <Compile Include="Entities\RaiseRequest.cs" />
     <Compile Include="Entities\RaiseRequestResponse.cs" />

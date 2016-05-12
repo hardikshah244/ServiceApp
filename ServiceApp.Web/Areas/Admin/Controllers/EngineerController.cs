@@ -1,4 +1,7 @@
-﻿using ServiceApp.Domain.Abstract;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using ServiceApp.Domain.Abstract;
+using ServiceApp.Domain.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +23,17 @@ namespace ServiceApp.Web.Areas.Admin.Controllers
         // GET: Admin/Engineer/Dashboard
         public ActionResult Dashboard()
         {
-            return View();
+            try
+            {
+                ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
+
+                return View(_engineerRepo.GetEngineerRequests(user.Id));
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         // GET: Admin/Engineer/ProfileInfo

@@ -55,14 +55,21 @@ namespace ServiceApp.Web.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Index(string sortOrder, int page = 1, int pageSize = 15)
         {
-            ViewBag.CurrentSort = sortOrder;
-            ViewBag.EmailSortParm = String.IsNullOrEmpty(sortOrder) ? "desc" : "";
+            try
+            {
+                ViewBag.CurrentSort = sortOrder;
+                ViewBag.EmailSortParm = String.IsNullOrEmpty(sortOrder) ? "desc" : "";
 
-            var lstEngineerInfo = _engineerinfoRepo.GetEngineerInfo(sortOrder);
+                var lstEngineerInfo = _engineerinfoRepo.GetEngineerInfo(sortOrder);
 
-            PagedList<EngineerInfo> plEngineerInfo = new PagedList<EngineerInfo>(lstEngineerInfo, page, pageSize);
+                PagedList<EngineerInfo> plEngineerInfo = new PagedList<EngineerInfo>(lstEngineerInfo, page, pageSize);
 
-            return View(plEngineerInfo);
+                return View(plEngineerInfo);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         // GET: Admin/EngineerInfo/Create
@@ -103,9 +110,10 @@ namespace ServiceApp.Web.Areas.Admin.Controllers
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 ModelState.AddModelError("Error", "Error occurred on register engineer");
+                Elmah.ErrorSignal.FromCurrentContext().Raise(new Exception(ex.Message, ex.InnerException));
             }
 
             return PartialView("_Create", engineerInfo);
