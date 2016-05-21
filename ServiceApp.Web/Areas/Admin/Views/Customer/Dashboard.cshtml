@@ -58,21 +58,25 @@
                             @Html.DisplayFor(modelItem => item.CreatedDateTime)
                         </td>
                         <td>
-                            @if (item.StatusTypeID == 1 || item.StatusTypeID == 2)
+                            @if (item.StatusTypeID == 1)
                             {
                                 <span class="label label-sm label-success">@Html.DisplayFor(modelItem => item.StatusTypeName)</span>
                             }
-                            else if (item.StatusTypeID == 3)
+                            else if (item.StatusTypeID == 2)
                             {
                                 <span class="label label-sm label-danger">@Html.DisplayFor(modelItem => item.StatusTypeName)</span>
                             }
-                            else if (item.StatusTypeID == 4)
+                            else if (item.StatusTypeID == 3)
                             {
                                 <span class="label label-sm label-info">@Html.DisplayFor(modelItem => item.StatusTypeName)</span>
                             }
-                            else if (item.StatusTypeID == 5)
+                            else if (item.StatusTypeID == 4)
                             {
                                 <span class="label label-sm label-warning">@Html.DisplayFor(modelItem => item.StatusTypeName)</span>
+                            }
+                            else if (item.StatusTypeID == 5)
+                            {
+                                <span class="label label-sm label-primary">@Html.DisplayFor(modelItem => item.StatusTypeName)</span>
                             }
 
                         </td>
