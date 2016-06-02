@@ -125,6 +125,9 @@
     <Compile Include="DataModel\GETENGINEERINFO_Result.cs">
       <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataModel\GETENGINEERREQUESTS_Result.cs">
+      <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataModel\ServiceAppDBModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -140,7 +143,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ServiceAppDBModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="DataModel\ServiceCategoryMaster.cs">
+      <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataModel\ServiceRequest.cs">
+      <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\ServiceRequest_Hist.cs">
       <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\ServiceTypeMaster.cs">

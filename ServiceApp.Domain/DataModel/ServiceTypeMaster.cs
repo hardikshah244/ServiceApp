@@ -18,6 +18,7 @@ namespace ServiceApp.Domain.DataModel
         public ServiceTypeMaster()
         {
             this.ServiceRequests = new HashSet<ServiceRequest>();
+            this.ServiceRequest_Hist = new HashSet<ServiceRequest_Hist>();
         }
     
         public int ServiceTypeID { get; set; }
@@ -25,5 +26,7 @@ namespace ServiceApp.Domain.DataModel
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ServiceRequest> ServiceRequests { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ServiceRequest_Hist> ServiceRequest_Hist { get; set; }
     }
 }

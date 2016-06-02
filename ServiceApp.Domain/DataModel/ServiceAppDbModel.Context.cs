@@ -32,15 +32,21 @@ namespace ServiceApp.Domain.DataModel
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<EngineerMembership> EngineerMemberships { get; set; }
-        public virtual DbSet<ServiceRequest> ServiceRequests { get; set; }
         public virtual DbSet<ServiceTypeMaster> ServiceTypeMasters { get; set; }
         public virtual DbSet<StatusTypeMaster> StatusTypeMasters { get; set; }
+        public virtual DbSet<ServiceCategoryMaster> ServiceCategoryMasters { get; set; }
+        public virtual DbSet<ServiceRequest> ServiceRequests { get; set; }
+        public virtual DbSet<ServiceRequest_Hist> ServiceRequest_Hist { get; set; }
     
-        public virtual ObjectResult<GETENGINEERDETAILS_Result> GETENGINEERDETAILS(Nullable<int> pServiceTypeID, Nullable<int> pStatusTypeID, string pLandmark, string pRemark, string pCreatedUserID, Nullable<int> pPincode)
+        public virtual ObjectResult<GETENGINEERDETAILS_Result> GETENGINEERDETAILS(Nullable<int> pServiceTypeID, Nullable<int> pServiceCategoryID, Nullable<int> pStatusTypeID, string pLandmark, string pRemark, string pCreatedUserID, Nullable<int> pPincode)
         {
             var pServiceTypeIDParameter = pServiceTypeID.HasValue ?
                 new ObjectParameter("PServiceTypeID", pServiceTypeID) :
                 new ObjectParameter("PServiceTypeID", typeof(int));
+    
+            var pServiceCategoryIDParameter = pServiceCategoryID.HasValue ?
+                new ObjectParameter("PServiceCategoryID", pServiceCategoryID) :
+                new ObjectParameter("PServiceCategoryID", typeof(int));
     
             var pStatusTypeIDParameter = pStatusTypeID.HasValue ?
                 new ObjectParameter("PStatusTypeID", pStatusTypeID) :
@@ -62,7 +68,7 @@ namespace ServiceApp.Domain.DataModel
                 new ObjectParameter("PPincode", pPincode) :
                 new ObjectParameter("PPincode", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GETENGINEERDETAILS_Result>("GETENGINEERDETAILS", pServiceTypeIDParameter, pStatusTypeIDParameter, pLandmarkParameter, pRemarkParameter, pCreatedUserIDParameter, pPincodeParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GETENGINEERDETAILS_Result>("GETENGINEERDETAILS", pServiceTypeIDParameter, pServiceCategoryIDParameter, pStatusTypeIDParameter, pLandmarkParameter, pRemarkParameter, pCreatedUserIDParameter, pPincodeParameter);
         }
     
         public virtual ObjectResult<EngineerInfo> GETENGINEERINFO()

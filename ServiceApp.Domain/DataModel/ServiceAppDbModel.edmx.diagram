@@ -10,17 +10,24 @@
         <EntityTypeShape EntityType="ServiceAppDBModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="6.5" IsExpanded="true" />
         <EntityTypeShape EntityType="ServiceAppDBModel.AspNetUser" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
         <EntityTypeShape EntityType="ServiceAppDBModel.EngineerMembership" Width="1.5" PointX="5.25" PointY="9.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ServiceAppDBModel.ServiceRequest" Width="1.5" PointX="8.25" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ServiceAppDBModel.ServiceTypeMaster" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ServiceAppDBModel.StatusTypeMaster" Width="1.5" PointX="6" PointY="13.125" IsExpanded="true" />
         <AssociationConnector Association="ServiceAppDBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="ServiceAppDBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="ServiceAppDBModel.FK_EngineerMembership_AspNetUsers" ManuallyRouted="false" />
-        <AssociationConnector Association="ServiceAppDBModel.FK_ServiceRequest_AspNetUsers" ManuallyRouted="false" />
-        <AssociationConnector Association="ServiceAppDBModel.FK_ServiceRequest_AspNetUsers1" ManuallyRouted="false" />
-        <AssociationConnector Association="ServiceAppDBModel.FK_ServiceRequest_ServiceTypeMaster" ManuallyRouted="false" />
-        <AssociationConnector Association="ServiceAppDBModel.FK_ServiceRequest_StatusTypeMaster" ManuallyRouted="false" />
         <AssociationConnector Association="ServiceAppDBModel.AspNetUserRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ServiceAppDBModel.ServiceCategoryMaster" Width="1.5" PointX="6" PointY="17.25" />
+        <EntityTypeShape EntityType="ServiceAppDBModel.ServiceRequest" Width="1.5" PointX="8.25" PointY="7.625" />
+        <EntityTypeShape EntityType="ServiceAppDBModel.ServiceRequest_Hist" Width="1.5" PointX="10.5" PointY="7.5" />
+        <AssociationConnector Association="ServiceAppDBModel.FK_ServiceRequest_AspNetUsers" />
+        <AssociationConnector Association="ServiceAppDBModel.FK_ServiceRequest_Hist_AspNetUsers" />
+        <AssociationConnector Association="ServiceAppDBModel.FK_ServiceRequest_Hist_ServiceCategoryMaster" />
+        <AssociationConnector Association="ServiceAppDBModel.FK_ServiceRequest_ServiceCategoryMaster" />
+        <AssociationConnector Association="ServiceAppDBModel.FK_ServiceRequest_Hist_ServiceRequest" />
+        <AssociationConnector Association="ServiceAppDBModel.FK_ServiceRequest_ServiceTypeMaster" />
+        <AssociationConnector Association="ServiceAppDBModel.FK_ServiceRequest_StatusTypeMaster" />
+        <AssociationConnector Association="ServiceAppDBModel.FK_ServiceRequest_Hist_ServiceTypeMaster" />
+        <AssociationConnector Association="ServiceAppDBModel.FK_ServiceRequest_Hist_StatusTypeMaster" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

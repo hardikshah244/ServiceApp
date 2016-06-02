@@ -9,6 +9,7 @@ namespace ServiceApp.Domain.Entities
     public class RaiseRequest
     {
         public int ServiceTypeID { get; set; }
+        public int ServiceCategoryID { get; set; }
         public int StatusTypeID { get; set; }
         public string Landmark { get; set; }
         public string Remark { get; set; }

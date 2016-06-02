@@ -14,8 +14,16 @@ namespace ServiceApp.Domain.DataModel
     
     public partial class ServiceRequest
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public ServiceRequest()
+        {
+            this.ServiceRequest_Hist = new HashSet<ServiceRequest_Hist>();
+        }
+    
         public int ServiceRequestID { get; set; }
+        public string ServiceRequestNO { get; set; }
         public int ServiceTypeID { get; set; }
+        public int ServiceCategoryID { get; set; }
         public int StatusTypeID { get; set; }
         public string Landmark { get; set; }
         public string Remark { get; set; }
@@ -27,7 +35,9 @@ namespace ServiceApp.Domain.DataModel
         public Nullable<System.DateTime> EngineerConfirmDateTime { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
-        public virtual AspNetUser AspNetUser1 { get; set; }
+        public virtual ServiceCategoryMaster ServiceCategoryMaster { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ServiceRequest_Hist> ServiceRequest_Hist { get; set; }
         public virtual ServiceTypeMaster ServiceTypeMaster { get; set; }
         public virtual StatusTypeMaster StatusTypeMaster { get; set; }
     }

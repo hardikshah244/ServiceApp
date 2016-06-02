@@ -34,13 +34,13 @@ namespace ServiceApp.Domain.Concrete
                 //context.ServiceRequests.Add(ObjServiceRequest);
                 //context.SaveChanges();
 
-                var GETENGINEERDETAILS_Result = context.GETENGINEERDETAILS(raiseRequest.ServiceTypeID, raiseRequest.StatusTypeID,
+                var GETENGINEERDETAILS_Result = context.GETENGINEERDETAILS(raiseRequest.ServiceTypeID, raiseRequest.ServiceCategoryID, raiseRequest.StatusTypeID,
                                                                             raiseRequest.Landmark, raiseRequest.Remark, raiseRequest.CreatedUserID,
                                                                             Convert.ToInt32(raiseRequest.Pincode)).ToList();
 
                 if (!string.IsNullOrEmpty((GETENGINEERDETAILS_Result[0]).Name) && !string.IsNullOrEmpty((GETENGINEERDETAILS_Result[0]).Email))
                 {
-                    ObjRaiseRequestResponse.ServiceRequestID = (GETENGINEERDETAILS_Result[0]).ServiceRequestID.GetValueOrDefault(0);
+                    ObjRaiseRequestResponse.ServiceRequestNO = (GETENGINEERDETAILS_Result[0]).ServiceRequestNO;
                     ObjRaiseRequestResponse.Name = (GETENGINEERDETAILS_Result[0]).Name;
                     ObjRaiseRequestResponse.Email = (GETENGINEERDETAILS_Result[0]).Email;
                     ObjRaiseRequestResponse.Message = "Success";
@@ -48,7 +48,7 @@ namespace ServiceApp.Domain.Concrete
                 }
                 else
                 {
-                    ObjRaiseRequestResponse.ServiceRequestID = (GETENGINEERDETAILS_Result[0]).ServiceRequestID.GetValueOrDefault(0);
+                    ObjRaiseRequestResponse.ServiceRequestNO = (GETENGINEERDETAILS_Result[0]).ServiceRequestNO;
                     ObjRaiseRequestResponse.Name = "";
                     ObjRaiseRequestResponse.Email = "";
                     ObjRaiseRequestResponse.Message = "Failed";
@@ -67,7 +67,7 @@ namespace ServiceApp.Domain.Concrete
             RequestResponse ObjRequestResponse = new RequestResponse();
             try
             {
-                var RequestResult = context.ServiceRequests.FirstOrDefault(cr => cr.ServiceRequestID == cancelRequest.ServiceRequestID);
+                var RequestResult = context.ServiceRequests.FirstOrDefault(cr => cr.ServiceRequestNO == cancelRequest.ServiceRequestNO);
 
                 if (RequestResult != null)
                 {
@@ -102,7 +102,7 @@ namespace ServiceApp.Domain.Concrete
 
             try
             {
-                var RequestResult = context.ServiceRequests.FirstOrDefault(cr => cr.ServiceRequestID == closeRequest.ServiceRequestID);
+                var RequestResult = context.ServiceRequests.FirstOrDefault(cr => cr.ServiceRequestNO == closeRequest.ServiceRequestNO);
 
                 if (RequestResult != null)
                 {
@@ -134,7 +134,7 @@ namespace ServiceApp.Domain.Concrete
             RequestResponse ObjRequestResponse = new RequestResponse();
             try
             {
-                var RequestResult = context.ServiceRequests.FirstOrDefault(cr => cr.ServiceRequestID == cancelRequestByUser.ServiceRequestID);
+                var RequestResult = context.ServiceRequests.FirstOrDefault(cr => cr.ServiceRequestNO == cancelRequestByUser.ServiceRequestNO);
 
                 if (RequestResult != null)
                 {
@@ -170,17 +170,19 @@ namespace ServiceApp.Domain.Concrete
             {
                 IEnumerable<UserRequestResponse> lstUserRequestResponse = (from SR in context.ServiceRequests
                                                                            join STM in context.ServiceTypeMasters on SR.ServiceTypeID equals STM.ServiceTypeID
+                                                                           join SCM in context.ServiceCategoryMasters on SR.ServiceCategoryID equals SCM.ServiceCategoryID
                                                                            join STTM in context.StatusTypeMasters on SR.StatusTypeID equals STTM.StatusTypeID
                                                                            join USERS in context.AspNetUsers on SR.UpdatedUserID equals USERS.Id into CREATEDUSERS
                                                                            from USERSD in CREATEDUSERS.DefaultIfEmpty()
                                                                            where SR.CreatedUserID == CreatedUserID
                                                                            select new UserRequestResponse()
                                                                            {
-                                                                               ServiceRequestID = SR.ServiceRequestID,
+                                                                               ServiceRequestNO = SR.ServiceRequestNO,
                                                                                CreatedDateTime = SR.CreatedDateTime,
                                                                                Landmark = SR.Landmark,
                                                                                Remark = SR.Remark,
                                                                                ServiceTypeName = STM.ServiceTypeName,
+                                                                               ServiceCategoryName = SCM.ServiceCategoryName,
                                                                                StatusTypeName = STTM.StatusTypeName,
                                                                                Name = USERSD.Name,
                                                                                StatusTypeID = STTM.StatusTypeID

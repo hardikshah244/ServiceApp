@@ -8,8 +8,9 @@ namespace ServiceApp.Domain.Entities
 {
     public class UserRequestResponse
     {
-        public int ServiceRequestID { get; set; }
+        public string ServiceRequestNO { get; set; }
         public string ServiceTypeName { get; set; }
+        public string ServiceCategoryName { get; set; }
         public string StatusTypeName { get; set; }
         public string Landmark { get; set; }
         public string Remark { get; set; }

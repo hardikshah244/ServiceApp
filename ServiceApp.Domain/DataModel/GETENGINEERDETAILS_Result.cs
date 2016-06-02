@@ -15,6 +15,6 @@ namespace ServiceApp.Domain.DataModel
     {
         public string Name { get; set; }
         public string Email { get; set; }
-        public Nullable<int> ServiceRequestID { get; set; }
+        public string ServiceRequestNO { get; set; }
     }
 }

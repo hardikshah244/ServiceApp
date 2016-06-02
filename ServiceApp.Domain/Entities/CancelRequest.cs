@@ -8,7 +8,7 @@ namespace ServiceApp.Domain.Entities
 {
     public class CancelRequest
     {
-        public int ServiceRequestID { get; set; }
+        public string ServiceRequestNO { get; set; }
         public int StatusTypeID { get; set; }
         public string ServiceRequestRemark { get; set; }
     }

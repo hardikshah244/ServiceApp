@@ -324,7 +324,7 @@ namespace ServiceApp.Domain.Concrete
             return dicUserInfo;
         }
 
-        public Dictionary<string, string> GetUserInfoByServiceRequestID(int ServiceRequestID)
+        public Dictionary<string, string> GetUserInfoByServiceRequestID(string ServiceRequestNO)
         {
             Dictionary<string, string> dicUserInfo = null;
 
@@ -332,7 +332,7 @@ namespace ServiceApp.Domain.Concrete
 
             var RequestResult = (from user in context.AspNetUsers
                                  join servicerequest in context.ServiceRequests on user.Id equals servicerequest.CreatedUserID
-                                 where servicerequest.ServiceRequestID == ServiceRequestID
+                                 where servicerequest.ServiceRequestNO == ServiceRequestNO
                                  select new
                                  {
                                      user.Name,

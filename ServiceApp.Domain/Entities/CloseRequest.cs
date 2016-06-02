@@ -8,7 +8,7 @@ namespace ServiceApp.Domain.Entities
 {
     public class CloseRequest
     {
-        public int ServiceRequestID { get; set; }
+        public string ServiceRequestNO { get; set; }
         public int StatusTypeID { get; set; }
     }
 }

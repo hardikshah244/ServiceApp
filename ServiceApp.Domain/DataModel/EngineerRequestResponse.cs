@@ -13,7 +13,6 @@ namespace ServiceApp.Domain.DataModel
     
     public partial class EngineerRequestResponse
     {
-        public int ServiceRequestID { get; set; }
         public System.DateTime CreatedDateTime { get; set; }
         public string Landmark { get; set; }
         public string Remark { get; set; }
@@ -22,5 +21,7 @@ namespace ServiceApp.Domain.DataModel
         public string Name { get; set; }
         public Nullable<System.DateTime> UpdatedDateTime { get; set; }
         public int StatusTypeID { get; set; }
+        public string ServiceRequestNO { get; set; }
+        public string ServiceCategoryName { get; set; }
     }
 }

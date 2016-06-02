@@ -232,15 +232,15 @@ namespace ServiceApp.WebApi.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        [Route("GetUserInfoByServiceRequestID/{ServiceRequestID}")]
-        public HttpResponseMessage GetUserInfoByServiceRequestID(int ServiceRequestID)
+        [Route("GetUserInfoByServiceRequestID/{ServiceRequestNO}")]
+        public HttpResponseMessage GetUserInfoByServiceRequestID(string ServiceRequestNO)
         {
             HttpResponseMessage ObjHttpResponseMessage = new HttpResponseMessage();
             try
             {
-                if (ServiceRequestID > 0)
+                if (!string.IsNullOrEmpty(ServiceRequestNO))
                 {
-                    Dictionary<string, string> dicUserInfo = _repo.GetUserInfoByServiceRequestID(ServiceRequestID);
+                    Dictionary<string, string> dicUserInfo = _repo.GetUserInfoByServiceRequestID(ServiceRequestNO);
 
                     if (dicUserInfo != null)
                         ObjHttpResponseMessage = Request.CreateResponse<Dictionary<string, string>>(HttpStatusCode.OK, dicUserInfo);
