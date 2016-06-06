@@ -1053,6 +1053,8 @@
     <Content Include="Assets\layouts\layout3\scripts\demo.min.js" />
     <Content Include="Assets\layouts\layout3\scripts\layout.js" />
     <Content Include="Assets\layouts\layout3\scripts\layout.min.js" />
+    <Content Include="Assets\pages\css\about.css" />
+    <Content Include="Assets\pages\css\about.min.css" />
     <Content Include="Assets\pages\css\faq.css" />
     <Content Include="Assets\pages\css\faq.min.css" />
     <Content Include="Assets\pages\img\bg-opacity.png" />
@@ -1060,12 +1062,7 @@
     <Content Include="Assets\pages\img\bg-white.png" />
     <Content Include="Assets\pages\img\inbox-nav-arrow-blue.png" />
     <Content Include="Assets\pages\img\login\logo.png" />
-    <Content Include="Assets\pages\media\bg\1.jpg" />
-    <Content Include="Assets\pages\media\bg\2.jpg" />
-    <Content Include="Assets\pages\media\bg\3.jpg" />
-    <Content Include="Assets\pages\media\bg\4.jpg" />
-    <Content Include="Assets\pages\media\bg\5.jpg" />
-    <Content Include="Assets\pages\media\bg\6.jpg" />
+    <Content Include="Assets\pages\media\user.jpg" />
     <Content Include="Assets\pages\scripts\dashboard.js" />
     <Content Include="Assets\pages\scripts\dashboard.min.js" />
     <Content Include="Assets\pages\scripts\form-validation-md.js" />
@@ -1230,6 +1227,7 @@
     <None Include="Properties\PublishProfiles\PikPot.pubxml" />
     <Content Include="Views\Shared\_MenuBar.cshtml" />
     <Content Include="Views\Home\FAQ.cshtml" />
+    <Content Include="Views\Home\AboutUs.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
