@@ -165,10 +165,13 @@
     .about-text .about-quote, .about-text ul, .about-text > p {
         padding-left: 20px;
         padding-right: 20px;
+        line-height: 22px;
     }
 
     .about-text li {
-        margin-bottom: .5em;
+        line-height: 22px;
+        margin-bottom: 20px;
+        color: #808a94;
     }
 
     .about-text .about-quote > h3 {
