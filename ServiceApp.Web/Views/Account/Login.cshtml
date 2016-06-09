@@ -1,0 +1,61 @@
+﻿@model ServiceApp.Web.Models.Login
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<!-- BEGIN LOGIN FORM -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light portlet-fit ">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class=" icon-layers font-green"></i>
+                    <span class="caption-subject font-green bold uppercase">Sign In</span>
+                </div>
+            </div>
+            <div class="portlet-body">
+
+                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "login-form" }))
+                {
+                @Html.AntiForgeryToken()
+                    if (!ViewData.ModelState.IsValid)
+                    {
+                <div class="alert alert-danger">
+                    <a class="close" data-dismiss="alert">×</a>
+                    <strong>Validation Errors</strong>
+                    @Html.ValidationSummary()
+                </div>
+                    }
+                <div class="row form-group">
+                    <div class="col-md-3">
+                        @Html.LabelFor(m => m.UserName, new { @class = "control-label visible-ie8 visible-ie9" })
+                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control form-control-solid placeholder-no-fix", autocomplete = "off", placeholder = "Username" })
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-3">
+                        @Html.LabelFor(m => m.Password, new { @class = "control-label visible-ie8 visible-ie9" })
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control form-control-solid placeholder-no-fix", autocomplete = "off", placeholder = "Password" })
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-3">
+                        @Html.CheckBoxFor(m => m.RememberMe)
+                        @Html.LabelFor(m => m.RememberMe, new { @class = "rememberme check" })
+                        <span class="pull-right">
+                            <a href="@Url.Action("ForgotPassword","Account")" id="forget-password" class="forget-password">Forgot Password?</a>
+                        </span>
+                    </div>
+                </div>
+                <div class="row form-actions">
+                    <div class="col-md-3">
+                        <button type="submit" class="btn green uppercase">Login</button>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END LOGIN FORM -->

@@ -12,7 +12,7 @@
                 </li>
                 <li class="menu-dropdown classic-menu-dropdown">
                     <a href="@Url.Action("Services", "Home")">
-                    Services
+                        Services
                     </a>
                 </li>
                 <li class="menu-dropdown classic-menu-dropdown">
@@ -30,6 +30,36 @@
                         FAQ
                     </a>
                 </li>
+                @if (User.IsInRole("Admin"))
+                {
+                    <li class="menu-dropdown classic-menu-dropdown">
+                        <a href="@Url.Action("Dashboard","Admin")">
+                            Dashboard
+                        </a>
+                    </li>
+
+                    <li class="menu-dropdown classic-menu-dropdown">
+                        <a href="@Url.Action("Index","EngineerInfo")">
+                            Engineer Info
+                        </a>
+                    </li>
+                }
+                else if (User.IsInRole("Customer"))
+                {
+                    <li class="menu-dropdown classic-menu-dropdown">
+                        <a href="@Url.Action("Dashboard","Customer")">
+                            Dashboard
+                        </a>
+                    </li>
+                }
+                else if (User.IsInRole("Engineer"))
+                {
+                    <li class="menu-dropdown classic-menu-dropdown">
+                        <a href="@Url.Action("Dashboard","Engineer")">
+                            Dashboard
+                        </a>
+                    </li>
+                }
             </ul>
         </div>
         <!-- END MEGA MENU -->
