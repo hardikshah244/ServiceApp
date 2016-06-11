@@ -84,7 +84,7 @@ namespace ServiceApp.Web.Controllers
                         authenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
                         ClaimsIdentity identity = _userManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
                         AuthenticationProperties props = new AuthenticationProperties();
-                        props.IsPersistent = loginModel.RememberMe;
+                        //props.IsPersistent = loginModel.RememberMe;
                         authenticationManager.SignIn(props, identity);
 
                         if (Url.IsLocalUrl(returnUrl))

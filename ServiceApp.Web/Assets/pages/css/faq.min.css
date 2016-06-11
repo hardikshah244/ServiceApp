@@ -76,6 +76,7 @@
             color: #6a757e;
             font-size: 14px;
             line-height: 22px;
+            text-align:justify;
         }
 
             .faq-content-1 .faq-section > .faq-content .panel-body > p:first-child {
