@@ -244,6 +244,7 @@ namespace ServiceApp.Domain.Concrete
                                                                   City = USERINFO.City,
                                                                   State = USERINFO.State,
                                                                   Pincode = USERINFO.Pincode,
+                                                                  Address = USERINFO.Address,
                                                                   MembershipType = MEMBERSHIP.MembershipType,
                                                                   StartDate = MEMBERSHIP.StartDate,
                                                                   EndDate = MEMBERSHIP.EndDate,
@@ -256,6 +257,36 @@ namespace ServiceApp.Domain.Concrete
             {
                 throw;
             }
+        }
+        public RequestResponse UpdateEngineerAddress(string Email, string Address)
+        {
+            RequestResponse ObjRequestResponse = new RequestResponse();
+            try
+            {
+                var RequestResult = context.AspNetUsers.FirstOrDefault(user => user.Email == Email);
+
+                if (RequestResult != null)
+                {
+                    RequestResult.Address = Address.Trim();
+
+                    int Cnt = context.SaveChanges();
+
+                    if (Cnt > 0)
+                        ObjRequestResponse.Message = "Success";
+                    else
+                        ObjRequestResponse.Message = "Failed";
+                }
+                else
+                {
+                    ObjRequestResponse.Message = "Failed";
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return ObjRequestResponse;
         }
 
         private bool disposed = false;

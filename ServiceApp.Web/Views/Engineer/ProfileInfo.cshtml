@@ -1,0 +1,130 @@
+﻿@model ServiceApp.Domain.Entities.EngineerProfileInfo
+
+@{
+    ViewBag.Title = "Profile Information";
+}
+
+
+<!-- BEGIN PROFILE INFORMATION -->
+<div id="dvUpdProfileInfo" class="row">
+    <div class="col-md-12">
+        <div class="portlet light">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class=" icon-layers font-green"></i>
+                    <span class="caption-subject font-green bold uppercase">Profile Information</span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div id="dvLoading" class="loading display-none">
+                </div>
+                @if (ViewData.ModelState.IsValid)
+                {
+                    if (@ViewBag.Message != null)
+                    {
+                        <div class="alert alert-success">
+                            <a class="close" data-dismiss="alert">×</a>
+                            @ViewBag.Message
+                        </div>
+                    }
+                }
+
+                @using (Ajax.BeginForm("", "ProfileInfo", new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "dvUpdProfileInfo", LoadingElementId = "dvLoading" }, new { @class = "form", id = "dvProfileInfo" }))
+                {
+                    <div class="form-horizontal">
+                        <div class="form-body">
+                            @Html.AntiForgeryToken()
+
+
+                            @if (!ViewData.ModelState.IsValid)
+                            {
+                                <div class="alert alert-danger">
+                                    <a class="close" data-dismiss="alert">×</a>
+                                    <strong>Validation Errors</strong>
+                                    @Html.ValidationSummary()
+                                </div>
+                            }
+
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Email, new { @class = "control-label col-md-2" })
+                                <div class="col-md-3">
+                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Name, new { @class = "control-label col-md-2" })
+                                <div class="col-md-3">
+                                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.PhoneNumber, new { @class = "control-label col-md-2" })
+                                <div class="col-md-3">
+                                    @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.City, new { @class = "control-label col-md-2" })
+                                <div class="col-md-3">
+                                    @Html.TextBoxFor(m => m.City, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.State, new { @class = "control-label col-md-2" })
+                                <div class="col-md-3">
+                                    @Html.TextBoxFor(m => m.State, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Pincode, new { @class = "control-label col-md-2" })
+                                <div class="col-md-3">
+                                    @Html.TextBoxFor(m => m.Pincode, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Address, new { @class = "control-label col-md-2" })
+                                <div class="col-md-3">
+                                    @Html.TextAreaFor(m => m.Address, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            @*<div class="form-group">
+                                    @Html.LabelFor(m => m.MembershipType, new { @class = "control-label col-md-2" })
+                                    <div class="col-md-7">
+                                        @Html.TextBoxFor(m => m.MembershipType, new { @class = "form-control", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.StartDate, new { @class = "control-label col-md-2" })
+                                    <div class="col-md-7">
+                                        @Html.TextBoxFor(m => m.StartDate, "{0:dd-MM-yyyy}", new { @class = "form-control", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.EndDate, new { @class = "control-label col-md-2" })
+                                    <div class="col-md-7">
+                                        @Html.TextBoxFor(m => m.EndDate, "{0:dd-MM-yyyy}", new { @class = "form-control", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.Amount, new { @class = "control-label col-md-2" })
+                                    <div class="col-md-7">
+                                        @Html.TextBoxFor(m => m.Amount, new { @class = "form-control", @readonly = "readonly" })
+                                    </div>
+                                </div>*@
+                            <div class="form-actions">
+                                <div class="col-md-5">
+                                    <span class="pull-right">
+                                        <button type="submit" id="btnChangePassword" name="Save" class="btn green uppercase" value="Save">Save</button>
+                                        <button type="submit" id="btnCancel" name="Cancel" class="btn default" value="Cancel">Cancel</button>
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END PROFILE INFORMATION -->

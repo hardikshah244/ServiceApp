@@ -49,8 +49,9 @@ namespace ServiceApp.Web.Controllers
             private set { _userRoleManager = value; }
         }
 
-        // GET: Admin/Account/Login
+        // GET: Account/Login
         [AllowAnonymous]
+        //[OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public ActionResult Login(string returnUrl)
         {
             if (Request.IsAuthenticated)
@@ -63,7 +64,7 @@ namespace ServiceApp.Web.Controllers
             return View();
         }
 
-        //Post : Admin/Account/Login        
+        //Post : Account/Login        
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -84,7 +85,7 @@ namespace ServiceApp.Web.Controllers
                         authenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
                         ClaimsIdentity identity = _userManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
                         AuthenticationProperties props = new AuthenticationProperties();
-                        //props.IsPersistent = loginModel.RememberMe;
+                        props.IsPersistent = false;//loginModel.RememberMe;
                         authenticationManager.SignIn(props, identity);
 
                         if (Url.IsLocalUrl(returnUrl))
@@ -93,20 +94,20 @@ namespace ServiceApp.Web.Controllers
                         }
                         else
                         {
-                            //if (User.IsInRole("Admin"))
-                            //{
-                            //    return RedirectToAction("Dashboard", "Admin");
-                            //}
-                            //else if (User.IsInRole("Customer"))
-                            //{
-                            //    return RedirectToAction("Dashboard", "Customer");
-                            //}
-                            //else if (User.IsInRole("Engineer"))
-                            //{
-                            //    return RedirectToAction("Dashboard", "Engineer");
-                            //}
+                            var userRole = _userManager.GetRoles(user.Id);
 
-                            return RedirectToAction("Index", "Home");
+                            if (userRole[0] == "Admin")
+                            {
+                                return RedirectToAction("Dashboard", "Admin");
+                            }
+                            else if (userRole[0] == "Customer")
+                            {
+                                return RedirectToAction("Dashboard", "Customer");
+                            }
+                            else if (userRole[0] == "Engineer")
+                            {
+                                return RedirectToAction("Dashboard", "Engineer");
+                            }
                         }
                     }
                     else
@@ -124,7 +125,7 @@ namespace ServiceApp.Web.Controllers
             return View(loginModel);
         }
 
-        //Post : Admin/Account/LogOut
+        //Post : Account/LogOut
         [Authorize]
         public ActionResult LogOut()
         {
@@ -142,7 +143,7 @@ namespace ServiceApp.Web.Controllers
             return RedirectToAction("Login", "Account");
         }
 
-        // GET: Admin/Account/ForgotPassword
+        // GET: Account/ForgotPassword
         [HttpGet]
         [AllowAnonymous]
         public ActionResult ForgotPassword()
@@ -150,7 +151,7 @@ namespace ServiceApp.Web.Controllers
             return View("ForgotPassword");
         }
 
-        // POST: Admin/Account/ForgotPassword
+        // POST: Account/ForgotPassword
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -205,7 +206,7 @@ namespace ServiceApp.Web.Controllers
             return View(forgotPassword);
         }
 
-        // GET: Admin/Account/ChangePassword
+        // GET: Account/ChangePassword
         [Authorize]
         [HttpGet]
         public ActionResult ChangePassword()
@@ -213,7 +214,7 @@ namespace ServiceApp.Web.Controllers
             return View();
         }
 
-        // POST: Admin/Account/ChangePassword
+        // POST: Account/ChangePassword
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]

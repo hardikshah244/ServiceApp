@@ -27,17 +27,13 @@
                     @Html.ValidationSummary()
                 </div>
                     }
-                <div class="row form-group">
-                    <div class="col-md-12">
+                <div class="form-group">
                         @Html.LabelFor(m => m.UserName, new { @class = "control-label visible-ie8 visible-ie9" })
                         @Html.TextBoxFor(m => m.UserName, new { @class = "form-control form-control-solid placeholder-no-fix", autocomplete = "off", placeholder = "Username" })
-                    </div>
                 </div>
-                <div class="row form-group">
-                    <div class="col-md-12">
+                <div class="form-group">
                         @Html.LabelFor(m => m.Password, new { @class = "control-label visible-ie8 visible-ie9" })
                         @Html.PasswordFor(m => m.Password, new { @class = "form-control form-control-solid placeholder-no-fix", autocomplete = "off", placeholder = "Password" })
-                    </div>
                 </div>
                 <div class="row form-group">
                     <div class="col-md-12">

@@ -23,6 +23,8 @@ namespace ServiceApp.Domain.Abstract
         IEnumerable<EngineerRequestResponse> GetEngineerRequests(string UpdatedUserID);
 
         EngineerProfileInfo GetProfileInfo(string Email);
+
+        RequestResponse UpdateEngineerAddress(string Email, string Address);
     }
 }
 
