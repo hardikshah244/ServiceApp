@@ -667,17 +667,17 @@
           <Property Type="Int32" Name="StatusTypeID" Nullable="false" />
         </ComplexType>
         <ComplexType Name="EngineerRequestResponse">
-          <Property Type="DateTime" Name="CreatedDateTime" Nullable="false" Precision="23" />
-          <Property Type="String" Name="Landmark" Nullable="true" />
-          <Property Type="String" Name="Remark" Nullable="true" />
-          <Property Type="String" Name="ServiceTypeName" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="StatusTypeName" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
-          <Property Type="DateTime" Name="UpdatedDateTime" Nullable="true" Precision="23" />
           <Property Type="Int32" Name="StatusTypeID" Nullable="false" />
-          <Property Type="String" Name="ServiceRequestNO" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="ServiceCategoryName" Nullable="false" MaxLength="50" />
-        </ComplexType>
+          <Property Type="String" Name="SRNO" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="SRCategory" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="SRTYPE" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Customer_Name" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="Created_DateTime" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="Assigned_DateTime" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="Completed_DateTime" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Customer_Feedback" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="50" />
+          </ComplexType>
         <EntityType Name="ServiceCategoryMaster">
           <Key>
             <PropertyRef Name="ServiceCategoryID" />
@@ -976,17 +976,17 @@
           <FunctionImportMapping FunctionImportName="GETENGINEERREQUESTS" FunctionName="ServiceAppDBModel.Store.GETENGINEERREQUESTS">
           <ResultMapping>
               <ComplexTypeMapping TypeName="ServiceAppDBModel.EngineerRequestResponse">
-                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
-                <ScalarProperty Name="Landmark" ColumnName="Landmark" />
-                <ScalarProperty Name="Remark" ColumnName="Remark" />
-                <ScalarProperty Name="ServiceTypeName" ColumnName="ServiceTypeName" />
-                <ScalarProperty Name="StatusTypeName" ColumnName="StatusTypeName" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="UpdatedDateTime" ColumnName="UpdatedDateTime" />
                 <ScalarProperty Name="StatusTypeID" ColumnName="StatusTypeID" />
-                <ScalarProperty Name="ServiceRequestNO" ColumnName="ServiceRequestNO" />
-                <ScalarProperty Name="ServiceCategoryName" ColumnName="ServiceCategoryName" />
-              </ComplexTypeMapping>
+                <ScalarProperty Name="SRNO" ColumnName="SRNO" />
+                <ScalarProperty Name="SRCategory" ColumnName="SRCategory" />
+                <ScalarProperty Name="SRTYPE" ColumnName="SRTYPE" />
+                <ScalarProperty Name="Customer_Name" ColumnName="Customer Name" />
+                <ScalarProperty Name="Created_DateTime" ColumnName="Created DateTime" />
+                <ScalarProperty Name="Assigned_DateTime" ColumnName="Assigned DateTime" />
+                <ScalarProperty Name="Completed_DateTime" ColumnName="Completed DateTime" />
+                <ScalarProperty Name="Customer_Feedback" ColumnName="Customer Feedback" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
           <EntitySetMapping Name="ServiceCategoryMasters">

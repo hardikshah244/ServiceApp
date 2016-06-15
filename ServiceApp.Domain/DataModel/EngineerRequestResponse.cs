@@ -13,15 +13,15 @@ namespace ServiceApp.Domain.DataModel
     
     public partial class EngineerRequestResponse
     {
-        public System.DateTime CreatedDateTime { get; set; }
-        public string Landmark { get; set; }
-        public string Remark { get; set; }
-        public string ServiceTypeName { get; set; }
-        public string StatusTypeName { get; set; }
-        public string Name { get; set; }
-        public Nullable<System.DateTime> UpdatedDateTime { get; set; }
         public int StatusTypeID { get; set; }
-        public string ServiceRequestNO { get; set; }
-        public string ServiceCategoryName { get; set; }
+        public string SRNO { get; set; }
+        public string SRCategory { get; set; }
+        public string SRTYPE { get; set; }
+        public string Customer_Name { get; set; }
+        public System.DateTime Created_DateTime { get; set; }
+        public Nullable<System.DateTime> Assigned_DateTime { get; set; }
+        public Nullable<System.DateTime> Completed_DateTime { get; set; }
+        public string Customer_Feedback { get; set; }
+        public string Status { get; set; }
     }
 }
