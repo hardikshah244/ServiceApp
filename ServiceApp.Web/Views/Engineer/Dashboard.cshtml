@@ -27,71 +27,94 @@
                 </div>
             </div>
             <div class="portlet-body">
-                <table class="table table-striped table-bordered table-hover dataTable no-footer dtr-inline" id="dvEngineerServiceRequests" role="grid" aria-describedby="dvEngineerServiceRequests_info">
-                    <thead>
-                        <tr>
-                            <th>SRNO</th>
-                            <th>SRCategory</th>
-                            <th>SRType</th>
-                            <th>Customer Name</th>                            
-                            <th>Created DateTime</th>
-                            <th>Assigned DateTime</th>
-                            <th>Completed DateTime</th>
-                            <th>Customer Feedback</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
-                            <tr role="row">
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.SRNO)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.SRCategory)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.SRTYPE)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Customer_Name)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Created_DateTime)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Assigned_DateTime)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Completed_DateTime)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Customer_Feedback)
-                                </td>
-                                <td>
-                                    @if (item.StatusTypeID == 2)
-                                    {
-                                        <span class="label label-sm label-danger">@Html.DisplayFor(modelItem => item.Status)</span>
-                                    }
-                                    else if (item.StatusTypeID == 3)
-                                    {
-                                        <span class="label label-sm label-info">@Html.DisplayFor(modelItem => item.Status)</span>
-                                    }
-                                    else if (item.StatusTypeID == 4)
-                                    {
-                                        <span class="label label-sm label-warning">@Html.DisplayFor(modelItem => item.Status)</span>
-                                    }
-                                    else if (item.StatusTypeID == 5)
-                                    {
-                                        <span class="label label-sm label-primary">@Html.DisplayFor(modelItem => item.Status)</span>
-                                    }
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+                <div class="row form-body">
+                    @using (Html.BeginForm("Dashboard", "Engineer", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form" }))
+                    {
+                        <div class="col-md-3 form-group">
+                            <label class="control-label">Category</label>
+                            @Html.DropDownList("ddlCatregory", (IEnumerable<SelectListItem>)ViewBag.Category, new { @class = "form-control input-medium" })
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label class="control-label">Type</label>
+                            @Html.DropDownList("ddlType", (IEnumerable<SelectListItem>)ViewBag.Type, new { @class = "form-control input-medium" })
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label class="control-label">Status</label>
+                            @Html.DropDownList("ddlSatus", (IEnumerable<SelectListItem>)ViewBag.Satus, new { @class = "form-control input-medium" })
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <button type="submit" id="btnSubmit" class="btn green uppercase margin-top-20">Submit</button>
+                        </div>
+                    }
+                </div>
 
+                @if (Model != null)
+                {
+                    <table class="table table-striped table-bordered table-hover dataTable no-footer dtr-inline" id="dvEngineerServiceRequests" role="grid" aria-describedby="dvEngineerServiceRequests_info">
+                        <thead>
+                            <tr>
+                                <th>SRNO</th>
+                                <th>Category</th>
+                                <th>Type</th>
+                                <th>Customer Name</th>
+                                <th>Created</th>
+                                <th>Assigned</th>
+                                <th>Completed</th>
+                                <th>Customer Feedback</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr role="row">
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SRNO)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SRCategory)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SRTYPE)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Customer_Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Created_DateTime)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Assigned_DateTime)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Completed_DateTime)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Customer_Feedback)
+                                    </td>
+                                    <td>
+                                        @if (item.StatusTypeID == 2)
+                                        {
+                                            <span class="label label-sm label-danger">@Html.DisplayFor(modelItem => item.Status)</span>
+                                        }
+                                        else if (item.StatusTypeID == 3)
+                                        {
+                                            <span class="label label-sm label-info">@Html.DisplayFor(modelItem => item.Status)</span>
+                                        }
+                                        else if (item.StatusTypeID == 4)
+                                        {
+                                            <span class="label label-sm label-warning">@Html.DisplayFor(modelItem => item.Status)</span>
+                                        }
+                                        else if (item.StatusTypeID == 5)
+                                        {
+                                            <span class="label label-sm label-primary">@Html.DisplayFor(modelItem => item.Status)</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
             </div>
         </div>
     </div>

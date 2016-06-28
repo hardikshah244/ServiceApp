@@ -76,13 +76,25 @@ namespace ServiceApp.Domain.DataModel
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EngineerInfo>("GETENGINEERINFO");
         }
     
-        public virtual ObjectResult<EngineerRequestResponse> GETENGINEERREQUESTS(string pUpdatedUserID)
+        public virtual ObjectResult<EngineerRequestResponse> GETENGINEERREQUESTS(string pUpdatedUserID, Nullable<int> pServiceCategoryID, Nullable<int> pServiceTypeID, Nullable<int> pStatusTypeID)
         {
             var pUpdatedUserIDParameter = pUpdatedUserID != null ?
                 new ObjectParameter("PUpdatedUserID", pUpdatedUserID) :
                 new ObjectParameter("PUpdatedUserID", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EngineerRequestResponse>("GETENGINEERREQUESTS", pUpdatedUserIDParameter);
+            var pServiceCategoryIDParameter = pServiceCategoryID.HasValue ?
+                new ObjectParameter("PServiceCategoryID", pServiceCategoryID) :
+                new ObjectParameter("PServiceCategoryID", typeof(int));
+    
+            var pServiceTypeIDParameter = pServiceTypeID.HasValue ?
+                new ObjectParameter("PServiceTypeID", pServiceTypeID) :
+                new ObjectParameter("PServiceTypeID", typeof(int));
+    
+            var pStatusTypeIDParameter = pStatusTypeID.HasValue ?
+                new ObjectParameter("PStatusTypeID", pStatusTypeID) :
+                new ObjectParameter("PStatusTypeID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EngineerRequestResponse>("GETENGINEERREQUESTS", pUpdatedUserIDParameter, pServiceCategoryIDParameter, pServiceTypeIDParameter, pStatusTypeIDParameter);
         }
     }
 }

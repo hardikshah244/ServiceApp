@@ -330,6 +330,9 @@
         <Function Name="GETENGINEERINFO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GETENGINEERREQUESTS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="PUpdatedUserID" Type="nvarchar" Mode="In" />
+          <Parameter Name="PServiceCategoryID" Type="int" Mode="In" />
+          <Parameter Name="PServiceTypeID" Type="int" Mode="In" />
+          <Parameter Name="PStatusTypeID" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="ServiceAppDBModelStoreContainer">
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
@@ -583,6 +586,9 @@
           <FunctionImport Name="GETENGINEERINFO" ReturnType="Collection(ServiceAppDBModel.EngineerInfo)" />
           <FunctionImport Name="GETENGINEERREQUESTS" ReturnType="Collection(ServiceAppDBModel.EngineerRequestResponse)">
           <Parameter Name="PUpdatedUserID" Mode="In" Type="String" />
+            <Parameter Name="PServiceCategoryID" Mode="In" Type="Int32" />
+            <Parameter Name="PServiceTypeID" Mode="In" Type="Int32" />
+            <Parameter Name="PStatusTypeID" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="ServiceCategoryMasters" EntityType="ServiceAppDBModel.ServiceCategoryMaster" />
           <EntitySet Name="ServiceRequests" EntityType="ServiceAppDBModel.ServiceRequest" />

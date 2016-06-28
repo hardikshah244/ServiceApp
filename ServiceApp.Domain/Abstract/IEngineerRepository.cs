@@ -20,11 +20,17 @@ namespace ServiceApp.Domain.Abstract
 
         IEnumerable<UserRequestResponse> GetUserRequests(string CreatedUserID);
 
-        IEnumerable<EngineerRequestResponse> GetEngineerRequests(string UpdatedUserID);
+        IEnumerable<EngineerRequestResponse> GetEngineerRequests(string UpdatedUserID, int ServiceCategoryID, int ServiceTypeID, int StatusTypeID);
 
         EngineerProfileInfo GetProfileInfo(string Email);
 
         RequestResponse UpdateEngineerAddress(string Email, string Address);
+
+        IEnumerable<ServiceCategoryMaster> GetCategories();
+
+        IEnumerable<ServiceTypeMaster> GetTypeMaster();
+
+        IEnumerable<StatusTypeMaster> GetStatus();
     }
 }
 

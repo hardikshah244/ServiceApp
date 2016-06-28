@@ -196,7 +196,7 @@ namespace ServiceApp.Domain.Concrete
             }
         }
 
-        public IEnumerable<EngineerRequestResponse> GetEngineerRequests(string UpdatedUserID)
+        public IEnumerable<EngineerRequestResponse> GetEngineerRequests(string UpdatedUserID, int ServiceCategoryID, int ServiceTypeID, int StatusTypeID)
         {
             try
             {
@@ -219,7 +219,7 @@ namespace ServiceApp.Domain.Concrete
                 //                                                                       StatusTypeID = STTM.StatusTypeID
                 //                                                                   }).AsEnumerable<EngineerRequestResponse>();
 
-                IEnumerable<EngineerRequestResponse> lstEngineerRequestResponse = context.GETENGINEERREQUESTS(UpdatedUserID).ToList<EngineerRequestResponse>();
+                IEnumerable<EngineerRequestResponse> lstEngineerRequestResponse = context.GETENGINEERREQUESTS(UpdatedUserID, ServiceCategoryID, ServiceTypeID, StatusTypeID).ToList<EngineerRequestResponse>();
 
                 return lstEngineerRequestResponse;
             }
@@ -287,6 +287,48 @@ namespace ServiceApp.Domain.Concrete
             }
 
             return ObjRequestResponse;
+        }
+
+        public IEnumerable<ServiceCategoryMaster> GetCategories()
+        {
+            try
+            {
+                IEnumerable<ServiceCategoryMaster> ObjServiceCategoryMaster = (from category in context.ServiceCategoryMasters
+                                                                               select category).AsEnumerable();
+                return ObjServiceCategoryMaster;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public IEnumerable<ServiceTypeMaster> GetTypeMaster()
+        {
+            try
+            {
+                IEnumerable<ServiceTypeMaster> ObjServiceTypeMaster = (from type in context.ServiceTypeMasters
+                                                                       select type).AsEnumerable();
+                return ObjServiceTypeMaster;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public IEnumerable<StatusTypeMaster> GetStatus()
+        {
+            try
+            {
+                IEnumerable<StatusTypeMaster> ObjStatusTypeMaster = (from status in context.StatusTypeMasters
+                                                                     select status).AsEnumerable();
+                return ObjStatusTypeMaster;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         private bool disposed = false;
