@@ -334,6 +334,15 @@
           <Parameter Name="PServiceTypeID" Type="int" Mode="In" />
           <Parameter Name="PStatusTypeID" Type="int" Mode="In" />
         </Function>
+        <Function Name="GETENGINEERREQUESTS_API" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PUpdatedUserID" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GETUSERREQUESTS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PCreatedUserID" Type="nvarchar" Mode="In" />
+          <Parameter Name="PServiceCategoryID" Type="int" Mode="In" />
+          <Parameter Name="PServiceTypeID" Type="int" Mode="In" />
+          <Parameter Name="PStatusTypeID" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="ServiceAppDBModelStoreContainer">
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
@@ -585,7 +594,7 @@
           </FunctionImport>
           <FunctionImport Name="GETENGINEERINFO" ReturnType="Collection(ServiceAppDBModel.EngineerInfo)" />
           <FunctionImport Name="GETENGINEERREQUESTS" ReturnType="Collection(ServiceAppDBModel.EngineerRequestResponse)">
-          <Parameter Name="PUpdatedUserID" Mode="In" Type="String" />
+            <Parameter Name="PUpdatedUserID" Mode="In" Type="String" />
             <Parameter Name="PServiceCategoryID" Mode="In" Type="Int32" />
             <Parameter Name="PServiceTypeID" Mode="In" Type="Int32" />
             <Parameter Name="PStatusTypeID" Mode="In" Type="Int32" />
@@ -629,6 +638,15 @@
             <End Role="StatusTypeMaster" EntitySet="StatusTypeMasters" />
             <End Role="ServiceRequest_Hist" EntitySet="ServiceRequest_Hist" />
           </AssociationSet>
+          <FunctionImport Name="GETENGINEERREQUESTS_API" ReturnType="Collection(ServiceAppDBModel.EngineerRequestResponseAPI)">
+          <Parameter Name="PUpdatedUserID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GETUSERREQUESTS" ReturnType="Collection(ServiceAppDBModel.UserRequestResponse)">
+            <Parameter Name="PCreatedUserID" Mode="In" Type="String" />
+            <Parameter Name="PServiceCategoryID" Mode="In" Type="Int32" />
+            <Parameter Name="PServiceTypeID" Mode="In" Type="Int32" />
+            <Parameter Name="PStatusTypeID" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="GETENGINEERDETAILS_Result">
           <Property Type="String" Name="Name" Nullable="true" MaxLength="200" />
@@ -848,6 +866,52 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="GETENGINEERREQUESTS_API_Result">
+          <Property Type="String" Name="ServiceRequestNO" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ServiceCategoryName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ServiceTypeName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="CreatedDateTime" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="UpdatedDateTime" Nullable="true" Precision="23" />
+          <Property Type="String" Name="StatusTypeName" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="StatusTypeID" Nullable="false" />
+          <Property Type="String" Name="Landmark" Nullable="true" />
+          <Property Type="String" Name="Remark" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="EngineerRequestResponseAPI">
+          <Property Type="String" Name="ServiceRequestNO" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ServiceCategoryName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ServiceTypeName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="CreatedDateTime" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="UpdatedDateTime" Nullable="true" Precision="23" />
+          <Property Type="String" Name="StatusTypeName" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="StatusTypeID" Nullable="false" />
+          <Property Type="String" Name="Landmark" Nullable="true" />
+          <Property Type="String" Name="Remark" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GETUSERREQUESTS_Result">
+          <Property Type="String" Name="SRNO" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Category" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="TYPE" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Engineer_Name" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="Created" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="Completed" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Feedback" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="StatusTypeID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="UserRequestResponse">
+          <Property Type="String" Name="SRNO" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Category" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="TYPE" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Engineer_Name" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="Created" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="Completed" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Feedback" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="StatusTypeID" Nullable="false" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1042,6 +1106,37 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GETENGINEERREQUESTS_API" FunctionName="ServiceAppDBModel.Store.GETENGINEERREQUESTS_API">
+          <ResultMapping>
+              <ComplexTypeMapping TypeName="ServiceAppDBModel.EngineerRequestResponseAPI">
+                <ScalarProperty Name="ServiceRequestNO" ColumnName="ServiceRequestNO" />
+                <ScalarProperty Name="ServiceCategoryName" ColumnName="ServiceCategoryName" />
+                <ScalarProperty Name="ServiceTypeName" ColumnName="ServiceTypeName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="UpdatedDateTime" ColumnName="UpdatedDateTime" />
+                <ScalarProperty Name="StatusTypeName" ColumnName="StatusTypeName" />
+                <ScalarProperty Name="StatusTypeID" ColumnName="StatusTypeID" />
+                <ScalarProperty Name="Landmark" ColumnName="Landmark" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GETUSERREQUESTS" FunctionName="ServiceAppDBModel.Store.GETUSERREQUESTS">
+          <ResultMapping>
+              <ComplexTypeMapping TypeName="ServiceAppDBModel.UserRequestResponse">
+                <ScalarProperty Name="SRNO" ColumnName="SRNO" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="TYPE" ColumnName="TYPE" />
+                <ScalarProperty Name="Engineer_Name" ColumnName="Engineer Name" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="Completed" ColumnName="Completed" />
+                <ScalarProperty Name="Feedback" ColumnName="Feedback" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="StatusTypeID" ColumnName="StatusTypeID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

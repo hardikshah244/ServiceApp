@@ -76,7 +76,7 @@ namespace ServiceApp.Web.Controllers
                 lstStatus.Insert(0, (new SelectListItem { Text = "Select", Value = "0" }));
                 ViewBag.Satus = lstStatus;
 
-                return View(_engineerRepo.GetEngineerRequests(user.Id, intCategory, intType, intStatus));
+                return PartialView("Dashboard", _engineerRepo.GetEngineerRequests(user.Id, intCategory, intType, intStatus));
             }
             catch (Exception)
             {

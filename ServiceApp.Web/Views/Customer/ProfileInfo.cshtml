@@ -5,71 +5,77 @@
 }
 
 <!-- BEGIN PAGE BASE CONTENT -->
-<div class="portlet light bordered">
-    <div class="portlet-title">
-        <div class="caption font-green-haze">
-            <span class="caption-subject bold uppercase">Profile Information</span>
-        </div>
-    </div>
-    <div class="portlet-body form">
-        <div class="form-horizontal">
-            <div class="form-body">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Email, new { @class = "control-label col-md-2" })
-                    <div class="col-md-7">
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @readonly = "readonly" })
-                    </div>
+<div id="dvUpdProfileInfo" class="row">
+    <div class="col-md-12">
+        <div class="portlet light">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class=" icon-layers font-green"></i>
+                    <span class="caption-subject font-green bold uppercase">Profile Information</span>
                 </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Name, new { @class = "control-label col-md-2" })
-                    <div class="col-md-7">
-                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @readonly = "readonly" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.PhoneNumber, new { @class = "control-label col-md-2" })
-                    <div class="col-md-7">
-                        @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", @readonly = "readonly" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.City, new { @class = "control-label col-md-2" })
-                    <div class="col-md-7">
-                        @Html.TextBoxFor(m => m.City, new { @class = "form-control", @readonly = "readonly" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.State, new { @class = "control-label col-md-2" })
-                    <div class="col-md-7">
-                        @Html.TextBoxFor(m => m.State, new { @class = "form-control", @readonly = "readonly" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Area, new { @class = "control-label col-md-2" })
-                    <div class="col-md-7">
-                        @Html.TextBoxFor(m => m.Area, new { @class = "form-control", @readonly = "readonly" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.SubArea, new { @class = "control-label col-md-2" })
-                    <div class="col-md-7">
-                        @Html.TextBoxFor(m => m.SubArea, new { @class = "form-control", @readonly = "readonly" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Address, new { @class = "control-label col-md-2" })
-                    <div class="col-md-7">
-                        @Html.TextAreaFor(m => m.Address, new { @class = "form-control", @readonly = "readonly" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Pincode, new { @class = "control-label col-md-2" })
-                    <div class="col-md-7">
-                        @Html.TextBoxFor(m => m.Pincode, new { @class = "form-control", @readonly = "readonly" })
+            </div>
+            <div class="portlet-body">
+                <div class="form form-horizontal">
+                    <div class="form-body">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Email, new { @class = "control-label col-md-2" })
+                            <div class="col-md-3">
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Name, new { @class = "control-label col-md-2" })
+                            <div class="col-md-3">
+                                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.PhoneNumber, new { @class = "control-label col-md-2" })
+                            <div class="col-md-3">
+                                @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.City, new { @class = "control-label col-md-2" })
+                            <div class="col-md-3">
+                                @Html.TextBoxFor(m => m.City, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.State, new { @class = "control-label col-md-2" })
+                            <div class="col-md-3">
+                                @Html.TextBoxFor(m => m.State, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Area, new { @class = "control-label col-md-2" })
+                            <div class="col-md-3">
+                                @Html.TextBoxFor(m => m.Area, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.SubArea, new { @class = "control-label col-md-2" })
+                            <div class="col-md-3">
+                                @Html.TextBoxFor(m => m.SubArea, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Address, new { @class = "control-label col-md-2" })
+                            <div class="col-md-3">
+                                @Html.TextAreaFor(m => m.Address, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Pincode, new { @class = "control-label col-md-2" })
+                            <div class="col-md-3">
+                                @Html.TextBoxFor(m => m.Pincode, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 <!-- END PAGE BASE CONTENT -->

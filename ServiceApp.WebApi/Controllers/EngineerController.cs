@@ -105,10 +105,10 @@ namespace ServiceApp.WebApi.Controllers
             {
                 if (!string.IsNullOrEmpty(CreatedUserID))
                 {
-                    IEnumerable<UserRequestResponse> iEnumUserRequestResponse = _engineerRepo.GetUserRequests(CreatedUserID);
+                    IEnumerable<UserRequestResponseAPI> iEnumUserRequestResponse = _engineerRepo.GetUserRequests(CreatedUserID);
 
                     if (iEnumUserRequestResponse.Count() > 0)
-                        ObjHttpResponseMessage = Request.CreateResponse<IEnumerable<UserRequestResponse>>(HttpStatusCode.OK, iEnumUserRequestResponse);
+                        ObjHttpResponseMessage = Request.CreateResponse<IEnumerable<UserRequestResponseAPI>>(HttpStatusCode.OK, iEnumUserRequestResponse);
                     else
                         return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Data not found!");
                 }
@@ -136,10 +136,10 @@ namespace ServiceApp.WebApi.Controllers
             {
                 if (!string.IsNullOrEmpty(UpdatedUserID))
                 {
-                    IEnumerable<EngineerRequestResponse> iEnumEngineerRequestResponse = _engineerRepo.GetEngineerRequests(UpdatedUserID);
+                    IEnumerable<EngineerRequestResponseAPI> iEnumEngineerRequestResponse = _engineerRepo.GetEngineerRequests(UpdatedUserID);
 
                     if (iEnumEngineerRequestResponse.Count() > 0)
-                        ObjHttpResponseMessage = Request.CreateResponse<IEnumerable<EngineerRequestResponse>>(HttpStatusCode.OK, iEnumEngineerRequestResponse);
+                        ObjHttpResponseMessage = Request.CreateResponse<IEnumerable<EngineerRequestResponseAPI>>(HttpStatusCode.OK, iEnumEngineerRequestResponse);
                     else
                         return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Data not found!");
                 }

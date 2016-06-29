@@ -164,18 +164,18 @@ namespace ServiceApp.Domain.Concrete
             return ObjRequestResponse;
         }
 
-        public IEnumerable<UserRequestResponse> GetUserRequests(string CreatedUserID)
+        public IEnumerable<UserRequestResponseAPI> GetUserRequests(string CreatedUserID)
         {
             try
             {
-                IEnumerable<UserRequestResponse> lstUserRequestResponse = (from SR in context.ServiceRequests
+                IEnumerable<UserRequestResponseAPI> lstUserRequestResponse = (from SR in context.ServiceRequests
                                                                            join STM in context.ServiceTypeMasters on SR.ServiceTypeID equals STM.ServiceTypeID
                                                                            join SCM in context.ServiceCategoryMasters on SR.ServiceCategoryID equals SCM.ServiceCategoryID
                                                                            join STTM in context.StatusTypeMasters on SR.StatusTypeID equals STTM.StatusTypeID
                                                                            join USERS in context.AspNetUsers on SR.UpdatedUserID equals USERS.Id into CREATEDUSERS
                                                                            from USERSD in CREATEDUSERS.DefaultIfEmpty()
                                                                            where SR.CreatedUserID == CreatedUserID
-                                                                           select new UserRequestResponse()
+                                                                           select new UserRequestResponseAPI()
                                                                            {
                                                                                ServiceRequestNO = SR.ServiceRequestNO,
                                                                                CreatedDateTime = SR.CreatedDateTime,
@@ -186,7 +186,21 @@ namespace ServiceApp.Domain.Concrete
                                                                                StatusTypeName = STTM.StatusTypeName,
                                                                                Name = USERSD.Name,
                                                                                StatusTypeID = STTM.StatusTypeID
-                                                                           }).AsEnumerable<UserRequestResponse>();
+                                                                           }).AsEnumerable<UserRequestResponseAPI>();
+
+                return lstUserRequestResponse;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public IEnumerable<UserRequestResponse> GetUserRequests(string CreatedUserID, int ServiceCategoryID, int ServiceTypeID, int StatusTypeID)
+        {
+            try
+            {
+                IEnumerable<UserRequestResponse> lstUserRequestResponse = context.GETUSERREQUESTS(CreatedUserID, ServiceCategoryID, ServiceTypeID, StatusTypeID).ToList<UserRequestResponse>();
 
                 return lstUserRequestResponse;
             }
@@ -220,6 +234,20 @@ namespace ServiceApp.Domain.Concrete
                 //                                                                   }).AsEnumerable<EngineerRequestResponse>();
 
                 IEnumerable<EngineerRequestResponse> lstEngineerRequestResponse = context.GETENGINEERREQUESTS(UpdatedUserID, ServiceCategoryID, ServiceTypeID, StatusTypeID).ToList<EngineerRequestResponse>();
+
+                return lstEngineerRequestResponse;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public IEnumerable<EngineerRequestResponseAPI> GetEngineerRequests(string UpdatedUserID)
+        {
+            try
+            {
+                IEnumerable<EngineerRequestResponseAPI> lstEngineerRequestResponse = context.GETENGINEERREQUESTS_API(UpdatedUserID).ToList<EngineerRequestResponseAPI>();
 
                 return lstEngineerRequestResponse;
             }

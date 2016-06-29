@@ -18,9 +18,13 @@ namespace ServiceApp.Domain.Abstract
 
         RequestResponse CancelRequestByUser(CancelRequestByUser cancelRequestByUser);
 
-        IEnumerable<UserRequestResponse> GetUserRequests(string CreatedUserID);
+        IEnumerable<UserRequestResponseAPI> GetUserRequests(string CreatedUserID);
+
+        IEnumerable<UserRequestResponse> GetUserRequests(string CreatedUserID, int ServiceCategoryID, int ServiceTypeID, int StatusTypeID);
 
         IEnumerable<EngineerRequestResponse> GetEngineerRequests(string UpdatedUserID, int ServiceCategoryID, int ServiceTypeID, int StatusTypeID);
+
+        IEnumerable<EngineerRequestResponseAPI> GetEngineerRequests(string UpdatedUserID);
 
         EngineerProfileInfo GetProfileInfo(string Email);
 

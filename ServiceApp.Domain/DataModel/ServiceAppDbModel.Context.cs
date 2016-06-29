@@ -96,5 +96,35 @@ namespace ServiceApp.Domain.DataModel
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EngineerRequestResponse>("GETENGINEERREQUESTS", pUpdatedUserIDParameter, pServiceCategoryIDParameter, pServiceTypeIDParameter, pStatusTypeIDParameter);
         }
+    
+        public virtual ObjectResult<EngineerRequestResponseAPI> GETENGINEERREQUESTS_API(string pUpdatedUserID)
+        {
+            var pUpdatedUserIDParameter = pUpdatedUserID != null ?
+                new ObjectParameter("PUpdatedUserID", pUpdatedUserID) :
+                new ObjectParameter("PUpdatedUserID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EngineerRequestResponseAPI>("GETENGINEERREQUESTS_API", pUpdatedUserIDParameter);
+        }
+    
+        public virtual ObjectResult<UserRequestResponse> GETUSERREQUESTS(string pCreatedUserID, Nullable<int> pServiceCategoryID, Nullable<int> pServiceTypeID, Nullable<int> pStatusTypeID)
+        {
+            var pCreatedUserIDParameter = pCreatedUserID != null ?
+                new ObjectParameter("PCreatedUserID", pCreatedUserID) :
+                new ObjectParameter("PCreatedUserID", typeof(string));
+    
+            var pServiceCategoryIDParameter = pServiceCategoryID.HasValue ?
+                new ObjectParameter("PServiceCategoryID", pServiceCategoryID) :
+                new ObjectParameter("PServiceCategoryID", typeof(int));
+    
+            var pServiceTypeIDParameter = pServiceTypeID.HasValue ?
+                new ObjectParameter("PServiceTypeID", pServiceTypeID) :
+                new ObjectParameter("PServiceTypeID", typeof(int));
+    
+            var pStatusTypeIDParameter = pStatusTypeID.HasValue ?
+                new ObjectParameter("PStatusTypeID", pStatusTypeID) :
+                new ObjectParameter("PStatusTypeID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UserRequestResponse>("GETUSERREQUESTS", pCreatedUserIDParameter, pServiceCategoryIDParameter, pServiceTypeIDParameter, pStatusTypeIDParameter);
+        }
     }
 }

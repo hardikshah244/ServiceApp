@@ -119,6 +119,9 @@
     <Compile Include="DataModel\EngineerRequestResponse.cs">
       <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataModel\EngineerRequestResponseAPI.cs">
+      <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataModel\GETENGINEERDETAILS_Result.cs">
       <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
     </Compile>
@@ -155,6 +158,9 @@
     <Compile Include="DataModel\StatusTypeMaster.cs">
       <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataModel\UserRequestResponse.cs">
+      <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\AdminProfileInfo.cs" />
     <Compile Include="Entities\CancelRequest.cs" />
     <Compile Include="Entities\CancelRequestByUser.cs" />
@@ -166,7 +172,7 @@
     <Compile Include="Entities\RaiseRequestResponse.cs" />
     <Compile Include="Entities\RegisterEngineer.cs" />
     <Compile Include="Entities\RequestResponse.cs" />
-    <Compile Include="Entities\UserRequestResponse.cs" />
+    <Compile Include="Entities\UserRequestResponseAPI.cs" />
     <Compile Include="Security\ApplicationRoleManager.cs" />
     <Compile Include="Security\ApplicationUserManager.cs" />
     <Compile Include="Security\AuthRepository.cs" />

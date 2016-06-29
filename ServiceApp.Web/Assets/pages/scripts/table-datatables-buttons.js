@@ -3,7 +3,7 @@ var TableDatatablesButtons = function () {
     var initTableCustomerServiceRequests = function () {
         var table = $('#dvCustomerServiceRequests');
 
-        var oTable = table.dataTable({
+        var oTable1 = table.dataTable({
 
             // Internationalisation. For more info refer to http://datatables.net/manual/i18n
             "language": {
@@ -29,8 +29,8 @@ var TableDatatablesButtons = function () {
             buttons: [
                 //{ extend: 'print', className: 'btn dark btn-outline' },
                 //{ extend: 'copy', className: 'btn red btn-outline' },
-                //{ extend: 'pdf', className: 'btn green btn-outline' },
-                //{ extend: 'excel', className: 'btn yellow btn-outline ' },
+                { extend: 'pdf', className: 'btn green btn-outline', title: "Dashboard Report" },
+                { extend: 'excel', className: 'btn green btn-outline', title: "Dashboard Report" },
                 //{ extend: 'csv', className: 'btn purple btn-outline ' },
                 //{ extend: 'colvis', className: 'btn dark btn-outline', text: 'Columns' }
             ],
@@ -91,9 +91,9 @@ var TableDatatablesButtons = function () {
             buttons: [
                 //{ extend: 'print', className: 'btn dark btn-outline' },
                 //{ extend: 'copy', className: 'btn red btn-outline' },
-                //{ extend: 'pdf', className: 'btn green btn-outline' },
-                //{ extend: 'excel', className: 'btn yellow btn-outline ' },
-                //{ extend: 'csv', className: 'btn purple btn-outline ' },
+                { extend: 'pdf', className: 'btn green btn-outline', title:"Dashboard Report" },
+                { extend: 'excel', className: 'btn green btn-outline', title: "Dashboard Report" },
+                //{ extend: 'csv', className: 'btn green btn-outline ' },
                 //{ extend: 'colvis', className: 'btn dark btn-outline', text: 'Columns' }
             ],
 

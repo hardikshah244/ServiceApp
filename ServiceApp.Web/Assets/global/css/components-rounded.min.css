@@ -2364,15 +2364,15 @@ li [class*=" icon-"], li [class^=icon-] {
         }
 
     .btn.btn-outline.green {
-        border-color: #32c5d2;
-        color: #32c5d2;
+        border-color: #249cff;
+        color: #249cff;
         background: 0 0;
     }
 
         .btn.btn-outline.green.active, .btn.btn-outline.green:active, .btn.btn-outline.green:active:focus, .btn.btn-outline.green:active:hover, .btn.btn-outline.green:focus, .btn.btn-outline.green:hover {
-            border-color: #32c5d2;
+            border-color: #00c6e0;
             color: #FFF;
-            background-color: #32c5d2;
+            background-color: #00c6e0;
         }
 
     .btn.green-stripe {
