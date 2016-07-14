@@ -318,6 +318,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="GETADMINUSERMGTINFO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PUSEREMAILORPHONENO" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="GETENGINEERDETAILS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="PServiceTypeID" Type="int" Mode="In" />
           <Parameter Name="PServiceCategoryID" Type="int" Mode="In" />
@@ -647,6 +650,9 @@
             <Parameter Name="PServiceTypeID" Mode="In" Type="Int32" />
             <Parameter Name="PStatusTypeID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="GETADMINUSERMGTINFO" ReturnType="Collection(ServiceAppDBModel.AdminUserMgtInfo)">
+            <Parameter Name="PUSEREMAILORPHONENO" Mode="In" Type="String" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="GETENGINEERDETAILS_Result">
           <Property Type="String" Name="Name" Nullable="true" MaxLength="200" />
@@ -912,6 +918,18 @@
           <Property Type="String" Name="Status" Nullable="false" MaxLength="50" />
           <Property Type="Int32" Name="StatusTypeID" Nullable="false" />
         </ComplexType>
+        <ComplexType Name="GETADMINUSERMGTINFO_Result">
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="256" />
+          <Property Type="String" Name="PhoneNumber" Nullable="false" MaxLength="10" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+          <Property Type="String" Name="NAME" Nullable="false" MaxLength="256" />
+        </ComplexType>
+        <ComplexType Name="AdminUserMgtInfo">
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="256" />
+          <Property Type="String" Name="PhoneNumber" Nullable="false" MaxLength="10" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+          <Property Type="String" Name="NAME" Nullable="false" MaxLength="256" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1134,6 +1152,16 @@
                 <ScalarProperty Name="Feedback" ColumnName="Feedback" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="StatusTypeID" ColumnName="StatusTypeID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GETADMINUSERMGTINFO" FunctionName="ServiceAppDBModel.Store.GETADMINUSERMGTINFO">
+          <ResultMapping>
+              <ComplexTypeMapping TypeName="ServiceAppDBModel.AdminUserMgtInfo">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

@@ -126,5 +126,14 @@ namespace ServiceApp.Domain.DataModel
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UserRequestResponse>("GETUSERREQUESTS", pCreatedUserIDParameter, pServiceCategoryIDParameter, pServiceTypeIDParameter, pStatusTypeIDParameter);
         }
+    
+        public virtual ObjectResult<AdminUserMgtInfo> GETADMINUSERMGTINFO(string pUSEREMAILORPHONENO)
+        {
+            var pUSEREMAILORPHONENOParameter = pUSEREMAILORPHONENO != null ?
+                new ObjectParameter("PUSEREMAILORPHONENO", pUSEREMAILORPHONENO) :
+                new ObjectParameter("PUSEREMAILORPHONENO", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<AdminUserMgtInfo>("GETADMINUSERMGTINFO", pUSEREMAILORPHONENOParameter);
+        }
     }
 }

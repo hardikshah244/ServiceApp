@@ -324,13 +324,16 @@ namespace ServiceApp.Domain.Concrete
             return dicUserInfo;
         }
 
-        public Dictionary<string, string> GetUserInfoByServiceRequestID(string ServiceRequestNO)
+        public Dictionary<string, string> GetUserInfoByServiceRequestID(string ServiceRequestNO, string UserType)
         {
             Dictionary<string, string> dicUserInfo = null;
-
+            dynamic RequestResult = null;
             ServiceAppDBContext context = new ServiceAppDBContext();
 
-            var RequestResult = (from user in context.AspNetUsers
+            if (UserType == "Customer")
+            {
+
+                RequestResult = (from user in context.AspNetUsers
                                  join servicerequest in context.ServiceRequests on user.Id equals servicerequest.CreatedUserID
                                  where servicerequest.ServiceRequestNO == ServiceRequestNO
                                  select new
@@ -347,6 +350,27 @@ namespace ServiceApp.Domain.Concrete
                                      servicerequest.Landmark,
                                      servicerequest.Remark
                                  }).FirstOrDefault();
+            }
+            else if (UserType == "Engineer")
+            {
+                RequestResult = (from user in context.AspNetUsers
+                                 join servicerequest in context.ServiceRequests on user.Id equals servicerequest.UpdatedUserID
+                                 where servicerequest.ServiceRequestNO == ServiceRequestNO
+                                 select new
+                                 {
+                                     user.Name,
+                                     user.Email,
+                                     user.PhoneNumber,
+                                     user.Address,
+                                     user.Area,
+                                     user.SubArea,
+                                     user.City,
+                                     user.State,
+                                     user.Pincode,
+                                     servicerequest.Landmark,
+                                     servicerequest.Remark
+                                 }).FirstOrDefault();
+            }
 
             if (RequestResult != null)
             {

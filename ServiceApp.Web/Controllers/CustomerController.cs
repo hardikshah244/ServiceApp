@@ -58,7 +58,7 @@ namespace ServiceApp.Web.Controllers
                 int intType = Convert.ToInt16(ObjFormCollection["ddlType"]);
                 int intStatus = Convert.ToInt16(ObjFormCollection["ddlSatus"]);
 
-                //ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
+                ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
 
                 List<SelectListItem> lstCategory = (new SelectList(_engineerRepo.GetCategories(), "ServiceCategoryID", "ServiceCategoryName", intCategory)).ToList();
                 lstCategory.Insert(0, (new SelectListItem { Text = "Select", Value = "0" }));
@@ -72,7 +72,7 @@ namespace ServiceApp.Web.Controllers
                 lstStatus.Insert(0, (new SelectListItem { Text = "Select", Value = "0" }));
                 ViewBag.Satus = lstStatus;
 
-                return PartialView("Dashboard", _engineerRepo.GetUserRequests("05d22bb6-28bd-4073-b261-42c5dfc7fede", intCategory, intType, intStatus));
+                return PartialView("Dashboard", _engineerRepo.GetUserRequests(user.Id, intCategory, intType, intStatus));
             }
             catch (Exception)
             {

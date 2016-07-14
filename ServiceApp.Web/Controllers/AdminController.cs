@@ -26,5 +26,21 @@ namespace ServiceApp.Web.Controllers
         {
             return View(_adminRepo.GetProfileInfo(User.Identity.Name));
         }
+
+        // GET: Admin/Dashboard
+        [HttpGet]
+        public ActionResult UserManagement()
+        {
+            return View();
+        }
+
+        // GET: Admin/Dashboard
+        [HttpPost]
+        public ActionResult UserManagement(FormCollection ObjFormCollection)
+        {
+            string strEmailOrMobileNo = ObjFormCollection["txtUserMobileOrEmail"];
+
+            return PartialView("UserManagement", _adminRepo.GetUserManagementInfo(strEmailOrMobileNo));
+        }
     }
 }

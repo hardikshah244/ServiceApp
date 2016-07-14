@@ -43,6 +43,12 @@
                             Engineer Info
                         </a>
                     </li>
+
+                    <li class="menu-dropdown classic-menu-dropdown">
+                        <a href="@Url.Action("UserManagement","Admin")">
+                            User Management
+                        </a>
+                    </li>
                 }
                 else if (User.IsInRole("Customer"))
                 {

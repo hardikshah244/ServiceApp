@@ -42,6 +42,13 @@ namespace ServiceApp.Domain.Concrete
             }
         }
 
+        public IEnumerable<AdminUserMgtInfo> GetUserManagementInfo(string strEmailOrMobileNo)
+        {
+            IEnumerable<AdminUserMgtInfo> lstAdminUserMgtInfo = context.GETADMINUSERMGTINFO(strEmailOrMobileNo).ToList<AdminUserMgtInfo>();
+
+            return lstAdminUserMgtInfo;
+        }
+
         private bool disposed = false;
         protected virtual void Dispose(bool disposing)
         {

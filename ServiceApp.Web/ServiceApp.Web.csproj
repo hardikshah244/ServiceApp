@@ -710,6 +710,7 @@
     <Content Include="Views\EngineerInfo\_Create.cshtml" />
     <Content Include="Views\Engineer\Dashboard.cshtml" />
     <Content Include="Views\Engineer\ProfileInfo.cshtml" />
+    <Content Include="Views\Admin\UserManagement.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

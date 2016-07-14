@@ -98,6 +98,9 @@
     <Compile Include="Concrete\AdminRepository.cs" />
     <Compile Include="Concrete\CustomerRepository.cs" />
     <Compile Include="Concrete\EngineerInfoRepository.cs" />
+    <Compile Include="DataModel\AdminUserMgtInfo.cs">
+      <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataModel\AspNetRole.cs">
       <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
     </Compile>
@@ -126,6 +129,15 @@
       <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\GETENGINEERINFO_Result.cs">
+      <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\GETENGINEERREQUESTS_API_Result.cs">
+      <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\GETENGINEERREQUESTS_Result.cs">
+      <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\GETUSERREQUESTS_Result.cs">
       <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\ServiceAppDBModel.Context.cs">

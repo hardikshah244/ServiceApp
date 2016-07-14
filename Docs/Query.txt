@@ -31,3 +31,13 @@ SELECT UpdatedUserID
 	==============
 	1aa5a2b0-379d-4ed9-be04-1c9d41c22fc1
 	fe9b9794-3189-422d-93e7-47450652de4f
+	
+	
+	User Management
+================
+
+SELECT EMAIL,PhoneNumber,CASE WHEN IsActive = 1 THEN 'True' ELSE 'False' END IsActive,ROLE.NAME 
+FROM AspNetUsers USERS,AspNetUserRoles ROLES,AspNetRoles ROLE
+WHERE USERS.ID=ROLES.UserId
+AND ROLES.RoleId = ROLE.Id
+AND ROLE.NAME <> 'Admin';
