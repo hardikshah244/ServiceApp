@@ -231,7 +231,7 @@ namespace ServiceApp.WebApi.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
+        [Authorize]
         [Route("GetUserInfoByServiceRequestID/{ServiceRequestNO}/{UserType}")]
         public HttpResponseMessage GetUserInfoByServiceRequestID(string ServiceRequestNO, string UserType)
         {
