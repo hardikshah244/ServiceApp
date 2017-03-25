@@ -49,6 +49,20 @@
                             User Management
                         </a>
                     </li>
+
+                    <li class="menu-dropdown classic-menu-dropdown">
+                        <a href="#">
+                            Administration
+                        </a>
+                        <ul class="dropdown-menu pull-left">
+                            <li class="">
+                                <a href="@Url.Action("CustomerDetails","Admin")" class="nav-link">Customer</a>
+                            </li>
+                            <li class="">
+                                <a href="@Url.Action("EngineerDetails","Admin")" class="nav-link">Engineer</a>
+                            </li>
+                        </ul>
+                    </li>
                 }
                 else if (User.IsInRole("Customer"))
                 {

@@ -1,5 +1,8 @@
 ﻿using ServiceApp.Domain.Abstract;
+using System.Collections.Generic;
 using System.Web.Mvc;
+using ServiceApp.Domain.DataModel;
+using System;
 
 namespace ServiceApp.Web.Controllers
 {
@@ -17,7 +20,12 @@ namespace ServiceApp.Web.Controllers
         [HttpGet]
         public ActionResult Dashboard()
         {
-            return View();
+            var DashboardModels = new Tuple<IEnumerable<GET_ADMIN_SR_MGT_Result>, IEnumerable<GET_ADMIN_SR_RAISED_Result>,
+                                        IEnumerable<GET_ADMIN_SR_ASSIGNED_Result>, IEnumerable<GET_ADMIN_SR_CLOSED_Result>>
+                            (_adminRepo.GetAdminSRMgtDetails(), _adminRepo.GetAdminSRRaisedDetails(),
+                            _adminRepo.GetAdminSRAssignedDetails(), _adminRepo.GetAdminSRClosedDetails());
+
+            return View(DashboardModels);
         }
 
         // GET: Admin/ProfileInfo
@@ -41,6 +49,31 @@ namespace ServiceApp.Web.Controllers
             string strEmailOrMobileNo = ObjFormCollection["txtUserMobileOrEmail"];
 
             return View("UserManagement", _adminRepo.GetUserManagementInfo(strEmailOrMobileNo));
+        }
+
+        // POST: Admin/UpdateUserActiveDeactive
+        [HttpPost]
+        public ActionResult UpdateUserActiveDeactive(bool ChkValue, string EmailOrMobileNo)
+        {
+            string strRetMessage = _adminRepo.UpdateUserActivateDeactivateByEmailOrPhone(ChkValue, EmailOrMobileNo);
+
+            ViewBag.Message = strRetMessage;
+
+            return View("UserManagement", _adminRepo.GetUserManagementInfo(EmailOrMobileNo));
+        }
+
+        // GET: Admin/CustomerDetails
+        [HttpGet]
+        public ActionResult CustomerDetails()
+        {
+            return View(_adminRepo.GetAdminCustomerDetails());
+        }
+
+        // GET: Admin/EngineerDetails
+        [HttpGet]
+        public ActionResult EngineerDetails()
+        {
+            return View(_adminRepo.GetAdminEngineerDetails());
         }
     }
 }

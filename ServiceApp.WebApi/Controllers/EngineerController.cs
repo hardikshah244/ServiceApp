@@ -12,7 +12,7 @@ using System.Web.Http;
 namespace ServiceApp.WebApi.Controllers
 {
     [RoutePrefix("api/Engineer")]
-    [Authorize]
+   // [Authorize]
     public class EngineerController : ApiController
     {
         private IEngineerRepository _engineerRepo = null;

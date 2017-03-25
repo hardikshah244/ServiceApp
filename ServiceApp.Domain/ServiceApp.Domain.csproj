@@ -125,6 +125,9 @@
     <Compile Include="DataModel\EngineerRequestResponseAPI.cs">
       <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataModel\GETADMINUSERMGTINFO_Result.cs">
+      <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataModel\GETENGINEERDETAILS_Result.cs">
       <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
     </Compile>
@@ -138,6 +141,24 @@
       <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\GETUSERREQUESTS_Result.cs">
+      <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\GET_ADMIN_CUST_DETAILS_Result.cs">
+      <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\GET_ADMIN_ENGINEER_DETAILS_Result.cs">
+      <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\GET_ADMIN_SR_ASSIGNED_Result.cs">
+      <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\GET_ADMIN_SR_CLOSED_Result.cs">
+      <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\GET_ADMIN_SR_MGT_Result.cs">
+      <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\GET_ADMIN_SR_RAISED_Result.cs">
       <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\ServiceAppDBModel.Context.cs">

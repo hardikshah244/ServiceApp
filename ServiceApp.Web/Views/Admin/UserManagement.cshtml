@@ -7,76 +7,103 @@
 
 
 <!-- BEGIN PAGE BASE CONTENT -->
-<div class="portlet light bordered">
-    <div class="portlet-title">
-        <div class="caption font-green-haze">
-            <span class="caption-subject bold uppercase">User Management</span>
-        </div>
-    </div>
-    <div class="portlet-body">
-        <div class="row form-body">
-            @using (Html.BeginForm("UserManagement", "Admin", FormMethod.Post, new { @class = "form", id = "dvSearch" }))
-            {
-                <div class="col-md-2 form-group">
-                    <label class="control-label">Enter Mobile No / Email Id</label>
+<div id="dvMainUserMgtInfo" class="row">
+    <div class="col-md-12">
+        <div class="portlet light portlet-fit">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class=" icon-layers font-green"></i>
+                    <span class="caption-subject font-green bold uppercase">User Management</span>
                 </div>
-                <div class="col-md-3 form-group">
-                    @Html.TextBox("txtUserMobileOrEmail", "", new { @class = "form-control" })
+            </div>
+            <div class="portlet-body">
+                <div id="dvLoading" class="loading display-none">
                 </div>
-                <div class="col-md-2">
-                    <button type="submit" id="btnSearch" name="Search" class="btn green uppercase" value="Search">Search</button>
-                </div>
-            }
-        </div>
-        @if (Model != null)
-        {
-            <table class="table table-striped table-bordered table-hover dataTable no-footer dtr-inline" id="dvUserMgtInfo" role="grid" aria-describedby="dvUserMgtInfo">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone No</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
+
+                <div class="row form-body">
+                    @using (Html.BeginForm("UserManagement", "Admin", FormMethod.Post, new { @class = "form", id = "dvSearch" }))
                     {
-                        <tr role="row">
-                            <td>
-                                @Html.DisplayFor(modelItem => item.NAME)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Email)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.PhoneNumber)
-                            </td>
-                            <td>
-                                <input type="checkbox" id="chkActive" name="Status" checked='@item.IsActive' class="make-switch" data-size="small" data-on-color="success" data-on-text="Active" data-off-color="default" data-off-text="Deactive">                                
-                            </td>
-                        </tr>
+                        <div class="col-md-2 form-group">
+                            <label class="control-label">Enter Mobile No / Email Id</label>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            @Html.TextBox("txtUserMobileOrEmail", "", new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" id="btnSearch" name="Search" class="btn green uppercase" value="Search">Search</button>
+                        </div>
                     }
-                </tbody>
-            </table>
-        }
+                </div>
+                @if (ViewData.ModelState.IsValid)
+                {
+                    if (ViewBag.Message != null)
+                    {
+                        <div class="row alert alert-success">
+                            <a class="close" data-dismiss="alert">×</a>
+                            @ViewBag.Message
+                        </div>
+                    }
+                }
+
+                @if (Model != null)
+                {
+                    <table class="table table-striped table-bordered table-hover dataTable no-footer dtr-inline" id="dvUserMgtInfo" role="grid" aria-describedby="dvUserMgtInfo">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone No</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr role="row">
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.NAME)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Email)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PhoneNumber)
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="chkActive" name="Status" data-Email='@item.Email' checked='@item.IsActive' class="make-switch" data-size="small" data-on-color="success" data-on-text="Active" data-off-color="default" data-off-text="Deactive">
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+
+
+            </div>
+        </div>
     </div>
 </div>
 <!-- END PAGE BASE CONTENT -->
 
 <script>
+
     $('#chkActive').on('change.bootstrapSwitch', function (e, state) {
-        console.log(e.target.checked);
-        //$.ajax({
-        //    method: 'POST',
-        //    url: '/uri/of/your/page',
-        //    data: {
-        //        'my_checkbox_value': e.target.checked
-        //    },
-        //    dataType: 'json',
-        //    success: function (data) {
-        //        console.log(data);
-        //    }
-        //});
+        $("#dvLoading").show();
+        if ((e.target.checked == true || e.target.checked == false) && $(e.target).attr("data-Email").trim() != "") {
+            $.ajax({
+                method: 'POST',
+                url: '@Url.Action("UpdateUserActiveDeactive", "Admin")',
+                data: {
+                    'ChkValue': e.target.checked, 'EmailOrMobileNo': $(e.target).attr("data-Email").trim()
+                },
+                dataType: 'json',
+                success: function (data) {
+                    $("#dvLoading").hide();                    
+                },
+                error: function (data) {
+                    $("#dvLoading").hide();                    
+                }
+            });
+        }
     });
-</script> 
+</script>

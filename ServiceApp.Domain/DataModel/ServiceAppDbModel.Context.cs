@@ -135,5 +135,35 @@ namespace ServiceApp.Domain.DataModel
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<AdminUserMgtInfo>("GETADMINUSERMGTINFO", pUSEREMAILORPHONENOParameter);
         }
+    
+        public virtual ObjectResult<GET_ADMIN_CUST_DETAILS_Result> GET_ADMIN_CUST_DETAILS()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GET_ADMIN_CUST_DETAILS_Result>("GET_ADMIN_CUST_DETAILS");
+        }
+    
+        public virtual ObjectResult<GET_ADMIN_ENGINEER_DETAILS_Result> GET_ADMIN_ENGINEER_DETAILS()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GET_ADMIN_ENGINEER_DETAILS_Result>("GET_ADMIN_ENGINEER_DETAILS");
+        }
+    
+        public virtual ObjectResult<GET_ADMIN_SR_MGT_Result> GET_ADMIN_SR_MGT()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GET_ADMIN_SR_MGT_Result>("GET_ADMIN_SR_MGT");
+        }
+    
+        public virtual ObjectResult<GET_ADMIN_SR_ASSIGNED_Result> GET_ADMIN_SR_ASSIGNED()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GET_ADMIN_SR_ASSIGNED_Result>("GET_ADMIN_SR_ASSIGNED");
+        }
+    
+        public virtual ObjectResult<GET_ADMIN_SR_RAISED_Result> GET_ADMIN_SR_RAISED()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GET_ADMIN_SR_RAISED_Result>("GET_ADMIN_SR_RAISED");
+        }
+    
+        public virtual ObjectResult<GET_ADMIN_SR_CLOSED_Result> GET_ADMIN_SR_CLOSED()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GET_ADMIN_SR_CLOSED_Result>("GET_ADMIN_SR_CLOSED");
+        }
     }
 }

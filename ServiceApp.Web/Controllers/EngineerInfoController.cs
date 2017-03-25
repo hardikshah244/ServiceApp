@@ -50,18 +50,13 @@ namespace ServiceApp.Web.Controllers
 
         // GET: Admin/EngineerInfo/Index
         [HttpGet]
-        public ActionResult Index(string sortOrder, int page = 1, int pageSize = 15)
+        public ActionResult Index()
         {
             try
             {
-                ViewBag.CurrentSort = sortOrder;
-                ViewBag.EmailSortParm = String.IsNullOrEmpty(sortOrder) ? "desc" : "";
+                var lstEngineerInfo = _engineerinfoRepo.GetEngineerInfo();
 
-                var lstEngineerInfo = _engineerinfoRepo.GetEngineerInfo(sortOrder);
-
-                PagedList<EngineerInfo> plEngineerInfo = new PagedList<EngineerInfo>(lstEngineerInfo, page, pageSize);
-
-                return View(plEngineerInfo);
+                return View(lstEngineerInfo);
             }
             catch (Exception)
             {

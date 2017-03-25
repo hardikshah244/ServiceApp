@@ -22,22 +22,9 @@ namespace ServiceApp.Domain.Concrete
             this.context = new ServiceAppDBContext();
         }
 
-        public IEnumerable<EngineerInfo> GetEngineerInfo(string sortOrder)
+        public IEnumerable<EngineerInfo> GetEngineerInfo()
         {
-            //IEnumerable<EngineerInfo> lstEngineerInfo = context.Database.SqlQuery
-            //                                                          <EngineerInfo>("exec GETENGINEERINFO", null).ToList();
-
-            IEnumerable<EngineerInfo> lstEngineerInfo = null;
-
-            switch (sortOrder)
-            {
-                case "desc":
-                    lstEngineerInfo = context.GETENGINEERINFO().ToList<EngineerInfo>().OrderByDescending(s => s.Email);
-                    break;
-                default:
-                    lstEngineerInfo = context.GETENGINEERINFO().ToList<EngineerInfo>().OrderBy(s => s.Email);
-                    break;
-            }
+            IEnumerable<EngineerInfo> lstEngineerInfo = context.GETENGINEERINFO().ToList<EngineerInfo>();
 
             return lstEngineerInfo;
         }

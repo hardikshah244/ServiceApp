@@ -11,6 +11,6 @@ namespace ServiceApp.Domain.Abstract
 {
     public interface IEngineerInfo
     {
-        IEnumerable<EngineerInfo> GetEngineerInfo(string sortOrder);
+        IEnumerable<EngineerInfo> GetEngineerInfo();
     }
 }

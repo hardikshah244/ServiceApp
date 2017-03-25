@@ -318,6 +318,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="GET_ADMIN_CUST_DETAILS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GET_ADMIN_ENGINEER_DETAILS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GET_ADMIN_SR_ASSIGNED" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GET_ADMIN_SR_CLOSED" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GET_ADMIN_SR_MGT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GET_ADMIN_SR_RAISED" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GETADMINUSERMGTINFO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="PUSEREMAILORPHONENO" Type="nvarchar" Mode="In" />
         </Function>
@@ -651,8 +657,14 @@
             <Parameter Name="PStatusTypeID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GETADMINUSERMGTINFO" ReturnType="Collection(ServiceAppDBModel.AdminUserMgtInfo)">
-            <Parameter Name="PUSEREMAILORPHONENO" Mode="In" Type="String" />
+          <Parameter Name="PUSEREMAILORPHONENO" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="GET_ADMIN_CUST_DETAILS" ReturnType="Collection(ServiceAppDBModel.GET_ADMIN_CUST_DETAILS_Result)" />
+          <FunctionImport Name="GET_ADMIN_ENGINEER_DETAILS" ReturnType="Collection(ServiceAppDBModel.GET_ADMIN_ENGINEER_DETAILS_Result)" />
+          <FunctionImport Name="GET_ADMIN_SR_MGT" ReturnType="Collection(ServiceAppDBModel.GET_ADMIN_SR_MGT_Result)" />
+          <FunctionImport Name="GET_ADMIN_SR_ASSIGNED" ReturnType="Collection(ServiceAppDBModel.GET_ADMIN_SR_ASSIGNED_Result)" />
+          <FunctionImport Name="GET_ADMIN_SR_RAISED" ReturnType="Collection(ServiceAppDBModel.GET_ADMIN_SR_RAISED_Result)" />
+          <FunctionImport Name="GET_ADMIN_SR_CLOSED" ReturnType="Collection(ServiceAppDBModel.GET_ADMIN_SR_CLOSED_Result)" />
           </EntityContainer>
         <ComplexType Name="GETENGINEERDETAILS_Result">
           <Property Type="String" Name="Name" Nullable="true" MaxLength="200" />
@@ -930,6 +942,68 @@
           <Property Type="Boolean" Name="IsActive" Nullable="false" />
           <Property Type="String" Name="NAME" Nullable="false" MaxLength="256" />
         </ComplexType>
+        <ComplexType Name="GET_ADMIN_CUST_DETAILS_Result">
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="PhoneNumber" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="256" />
+          <Property Type="DateTime" Name="CreationDate" Nullable="false" />
+          <Property Type="Int32" Name="No_Of_SR_Raised" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GET_ADMIN_ENGINEER_DETAILS_Result">
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="PhoneNumber" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="256" />
+          <Property Type="DateTime" Name="CreationDate" Nullable="false" />
+          <Property Type="Int32" Name="No_Of_SR_Served" Nullable="false" />
+          <Property Type="Int32" Name="No_Of_SR_Cancelled" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GET_ADMIN_SR_MGT_Result">
+          <Property Type="Int32" Name="ServiceRequestID" Nullable="false" />
+          <Property Type="String" Name="ServiceCategoryName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ServiceTypeName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CustName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CustPhoneNo" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="CreatedDateTime" Nullable="true" MaxLength="4000" />
+          <Property Type="String" Name="AssignedDateTime" Nullable="true" MaxLength="4000" />
+          <Property Type="String" Name="CompletedDateTime" Nullable="true" MaxLength="4000" />
+          <Property Type="String" Name="CustomerFeedback" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="StatusTypeName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="WITHIN99" Nullable="false" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="GET_ADMIN_SR_ASSIGNED_Result">
+          <Property Type="Int32" Name="ServiceRequestID" Nullable="false" />
+          <Property Type="String" Name="ServiceCategoryName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ServiceTypeName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CustName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CustPhoneNo" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="EngName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="EngPhoneNo" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="CreatedDateTime" Nullable="true" MaxLength="4000" />
+          <Property Type="String" Name="UpdatedDateTime" Nullable="true" MaxLength="4000" />
+          <Property Type="String" Name="WITHIN99" Nullable="false" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="GET_ADMIN_SR_RAISED_Result">
+          <Property Type="Int32" Name="ServiceRequestID" Nullable="false" />
+          <Property Type="String" Name="ServiceCategoryName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ServiceTypeName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="PhoneNumber" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="CreatedDateTime" Nullable="true" MaxLength="4000" />
+          <Property Type="String" Name="Remain_Time" Nullable="true" MaxLength="4000" />
+        </ComplexType>
+        <ComplexType Name="GET_ADMIN_SR_CLOSED_Result">
+          <Property Type="Int32" Name="ServiceRequestID" Nullable="false" />
+          <Property Type="String" Name="ServiceCategoryName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ServiceTypeName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CustName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CustPhoneNo" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="EngName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="EngPhoneNo" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="CreatedDateTime" Nullable="true" MaxLength="4000" />
+          <Property Type="String" Name="UpdatedDateTime" Nullable="true" MaxLength="4000" />
+          <Property Type="String" Name="WITHIN99" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="CustomerFeedback" Nullable="false" MaxLength="1" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1162,6 +1236,92 @@
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="NAME" ColumnName="NAME" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GET_ADMIN_CUST_DETAILS" FunctionName="ServiceAppDBModel.Store.GET_ADMIN_CUST_DETAILS">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ServiceAppDBModel.GET_ADMIN_CUST_DETAILS_Result">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="No_Of_SR_Raised" ColumnName="No Of SR Raised" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GET_ADMIN_ENGINEER_DETAILS" FunctionName="ServiceAppDBModel.Store.GET_ADMIN_ENGINEER_DETAILS">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ServiceAppDBModel.GET_ADMIN_ENGINEER_DETAILS_Result">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="No_Of_SR_Served" ColumnName="No Of SR Served" />
+                <ScalarProperty Name="No_Of_SR_Cancelled" ColumnName="No Of SR Cancelled" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GET_ADMIN_SR_MGT" FunctionName="ServiceAppDBModel.Store.GET_ADMIN_SR_MGT">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ServiceAppDBModel.GET_ADMIN_SR_MGT_Result">
+                <ScalarProperty Name="ServiceRequestID" ColumnName="ServiceRequestID" />
+                <ScalarProperty Name="ServiceCategoryName" ColumnName="ServiceCategoryName" />
+                <ScalarProperty Name="ServiceTypeName" ColumnName="ServiceTypeName" />
+                <ScalarProperty Name="CustName" ColumnName="CustName" />
+                <ScalarProperty Name="CustPhoneNo" ColumnName="CustPhoneNo" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="AssignedDateTime" ColumnName="AssignedDateTime" />
+                <ScalarProperty Name="CompletedDateTime" ColumnName="CompletedDateTime" />
+                <ScalarProperty Name="CustomerFeedback" ColumnName="CustomerFeedback" />
+                <ScalarProperty Name="StatusTypeName" ColumnName="StatusTypeName" />
+                <ScalarProperty Name="WITHIN99" ColumnName="WITHIN99" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GET_ADMIN_SR_ASSIGNED" FunctionName="ServiceAppDBModel.Store.GET_ADMIN_SR_ASSIGNED">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ServiceAppDBModel.GET_ADMIN_SR_ASSIGNED_Result">
+                <ScalarProperty Name="ServiceRequestID" ColumnName="ServiceRequestID" />
+                <ScalarProperty Name="ServiceCategoryName" ColumnName="ServiceCategoryName" />
+                <ScalarProperty Name="ServiceTypeName" ColumnName="ServiceTypeName" />
+                <ScalarProperty Name="CustName" ColumnName="CustName" />
+                <ScalarProperty Name="CustPhoneNo" ColumnName="CustPhoneNo" />
+                <ScalarProperty Name="EngName" ColumnName="EngName" />
+                <ScalarProperty Name="EngPhoneNo" ColumnName="EngPhoneNo" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="UpdatedDateTime" ColumnName="UpdatedDateTime" />
+                <ScalarProperty Name="WITHIN99" ColumnName="WITHIN99" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GET_ADMIN_SR_RAISED" FunctionName="ServiceAppDBModel.Store.GET_ADMIN_SR_RAISED">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ServiceAppDBModel.GET_ADMIN_SR_RAISED_Result">
+                <ScalarProperty Name="ServiceRequestID" ColumnName="ServiceRequestID" />
+                <ScalarProperty Name="ServiceCategoryName" ColumnName="ServiceCategoryName" />
+                <ScalarProperty Name="ServiceTypeName" ColumnName="ServiceTypeName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="Remain_Time" ColumnName="Remain Time" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GET_ADMIN_SR_CLOSED" FunctionName="ServiceAppDBModel.Store.GET_ADMIN_SR_CLOSED">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ServiceAppDBModel.GET_ADMIN_SR_CLOSED_Result">
+                <ScalarProperty Name="ServiceRequestID" ColumnName="ServiceRequestID" />
+                <ScalarProperty Name="ServiceCategoryName" ColumnName="ServiceCategoryName" />
+                <ScalarProperty Name="ServiceTypeName" ColumnName="ServiceTypeName" />
+                <ScalarProperty Name="CustName" ColumnName="CustName" />
+                <ScalarProperty Name="CustPhoneNo" ColumnName="CustPhoneNo" />
+                <ScalarProperty Name="EngName" ColumnName="EngName" />
+                <ScalarProperty Name="EngPhoneNo" ColumnName="EngPhoneNo" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="UpdatedDateTime" ColumnName="UpdatedDateTime" />
+                <ScalarProperty Name="WITHIN99" ColumnName="WITHIN99" />
+                <ScalarProperty Name="CustomerFeedback" ColumnName="CustomerFeedback" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
