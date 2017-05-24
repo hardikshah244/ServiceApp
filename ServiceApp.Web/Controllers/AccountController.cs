@@ -81,33 +81,42 @@ namespace ServiceApp.Web.Controllers
 
                     if (user != null)
                     {
-                        IAuthenticationManager authenticationManager = HttpContext.GetOwinContext().Authentication;
-                        authenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-                        ClaimsIdentity identity = _userManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
-                        AuthenticationProperties props = new AuthenticationProperties();
-                        props.IsPersistent = false;//loginModel.RememberMe;
-                        authenticationManager.SignIn(props, identity);
+                        bool IsActive = _repo.CheckIsUserActiveOrDeactive(user.Email);
 
-                        if (Url.IsLocalUrl(returnUrl))
+                        if (IsActive)
                         {
-                            return Redirect(returnUrl);
+                            IAuthenticationManager authenticationManager = HttpContext.GetOwinContext().Authentication;
+                            authenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
+                            ClaimsIdentity identity = _userManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
+                            AuthenticationProperties props = new AuthenticationProperties();
+                            props.IsPersistent = false;//loginModel.RememberMe;
+                            authenticationManager.SignIn(props, identity);
+
+                            if (Url.IsLocalUrl(returnUrl))
+                            {
+                                return Redirect(returnUrl);
+                            }
+                            else
+                            {
+                                var userRole = _userManager.GetRoles(user.Id);
+
+                                if (userRole[0] == "Admin")
+                                {
+                                    return RedirectToAction("Dashboard", "Admin");
+                                }
+                                else if (userRole[0] == "Customer")
+                                {
+                                    return RedirectToAction("Dashboard", "Customer");
+                                }
+                                else if (userRole[0] == "Engineer")
+                                {
+                                    return RedirectToAction("Dashboard", "Engineer");
+                                }
+                            }
                         }
                         else
                         {
-                            var userRole = _userManager.GetRoles(user.Id);
-
-                            if (userRole[0] == "Admin")
-                            {
-                                return RedirectToAction("Dashboard", "Admin");
-                            }
-                            else if (userRole[0] == "Customer")
-                            {
-                                return RedirectToAction("Dashboard", "Customer");
-                            }
-                            else if (userRole[0] == "Engineer")
-                            {
-                                return RedirectToAction("Dashboard", "Engineer");
-                            }
+                            ModelState.AddModelError("", "User is deactivated, Please contact administrator.");
                         }
                     }
                     else

@@ -1072,11 +1072,11 @@ a.dt-button, button.dt-button, div.dt-button {
     }
 
 .dataTables_wrapper .dt-buttons {
-    float: right;
+    float: left;
 }
 
 .portlet.light .dataTables_wrapper .dt-buttons {
-    margin-top: -47px;
+    /*margin-top: -47px;*/
 }
 
 .portlet.box .dataTables_wrapper .dt-buttons {

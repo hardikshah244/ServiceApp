@@ -52,7 +52,7 @@ var TableDatatablesButtons = function () {
             // set the initial value
             "pageLength": 10,
 
-            "dom": "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>", // horizobtal scrollable datatable
+            "dom": "<'row' <'col-md-3 col-sm-12'B><'col-md-4 col-sm-12'l><'col-md-5 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>", // horizobtal scrollable datatable
 
             // Uncomment below line("dom" parameter) to fix the dropdown overflow issue in the datatable cells. The default datatable layout
             // setup uses scrollable div(table-scrollable) with overflow:auto to enable vertical scroll(see: assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js). 
@@ -114,7 +114,7 @@ var TableDatatablesButtons = function () {
             // set the initial value
             "pageLength": 10,
 
-            "dom": "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>", // horizobtal scrollable datatable
+            "dom": "<'row' <'col-md-3 col-sm-12'B><'col-md-4 col-sm-12'l><'col-md-5 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>", // horizobtal scrollable datatable
 
             // Uncomment below line("dom" parameter) to fix the dropdown overflow issue in the datatable cells. The default datatable layout
             // setup uses scrollable div(table-scrollable) with overflow:auto to enable vertical scroll(see: assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js). 
@@ -152,8 +152,8 @@ var TableDatatablesButtons = function () {
             buttons: [
                 //{ extend: 'print', className: 'btn dark btn-outline' },
                 //{ extend: 'copy', className: 'btn red btn-outline' },
-                //{ extend: 'pdf', className: 'btn green btn-outline', title: "Dashboard Report" },
-                //{ extend: 'excel', className: 'btn green btn-outline', title: "Dashboard Report" },
+                { extend: 'pdf', className: 'btn green btn-outline', title: "Engineer Info Report" },
+                { extend: 'excel', className: 'btn green btn-outline', title: "Engineer Info Report" },
                 //{ extend: 'csv', className: 'btn green btn-outline ' },
                 //{ extend: 'colvis', className: 'btn dark btn-outline', text: 'Columns' }
             ],
@@ -175,7 +175,7 @@ var TableDatatablesButtons = function () {
             // set the initial value
             "pageLength": 10,
 
-            "dom": "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>", // horizobtal scrollable datatable
+            "dom": "<'row' <'col-md-3 col-sm-12'B><'col-md-4 col-sm-12'l><'col-md-5 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>", // horizobtal scrollable datatable
 
             // Uncomment below line("dom" parameter) to fix the dropdown overflow issue in the datatable cells. The default datatable layout
             // setup uses scrollable div(table-scrollable) with overflow:auto to enable vertical scroll(see: assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js). 
@@ -213,8 +213,8 @@ var TableDatatablesButtons = function () {
             buttons: [
                 //{ extend: 'print', className: 'btn dark btn-outline' },
                 //{ extend: 'copy', className: 'btn red btn-outline' },
-                //{ extend: 'pdf', className: 'btn green btn-outline', title: "Dashboard Report" },
-                //{ extend: 'excel', className: 'btn green btn-outline', title: "Dashboard Report" },
+                { extend: 'pdf', className: 'btn green btn-outline', title: "Engineer Details Report" },
+                { extend: 'excel', className: 'btn green btn-outline', title: "Engineer Details Report" },
                 //{ extend: 'csv', className: 'btn green btn-outline ' },
                 //{ extend: 'colvis', className: 'btn dark btn-outline', text: 'Columns' }
             ],
@@ -236,7 +236,7 @@ var TableDatatablesButtons = function () {
             // set the initial value
             "pageLength": 10,
 
-            "dom": "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>", // horizobtal scrollable datatable
+            "dom": "<'row' <'col-md-3 col-sm-12'B><'col-md-4 col-sm-12'l><'col-md-5 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>", // horizobtal scrollable datatable
 
             // Uncomment below line("dom" parameter) to fix the dropdown overflow issue in the datatable cells. The default datatable layout
             // setup uses scrollable div(table-scrollable) with overflow:auto to enable vertical scroll(see: assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js). 
@@ -274,8 +274,8 @@ var TableDatatablesButtons = function () {
             buttons: [
                 //{ extend: 'print', className: 'btn dark btn-outline' },
                 //{ extend: 'copy', className: 'btn red btn-outline' },
-                //{ extend: 'pdf', className: 'btn green btn-outline', title: "Dashboard Report" },
-                //{ extend: 'excel', className: 'btn green btn-outline', title: "Dashboard Report" },
+                { extend: 'pdf', className: 'btn green btn-outline', title: "Customer Details Report" },
+                { extend: 'excel', className: 'btn green btn-outline', title: "Customer Details Report" },
                 //{ extend: 'csv', className: 'btn green btn-outline ' },
                 //{ extend: 'colvis', className: 'btn dark btn-outline', text: 'Columns' }
             ],
@@ -297,7 +297,7 @@ var TableDatatablesButtons = function () {
             // set the initial value
             "pageLength": 10,
 
-            "dom": "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>", // horizobtal scrollable datatable
+            "dom": "<'row' <'col-md-3 col-sm-12'B><'col-md-4 col-sm-12'l><'col-md-5 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>", // horizobtal scrollable datatable
 
             // Uncomment below line("dom" parameter) to fix the dropdown overflow issue in the datatable cells. The default datatable layout
             // setup uses scrollable div(table-scrollable) with overflow:auto to enable vertical scroll(see: assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js). 
@@ -337,8 +337,8 @@ var TableDatatablesButtons = function () {
             buttons: [
                 //{ extend: 'print', className: 'btn dark btn-outline' },
                 //{ extend: 'copy', className: 'btn red btn-outline' },
-                //{ extend: 'pdf', className: 'btn green btn-outline', title: "Dashboard Report" },
-                //{ extend: 'excel', className: 'btn green btn-outline', title: "Dashboard Report" },
+                { extend: 'pdf', className: 'btn green btn-outline', title: "SR Management Report" },
+                { extend: 'excel', className: 'btn green btn-outline', title: "SR Management Report" },
                 //{ extend: 'csv', className: 'btn green btn-outline ' },
                 //{ extend: 'colvis', className: 'btn dark btn-outline', text: 'Columns' }
             ],
@@ -360,7 +360,7 @@ var TableDatatablesButtons = function () {
             // set the initial value
             "pageLength": 10,
 
-            "dom": "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>", // horizobtal scrollable datatable
+            "dom": "<'row' <'col-md-3 col-sm-12'B><'col-md-4 col-sm-12'l><'col-md-5 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>", // horizobtal scrollable datatable
 
             // Uncomment below line("dom" parameter) to fix the dropdown overflow issue in the datatable cells. The default datatable layout
             // setup uses scrollable div(table-scrollable) with overflow:auto to enable vertical scroll(see: assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js). 
@@ -398,8 +398,8 @@ var TableDatatablesButtons = function () {
             buttons: [
                 //{ extend: 'print', className: 'btn dark btn-outline' },
                 //{ extend: 'copy', className: 'btn red btn-outline' },
-                //{ extend: 'pdf', className: 'btn green btn-outline', title: "Dashboard Report" },
-                //{ extend: 'excel', className: 'btn green btn-outline', title: "Dashboard Report" },
+                { extend: 'pdf', className: 'btn green btn-outline', title: "SR Open Report" },
+                { extend: 'excel', className: 'btn green btn-outline', title: "SR Open Report" },
                 //{ extend: 'csv', className: 'btn green btn-outline ' },
                 //{ extend: 'colvis', className: 'btn dark btn-outline', text: 'Columns' }
             ],
@@ -421,7 +421,7 @@ var TableDatatablesButtons = function () {
             // set the initial value
             "pageLength": 10,
 
-            "dom": "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>", // horizobtal scrollable datatable
+            "dom": "<'row' <'col-md-3 col-sm-12'B><'col-md-4 col-sm-12'l><'col-md-5 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>", // horizobtal scrollable datatable
 
             // Uncomment below line("dom" parameter) to fix the dropdown overflow issue in the datatable cells. The default datatable layout
             // setup uses scrollable div(table-scrollable) with overflow:auto to enable vertical scroll(see: assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js). 
@@ -459,8 +459,8 @@ var TableDatatablesButtons = function () {
             buttons: [
                 //{ extend: 'print', className: 'btn dark btn-outline' },
                 //{ extend: 'copy', className: 'btn red btn-outline' },
-                //{ extend: 'pdf', className: 'btn green btn-outline', title: "Dashboard Report" },
-                //{ extend: 'excel', className: 'btn green btn-outline', title: "Dashboard Report" },
+                { extend: 'pdf', className: 'btn green btn-outline', title: "SR Assigned Report" },
+                { extend: 'excel', className: 'btn green btn-outline', title: "SR Assigned Report" },
                 //{ extend: 'csv', className: 'btn green btn-outline ' },
                 //{ extend: 'colvis', className: 'btn dark btn-outline', text: 'Columns' }
             ],
@@ -482,7 +482,7 @@ var TableDatatablesButtons = function () {
             // set the initial value
             "pageLength": 10,
 
-            "dom": "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>", // horizobtal scrollable datatable
+            "dom": "<'row' <'col-md-3 col-sm-12'B><'col-md-4 col-sm-12'l><'col-md-5 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>", // horizobtal scrollable datatable
 
             // Uncomment below line("dom" parameter) to fix the dropdown overflow issue in the datatable cells. The default datatable layout
             // setup uses scrollable div(table-scrollable) with overflow:auto to enable vertical scroll(see: assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js). 
@@ -521,8 +521,8 @@ var TableDatatablesButtons = function () {
             buttons: [
                 //{ extend: 'print', className: 'btn dark btn-outline' },
                 //{ extend: 'copy', className: 'btn red btn-outline' },
-                //{ extend: 'pdf', className: 'btn green btn-outline', title: "Dashboard Report" },
-                //{ extend: 'excel', className: 'btn green btn-outline', title: "Dashboard Report" },
+                { extend: 'pdf', className: 'btn green btn-outline', title: "SR Closed Report" },
+                { extend: 'excel', className: 'btn green btn-outline', title: "SR Closed Report" }
                 //{ extend: 'csv', className: 'btn green btn-outline ' },
                 //{ extend: 'colvis', className: 'btn dark btn-outline', text: 'Columns' }
             ],
@@ -544,7 +544,7 @@ var TableDatatablesButtons = function () {
             // set the initial value
             "pageLength": 10,
 
-            "dom": "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>", // horizobtal scrollable datatable
+            "dom": "<'row' <'col-md-3 col-sm-12'B><'col-md-4 col-sm-12'l><'col-md-5 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>", // horizobtal scrollable datatable
 
             // Uncomment below line("dom" parameter) to fix the dropdown overflow issue in the datatable cells. The default datatable layout
             // setup uses scrollable div(table-scrollable) with overflow:auto to enable vertical scroll(see: assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js). 

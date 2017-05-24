@@ -638,6 +638,7 @@
     <Folder Include="Content\" />
     <Folder Include="fonts\" />
     <Folder Include="Images\" />
+    <Folder Include="UploadFiles\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

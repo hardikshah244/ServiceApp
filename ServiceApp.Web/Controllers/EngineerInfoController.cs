@@ -8,6 +8,7 @@ using ServiceApp.Domain.DataModel;
 using ServiceApp.Domain.Security;
 using System;
 using System.Configuration;
+using System.IO;
 using System.Web;
 using System.Web.Mvc;
 
@@ -74,7 +75,7 @@ namespace ServiceApp.Web.Controllers
         // POST: Admin/EngineerInfo/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(EngineerInfo engineerInfo)
+        public ActionResult Create(EngineerInfo engineerInfo, HttpPostedFileBase file)
         {
             try
             {
@@ -86,6 +87,16 @@ namespace ServiceApp.Web.Controllers
 
                     if (result.Succeeded)
                     {
+                        if (file.ContentLength > 0)
+                        {
+                            string strFileName = Path.GetFileName(file.FileName);
+                            string strFileExtension = Path.GetExtension(file.FileName);
+                            string strEngineerDocName = engineerInfo.PhoneNumber + strFileExtension;
+
+                            string strPath = Path.Combine(Server.MapPath("~/UploadFiles"), strEngineerDocName);
+                            file.SaveAs(strPath);
+                        }
+
                         ViewBag.Message = "Engineer successfully registered";
 
                         Email.SendEmail(strFromEmail, engineerInfo.Email, "RegisterEngineer", "You are successfully registered in system, Please find below login information <br/>Email :- " + engineerInfo.Email + " Password:- " + strPassword);
@@ -109,6 +120,20 @@ namespace ServiceApp.Web.Controllers
             }
 
             return PartialView("_Create", engineerInfo);
+        }
+
+        [HttpPost]
+        public ActionResult Index1(HttpPostedFileBase file)
+        {
+
+            if (file.ContentLength > 0)
+            {
+                var fileName = Path.GetFileName(file.FileName);
+                var path = Path.Combine(Server.MapPath("~/App_Data/uploads"), fileName);
+                file.SaveAs(path);
+            }
+
+            return RedirectToAction("Index1");
         }
 
     }
