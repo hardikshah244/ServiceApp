@@ -35,6 +35,7 @@ namespace ServiceApp.Domain.Abstract
         IEnumerable<ServiceTypeMaster> GetTypeMaster();
 
         IEnumerable<StatusTypeMaster> GetStatus();
+        List<RaiseRequestResponse> GetEngineerForRequests();
     }
 }
 

@@ -19,6 +19,7 @@ namespace ServiceApp.Domain.DataModel
 
         [Required]
         [RegularExpression(@"^(\d{10})$", ErrorMessage = "Please enter valid phone number")]
+        [MinLength(10)]
         [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
 
@@ -31,7 +32,7 @@ namespace ServiceApp.Domain.DataModel
         public string State { get; set; }
 
         [Required]
-        [MaxLength(15)]
+        [MinLength(6)]
         public string Pincode { get; set; }
 
         [Required]
@@ -52,6 +53,8 @@ namespace ServiceApp.Domain.DataModel
         public Nullable<decimal> Amount { get; set; }
 
         public string Id { get; set; }
+
+        public List<string> FileDetails { get; set; }
     }
 
     [MetadataType(typeof(EngineerInfoMetadata))]

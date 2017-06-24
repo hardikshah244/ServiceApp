@@ -40,6 +40,16 @@ namespace ServiceApp.WebApi.Providers
                 context.SetError("invalid_grant", "The user name or password is incorrect.");
                 return;
             }
+            else if (user != null)
+            {
+                bool IsActive = _repo.CheckIsUserActiveOrDeactive(user.Email);
+
+                if (IsActive == false)
+                {
+                    context.SetError("invalid_grant", "The user is deactivated.");
+                    return;
+                }
+            }
 
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
             identity.AddClaim(new Claim("sub", context.UserName));

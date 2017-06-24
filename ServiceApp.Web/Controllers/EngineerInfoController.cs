@@ -1,16 +1,19 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using PagedList;
 using ServiceApp.Domain.Abstract;
 using ServiceApp.Domain.Common;
 using ServiceApp.Domain.Concrete;
 using ServiceApp.Domain.DataModel;
 using ServiceApp.Domain.Security;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Web;
 using System.Web.Mvc;
+using System.IO.Compression;
+using System.Linq;
+using System.Net;
 
 namespace ServiceApp.Web.Controllers
 {
@@ -23,6 +26,8 @@ namespace ServiceApp.Web.Controllers
         private ApplicationRoleManager _userRoleManager = null;
 
         private string strFromEmail = ConfigurationManager.AppSettings["FromEmail"].ToString();
+        private string strDocumentUploadPath = ConfigurationManager.AppSettings["DocumentUploadPath"].ToString();
+        private string strDocumentDownloadFiles = ConfigurationManager.AppSettings["DocumentDownloadFiles"].ToString();
 
         public EngineerInfoController(IEngineerInfo engineerinfoRepo)
         {
@@ -55,7 +60,7 @@ namespace ServiceApp.Web.Controllers
         {
             try
             {
-                var lstEngineerInfo = _engineerinfoRepo.GetEngineerInfo();
+                var lstEngineerInfo = _engineerinfoRepo.GetEngineerInfo("");
 
                 return View(lstEngineerInfo);
             }
@@ -75,43 +80,73 @@ namespace ServiceApp.Web.Controllers
         // POST: Admin/EngineerInfo/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(EngineerInfo engineerInfo, HttpPostedFileBase file)
+        public ActionResult Create(EngineerInfo engineerInfo)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    string strPassword = Validations.GeneratePassword(engineerInfo.Email, engineerInfo.PhoneNumber);
+                    List<string> fileDetails = new List<string>();
 
-                    IdentityResult result = _repo.RegisterEngineerWebApp(engineerInfo, strPassword);
-
-                    if (result.Succeeded)
+                    if (Request.Files != null && Request.Files.Count > 0 && Request.Files[0].ContentLength > 0)
                     {
-                        if (file.ContentLength > 0)
+                        for (int i = 0; i < Request.Files.Count; i++)
                         {
-                            string strFileName = Path.GetFileName(file.FileName);
-                            string strFileExtension = Path.GetExtension(file.FileName);
-                            string strEngineerDocName = engineerInfo.PhoneNumber + strFileExtension;
+                            var file = Request.Files[i];
 
-                            string strPath = Path.Combine(Server.MapPath("~/UploadFiles"), strEngineerDocName);
-                            file.SaveAs(strPath);
+                            if (file != null && file.ContentLength > 0)
+                            {
+                                var fileName = Path.GetFileName(file.FileName);
+                                var FileExtension = Path.GetExtension(file.FileName);
+                                var FileDirectory = Server.MapPath(strDocumentUploadPath + engineerInfo.PhoneNumber);
+
+                                if (!Directory.Exists(FileDirectory))
+                                {
+                                    Directory.CreateDirectory(FileDirectory);
+                                }
+
+                                var DocNameWithDirectory = Path.Combine(FileDirectory, fileName);
+
+                                if (!System.IO.File.Exists(DocNameWithDirectory))
+                                {
+                                    file.SaveAs(DocNameWithDirectory);
+
+                                    fileDetails.Add(fileName);
+                                }
+                                else
+                                {
+                                    ModelState.AddModelError("Error", "Document " + fileName + " already available");
+                                }
+                            }
                         }
 
-                        ViewBag.Message = "Engineer successfully registered";
+                        string strPassword = Validations.GeneratePassword(engineerInfo.Email, engineerInfo.PhoneNumber);
 
-                        Email.SendEmail(strFromEmail, engineerInfo.Email, "RegisterEngineer", "You are successfully registered in system, Please find below login information <br/>Email :- " + engineerInfo.Email + " Password:- " + strPassword);
+                        IdentityResult result = _repo.RegisterEngineerWebApp(engineerInfo, strPassword);
 
-                        return Json(new { success = true });
+                        if (result.Succeeded)
+                        {
+                            engineerInfo.FileDetails = fileDetails;
+
+                            ViewBag.Message = "Engineer successfully registered";
+
+                            Email.SendEmail(strFromEmail, engineerInfo.Email, "RegisterEngineer", "You are successfully registered in system, Please find below login information <br/>Email :- " + engineerInfo.Email + " Password:- " + strPassword);
+
+                            return Json(new { success = true, Message = "Engineer successfully registered" });
+                        }
+                        else
+                        {
+                            foreach (var error in result.Errors)
+                            {
+                                ModelState.AddModelError("", error);
+                            }
+                        }
                     }
                     else
                     {
-                        foreach (var error in result.Errors)
-                        {
-                            ModelState.AddModelError("", error);
-                        }
+                        ModelState.AddModelError("Error", "Please upload atleast 1 document");
                     }
                 }
-
             }
             catch (Exception ex)
             {
@@ -122,19 +157,168 @@ namespace ServiceApp.Web.Controllers
             return PartialView("_Create", engineerInfo);
         }
 
-        [HttpPost]
-        public ActionResult Index1(HttpPostedFileBase file)
+        // GET: Admin/EngineerInfo/Edit
+        [HttpGet]
+        public ActionResult Edit(string Email)
         {
-
-            if (file.ContentLength > 0)
+            try
             {
-                var fileName = Path.GetFileName(file.FileName);
-                var path = Path.Combine(Server.MapPath("~/App_Data/uploads"), fileName);
-                file.SaveAs(path);
-            }
+                var lstEngineerInfo = _engineerinfoRepo.GetEngineerInfoByEmail(Email);
 
-            return RedirectToAction("Index1");
+                string strUploadedFileDirectory = Server.MapPath(strDocumentUploadPath + lstEngineerInfo.PhoneNumber);
+                List<string> lstDocuments = null;
+                if (Directory.Exists(strUploadedFileDirectory))
+                {
+                    DirectoryInfo di = new DirectoryInfo(strUploadedFileDirectory);
+
+                    lstDocuments = di.GetFiles().Select(file => file.Name).ToList();
+                }
+
+                lstEngineerInfo.FileDetails = lstDocuments;
+
+                return PartialView("_Edit", lstEngineerInfo);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
+        // POST: Admin/EngineerInfo/Edit
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(EngineerInfo engineerInfo)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    List<string> fileDetails = (engineerInfo.FileDetails == null || engineerInfo.FileDetails[0] == "") ? null : engineerInfo.FileDetails[0].Split(',').ToList<string>();
+
+                    if ((Request.Files != null && Request.Files.Count > 0 && Request.Files[0].ContentLength > 0) || (fileDetails != null && fileDetails.Count > 0))
+                    {
+                        for (int i = 0; i < Request.Files.Count; i++)
+                        {
+                            var file = Request.Files[i];
+
+                            if (file != null && file.ContentLength > 0)
+                            {
+                                var fileName = Path.GetFileName(file.FileName);
+                                var FileDirectory = Server.MapPath(strDocumentUploadPath + engineerInfo.PhoneNumber);
+
+                                if (!Directory.Exists(FileDirectory))
+                                {
+                                    Directory.CreateDirectory(FileDirectory);
+                                }
+
+                                var DocNameWithDirectory = Path.Combine(FileDirectory, fileName);
+
+                                if (!System.IO.File.Exists(DocNameWithDirectory))
+                                {
+                                    file.SaveAs(DocNameWithDirectory);
+
+                                    fileDetails.Add(fileName);
+                                }
+                                else
+                                {
+                                    ModelState.AddModelError("Error", "Document " + fileName + " already available");
+                                }
+                            }
+                        }
+
+                        IdentityResult result = _repo.UpdateEngineerWebApp(engineerInfo);
+
+                        if (result.Succeeded)
+                        {
+                            engineerInfo.FileDetails = fileDetails;
+
+                            ViewBag.Message = "Engineer Information updated successfully";
+
+                            // Email.SendEmail(strFromEmail, engineerInfo.Email, "RegisterEngineer", "You are successfully registered in system, Please find below login information <br/>Email :- " + engineerInfo.Email + " Password:- " + strPassword);
+
+                            return Json(new { success = true, Message = "Engineer Information updated successfully" });
+                        }
+                        else
+                        {
+                            foreach (var error in result.Errors)
+                            {
+                                ModelState.AddModelError("", error);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("Error", "Please upload atleast 1 document");
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("Error", "Error occurred on update engineer inforamtion");
+                Elmah.ErrorSignal.FromCurrentContext().Raise(new Exception(ex.Message, ex.InnerException));
+            }
+
+            return PartialView("_Edit", engineerInfo);
+        }
+
+        [HttpGet]
+        public ActionResult DownloadZipDoc(string DocId)
+        {
+            string strArchive = Server.MapPath(strDocumentDownloadFiles + DocId + ".zip");
+            try
+            {
+                string strUploadedFileDirectory = Server.MapPath(strDocumentUploadPath + DocId);
+
+                if (Directory.Exists(strUploadedFileDirectory))
+                {
+                    // Delete existing .Zip file
+                    if (System.IO.File.Exists(strArchive))
+                    {
+                        System.IO.File.Delete(strArchive);
+                    }
+
+                    // Create .Zip file from Uploaded files
+                    ZipFile.CreateFromDirectory(strUploadedFileDirectory, strArchive, CompressionLevel.Fastest, true);
+
+                    return File(strArchive, "application/zip", DocId + ".zip");
+                }
+            }
+            catch (Exception)
+            {
+                return Content("Error occurred on download files");
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        public FileResult DownloadDoc(string Doc, string FileName)
+        {
+            return File(Path.Combine(Server.MapPath(strDocumentUploadPath) + Doc, FileName), System.Net.Mime.MediaTypeNames.Application.Octet, FileName);
+        }
+
+        [HttpPost]
+        public JsonResult DeleteDoc(string Doc, string FileName)
+        {
+            if (string.IsNullOrEmpty(Doc) && string.IsNullOrEmpty(FileName))
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(new { Result = "Error" });
+            }
+            try
+            {
+                //Delete document from the file system
+                string strDocName = Path.Combine(Server.MapPath(strDocumentUploadPath) + Doc, FileName);
+                if (System.IO.File.Exists(strDocName))
+                {
+                    System.IO.File.Delete(strDocName);
+                }
+                return Json(new { Result = "OK" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { Result = "ERROR", Message = ex.Message });
+            }
+        }
     }
 }

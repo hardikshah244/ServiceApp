@@ -127,6 +127,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -214,6 +216,7 @@
     <Compile Include="Models\ForgotPassword.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\MultiButtonAttribute.cs" />
+    <Compile Include="Models\Scheduler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -603,12 +606,8 @@
     <Content Include="Assets\pages\img\inbox-nav-arrow-blue.png" />
     <Content Include="Assets\pages\img\login\logo.png" />
     <Content Include="Assets\pages\media\user.jpg" />
-    <Content Include="Assets\pages\scripts\dashboard.js" />
-    <Content Include="Assets\pages\scripts\dashboard.min.js" />
-    <Content Include="Assets\pages\scripts\form-validation-md.js" />
-    <Content Include="Assets\pages\scripts\form-validation-md.min.js" />
-    <Content Include="Assets\pages\scripts\login.js" />
-    <Content Include="Assets\pages\scripts\login.min.js" />
+    <Content Include="Assets\pages\scripts\ControlValidations.js" />
+    <Content Include="Assets\pages\scripts\EngineerInfo.js" />
     <Content Include="Assets\pages\scripts\modalform.js" />
     <Content Include="Assets\pages\scripts\table-datatables-buttons.js" />
     <Content Include="Assets\pages\scripts\ui-modals.js" />
@@ -636,6 +635,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Assets\layouts\global\scripts\" />
     <Folder Include="Content\" />
+    <Folder Include="DownloadFiles\" />
     <Folder Include="fonts\" />
     <Folder Include="Images\" />
     <Folder Include="UploadFiles\" />
@@ -714,6 +714,7 @@
     <Content Include="Views\Admin\UserManagement.cshtml" />
     <Content Include="Views\Admin\CustomerDetails.cshtml" />
     <Content Include="Views\Admin\EngineerDetails.cshtml" />
+    <Content Include="Views\EngineerInfo\_Edit.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -11,18 +11,10 @@ namespace ServiceApp.Domain.DataModel
 {
     using System;
     
-    public partial class GET_ADMIN_SR_CLOSED_Result
+    public partial class GETENGINEERS_SCHEDULER_Result
     {
+        public int ServiceRequestID { get; set; }
         public string ServiceRequestNO { get; set; }
-        public string ServiceCategoryName { get; set; }
-        public string ServiceTypeName { get; set; }
-        public string CustName { get; set; }
-        public string CustPhoneNo { get; set; }
-        public string EngName { get; set; }
-        public string EngPhoneNo { get; set; }
-        public string CreatedDateTime { get; set; }
-        public string UpdatedDateTime { get; set; }
-        public string WITHIN99 { get; set; }
-        public string CustomerFeedback { get; set; }
+        public string Pincode { get; set; }
     }
 }

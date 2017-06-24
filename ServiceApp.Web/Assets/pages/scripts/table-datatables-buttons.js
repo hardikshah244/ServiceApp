@@ -159,7 +159,7 @@ var TableDatatablesButtons = function () {
             ],
 
             // setup responsive extension: http://datatables.net/extensions/responsive/
-            responsive: true,
+            //responsive: true,
 
             //"ordering": false, disable column ordering 
             //"paging": false, disable pagination

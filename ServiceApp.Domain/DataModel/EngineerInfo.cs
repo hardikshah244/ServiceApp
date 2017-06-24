@@ -10,7 +10,8 @@
 namespace ServiceApp.Domain.DataModel
 {
     using System;
-    
+    using System.Collections.Generic;
+
     public partial class EngineerInfo
     {
         public string Email { get; set; }
@@ -25,5 +26,6 @@ namespace ServiceApp.Domain.DataModel
         public Nullable<System.DateTime> EndDate { get; set; }
         public Nullable<decimal> Amount { get; set; }
         public string Id { get; set; }
+        public List<string> FileDetails { get; set; }
     }
 }

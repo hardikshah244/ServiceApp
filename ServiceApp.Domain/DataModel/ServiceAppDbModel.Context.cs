@@ -71,9 +71,13 @@ namespace ServiceApp.Domain.DataModel
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GETENGINEERDETAILS_Result>("GETENGINEERDETAILS", pServiceTypeIDParameter, pServiceCategoryIDParameter, pStatusTypeIDParameter, pLandmarkParameter, pRemarkParameter, pCreatedUserIDParameter, pPincodeParameter);
         }
     
-        public virtual ObjectResult<EngineerInfo> GETENGINEERINFO()
+        public virtual ObjectResult<EngineerInfo> GETENGINEERINFO(string pUSEREMAIL)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EngineerInfo>("GETENGINEERINFO");
+            var pUSEREMAILParameter = pUSEREMAIL != null ?
+                new ObjectParameter("PUSEREMAIL", pUSEREMAIL) :
+                new ObjectParameter("PUSEREMAIL", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EngineerInfo>("GETENGINEERINFO", pUSEREMAILParameter);
         }
     
         public virtual ObjectResult<EngineerRequestResponse> GETENGINEERREQUESTS(string pUpdatedUserID, Nullable<int> pServiceCategoryID, Nullable<int> pServiceTypeID, Nullable<int> pStatusTypeID)
@@ -146,14 +150,19 @@ namespace ServiceApp.Domain.DataModel
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GET_ADMIN_ENGINEER_DETAILS_Result>("GET_ADMIN_ENGINEER_DETAILS");
         }
     
-        public virtual ObjectResult<GET_ADMIN_SR_MGT_Result> GET_ADMIN_SR_MGT()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GET_ADMIN_SR_MGT_Result>("GET_ADMIN_SR_MGT");
-        }
-    
         public virtual ObjectResult<GET_ADMIN_SR_ASSIGNED_Result> GET_ADMIN_SR_ASSIGNED()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GET_ADMIN_SR_ASSIGNED_Result>("GET_ADMIN_SR_ASSIGNED");
+        }
+    
+        public virtual ObjectResult<GET_ADMIN_SR_CLOSED_Result> GET_ADMIN_SR_CLOSED()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GET_ADMIN_SR_CLOSED_Result>("GET_ADMIN_SR_CLOSED");
+        }
+    
+        public virtual ObjectResult<GET_ADMIN_SR_MGT_Result> GET_ADMIN_SR_MGT()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GET_ADMIN_SR_MGT_Result>("GET_ADMIN_SR_MGT");
         }
     
         public virtual ObjectResult<GET_ADMIN_SR_RAISED_Result> GET_ADMIN_SR_RAISED()
@@ -161,9 +170,26 @@ namespace ServiceApp.Domain.DataModel
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GET_ADMIN_SR_RAISED_Result>("GET_ADMIN_SR_RAISED");
         }
     
-        public virtual ObjectResult<GET_ADMIN_SR_CLOSED_Result> GET_ADMIN_SR_CLOSED()
+        public virtual ObjectResult<ASSIGNENGINEERS_SCHEDULER_Result> ASSIGNENGINEERS_SCHEDULER(Nullable<int> pServiceRequestID, string pServiceRequestNO, string pPINCODE)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GET_ADMIN_SR_CLOSED_Result>("GET_ADMIN_SR_CLOSED");
+            var pServiceRequestIDParameter = pServiceRequestID.HasValue ?
+                new ObjectParameter("PServiceRequestID", pServiceRequestID) :
+                new ObjectParameter("PServiceRequestID", typeof(int));
+    
+            var pServiceRequestNOParameter = pServiceRequestNO != null ?
+                new ObjectParameter("PServiceRequestNO", pServiceRequestNO) :
+                new ObjectParameter("PServiceRequestNO", typeof(string));
+    
+            var pPINCODEParameter = pPINCODE != null ?
+                new ObjectParameter("PPINCODE", pPINCODE) :
+                new ObjectParameter("PPINCODE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ASSIGNENGINEERS_SCHEDULER_Result>("ASSIGNENGINEERS_SCHEDULER", pServiceRequestIDParameter, pServiceRequestNOParameter, pPINCODEParameter);
+        }
+    
+        public virtual ObjectResult<GETENGINEERS_SCHEDULER_Result> GETENGINEERS_SCHEDULER()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GETENGINEERS_SCHEDULER_Result>("GETENGINEERS_SCHEDULER");
         }
     }
 }

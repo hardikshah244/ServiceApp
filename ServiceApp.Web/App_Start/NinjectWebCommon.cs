@@ -12,6 +12,7 @@ namespace ServiceApp.Web.App_Start
     using Ninject.Web.Common;
     using Domain.Abstract;
     using Domain.Concrete;
+    using Models;
 
     public static class NinjectWebCommon
     {

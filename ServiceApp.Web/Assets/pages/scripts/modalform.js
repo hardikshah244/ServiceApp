@@ -2,12 +2,11 @@
 
     $.ajaxSetup({ cache: false });
 
-    $("a[data-modal]").on("click", function (e) {
+    //show.bs.modal
+    $('a[data-modal]').on('click', function (e) {
 
         // hide dropdown if any
-        $(e.target).closest('.btn-group').children('.dropdown-toggle').dropdown('toggle');
-
-
+        // $(e.target).closest('.btn-group').children('.dropdown-toggle').dropdown('toggle');
         $('#dvModalContent').load(this.href, function () {
 
 
@@ -28,12 +27,16 @@
 function bindForm(dialog) {
 
     $('form', dialog).submit(function () {
+        var formdata = new FormData($('form').get(0));
         $.ajax({
             url: this.action,
             type: this.method,
-            data: $(this).serialize(),
+            data: formdata,
+            processData: false,
+            contentType: false,
             success: function (result) {
                 if (result.success) {
+                    alert(result.Message);
                     $('#dvModal').modal('hide');
                     //Refresh
                     location.reload();

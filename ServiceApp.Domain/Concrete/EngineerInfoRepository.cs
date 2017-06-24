@@ -22,12 +22,21 @@ namespace ServiceApp.Domain.Concrete
             this.context = new ServiceAppDBContext();
         }
 
-        public IEnumerable<EngineerInfo> GetEngineerInfo()
+        public IEnumerable<EngineerInfo> GetEngineerInfo(string Email)
         {
-            IEnumerable<EngineerInfo> lstEngineerInfo = context.GETENGINEERINFO().ToList<EngineerInfo>();
+            IEnumerable<EngineerInfo> lstEngineerInfo = context.GETENGINEERINFO(Email).ToList<EngineerInfo>();
 
             return lstEngineerInfo;
         }
+
+        public EngineerInfo GetEngineerInfoByEmail(string Email)
+        {
+            EngineerInfo lstEngineerInfo = context.GETENGINEERINFO(Email).First();
+
+            return lstEngineerInfo;
+        }
+
+        
 
         private bool disposed = false;
         protected virtual void Dispose(bool disposing)

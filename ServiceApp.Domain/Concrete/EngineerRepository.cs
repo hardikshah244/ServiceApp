@@ -169,24 +169,24 @@ namespace ServiceApp.Domain.Concrete
             try
             {
                 IEnumerable<UserRequestResponseAPI> lstUserRequestResponse = (from SR in context.ServiceRequests
-                                                                           join STM in context.ServiceTypeMasters on SR.ServiceTypeID equals STM.ServiceTypeID
-                                                                           join SCM in context.ServiceCategoryMasters on SR.ServiceCategoryID equals SCM.ServiceCategoryID
-                                                                           join STTM in context.StatusTypeMasters on SR.StatusTypeID equals STTM.StatusTypeID
-                                                                           join USERS in context.AspNetUsers on SR.UpdatedUserID equals USERS.Id into CREATEDUSERS
-                                                                           from USERSD in CREATEDUSERS.DefaultIfEmpty()
-                                                                           where SR.CreatedUserID == CreatedUserID
-                                                                           select new UserRequestResponseAPI()
-                                                                           {
-                                                                               ServiceRequestNO = SR.ServiceRequestNO,
-                                                                               CreatedDateTime = SR.CreatedDateTime,
-                                                                               Landmark = SR.Landmark,
-                                                                               Remark = SR.Remark,
-                                                                               ServiceTypeName = STM.ServiceTypeName,
-                                                                               ServiceCategoryName = SCM.ServiceCategoryName,
-                                                                               StatusTypeName = STTM.StatusTypeName,
-                                                                               Name = USERSD.Name,
-                                                                               StatusTypeID = STTM.StatusTypeID
-                                                                           }).AsEnumerable<UserRequestResponseAPI>();
+                                                                              join STM in context.ServiceTypeMasters on SR.ServiceTypeID equals STM.ServiceTypeID
+                                                                              join SCM in context.ServiceCategoryMasters on SR.ServiceCategoryID equals SCM.ServiceCategoryID
+                                                                              join STTM in context.StatusTypeMasters on SR.StatusTypeID equals STTM.StatusTypeID
+                                                                              join USERS in context.AspNetUsers on SR.UpdatedUserID equals USERS.Id into CREATEDUSERS
+                                                                              from USERSD in CREATEDUSERS.DefaultIfEmpty()
+                                                                              where SR.CreatedUserID == CreatedUserID
+                                                                              select new UserRequestResponseAPI()
+                                                                              {
+                                                                                  ServiceRequestNO = SR.ServiceRequestNO,
+                                                                                  CreatedDateTime = SR.CreatedDateTime,
+                                                                                  Landmark = SR.Landmark,
+                                                                                  Remark = SR.Remark,
+                                                                                  ServiceTypeName = STM.ServiceTypeName,
+                                                                                  ServiceCategoryName = SCM.ServiceCategoryName,
+                                                                                  StatusTypeName = STTM.StatusTypeName,
+                                                                                  Name = USERSD.Name,
+                                                                                  StatusTypeID = STTM.StatusTypeID
+                                                                              }).AsEnumerable<UserRequestResponseAPI>();
 
                 return lstUserRequestResponse;
             }
@@ -357,6 +357,48 @@ namespace ServiceApp.Domain.Concrete
             {
                 throw;
             }
+        }
+
+        //For Scheduler
+        public List<RaiseRequestResponse> GetEngineerForRequests()
+        {
+            List<RaiseRequestResponse> lstRaiseRequestResponse = null;
+            try
+            {
+                IEnumerable<GETENGINEERS_SCHEDULER_Result> ObjGETENGINEERS_SCHEDULER = context.GETENGINEERS_SCHEDULER();
+
+                lstRaiseRequestResponse = new List<RaiseRequestResponse>();
+
+                foreach (var item in ObjGETENGINEERS_SCHEDULER)
+                {
+                    RaiseRequestResponse ObjRaiseRequestResponse = new RaiseRequestResponse();
+
+                    var ASSIGNENGINEERS_SCHEDULER_Result = context.ASSIGNENGINEERS_SCHEDULER(item.ServiceRequestID, item.ServiceRequestNO, item.Pincode).ToList();
+
+                    if (!string.IsNullOrEmpty((ASSIGNENGINEERS_SCHEDULER_Result[0]).Name) && !string.IsNullOrEmpty((ASSIGNENGINEERS_SCHEDULER_Result[0]).Email))
+                    {
+                        ObjRaiseRequestResponse.ServiceRequestNO = (ASSIGNENGINEERS_SCHEDULER_Result[0]).ServiceRequestNO;
+                        ObjRaiseRequestResponse.Name = (ASSIGNENGINEERS_SCHEDULER_Result[0]).Name;
+                        ObjRaiseRequestResponse.Email = (ASSIGNENGINEERS_SCHEDULER_Result[0]).Email;
+                        ObjRaiseRequestResponse.Message = "Success";
+                    }
+                    else
+                    {
+                        ObjRaiseRequestResponse.ServiceRequestNO = (ASSIGNENGINEERS_SCHEDULER_Result[0]).ServiceRequestNO;
+                        ObjRaiseRequestResponse.Name = "";
+                        ObjRaiseRequestResponse.Email = "";
+                        ObjRaiseRequestResponse.Message = "Failed";
+                    }
+
+                    lstRaiseRequestResponse.Add(ObjRaiseRequestResponse);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return lstRaiseRequestResponse;
         }
 
         private bool disposed = false;

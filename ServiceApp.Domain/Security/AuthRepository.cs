@@ -213,6 +213,58 @@ namespace ServiceApp.Domain.Concrete
         }
 
         // In this application UserName consider as Email
+        public IdentityResult UpdateEngineerWebApp(EngineerInfo engineerInfo)
+        {
+            IdentityResult result = null;
+            ApplicationUser user = null;
+            Validations ObjValidations = new Validations();
+            try
+            {
+                if (engineerInfo.MembershipType == "Paid")
+                {
+                    if (engineerInfo.StartDate == null || engineerInfo.Amount == null)
+                        return IdentityResult.Failed("Startdate can't be blank or amount greater than zero");
+                }
+
+                user = _userManager.FindByEmail(engineerInfo.Email);
+
+                if (user != null)
+                {
+                    ServiceAppDBContext dbContext = new ServiceAppDBContext();
+
+                    var RequestResult = dbContext.EngineerMemberships.FirstOrDefault(EngiUserId => EngiUserId.UserId == user.Id);
+
+                    if (RequestResult != null)
+                    {
+                        RequestResult.MembershipType = engineerInfo.MembershipType;
+                        RequestResult.StartDate = engineerInfo.StartDate;
+                        RequestResult.EndDate = engineerInfo.StartDate?.AddDays(30);
+                        RequestResult.Amount = engineerInfo.Amount;
+
+                        dbContext.Entry(RequestResult).State = System.Data.Entity.EntityState.Modified;
+
+                        int Cnt = dbContext.SaveChanges();
+
+                        if (Cnt > 0)
+                            result = IdentityResult.Success;
+                        else
+                            result = IdentityResult.Failed("Unable to update Membership information");
+                    }
+                }
+                else
+                {
+                    result = IdentityResult.Failed("User not found!");
+                }
+
+                return result;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        // In this application UserName consider as Email
         public IdentityResult ChangePassword(ChangePassword changePasswordModel)
         {
             try
@@ -314,8 +366,10 @@ namespace ServiceApp.Domain.Concrete
             if (!string.IsNullOrEmpty(user.Address))
                 dicUserInfo.Add("Address", user.Address);
 
-            dicUserInfo.Add("Area", user.Area);
-            dicUserInfo.Add("SubArea", user.SubArea);
+            if (!string.IsNullOrEmpty(user.Area))
+                dicUserInfo.Add("Area", user.Area);
+            if (!string.IsNullOrEmpty(user.SubArea))
+                dicUserInfo.Add("SubArea", user.SubArea);
             dicUserInfo.Add("City", user.City);
             dicUserInfo.Add("State", user.State);
             dicUserInfo.Add("Pincode", user.Pincode);
@@ -390,6 +444,22 @@ namespace ServiceApp.Domain.Concrete
             }
 
             return dicUserInfo;
+        }
+
+        public bool CheckIsUserActiveOrDeactive(string Email)
+        {
+            try
+            {
+                ServiceAppDBContext context = new ServiceAppDBContext();
+
+                var IsActive = context.AspNetUsers.Where(E => E.Email == Email).FirstOrDefault().IsActive;
+
+                return IsActive;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         #region RoleManager

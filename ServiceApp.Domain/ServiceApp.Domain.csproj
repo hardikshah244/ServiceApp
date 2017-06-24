@@ -113,6 +113,9 @@
     <Compile Include="DataModel\AspNetUserLogin.cs">
       <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataModel\ASSIGNENGINEERS_SCHEDULER_Result.cs">
+      <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataModel\EngineerInfo.cs">
       <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
     </Compile>
@@ -138,6 +141,9 @@
       <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\GETENGINEERREQUESTS_Result.cs">
+      <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\GETENGINEERS_SCHEDULER_Result.cs">
       <DependentUpon>ServiceAppDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\GETUSERREQUESTS_Result.cs">

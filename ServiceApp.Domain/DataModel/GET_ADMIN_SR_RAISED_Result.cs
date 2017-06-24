@@ -13,7 +13,7 @@ namespace ServiceApp.Domain.DataModel
     
     public partial class GET_ADMIN_SR_RAISED_Result
     {
-        public int ServiceRequestID { get; set; }
+        public string ServiceRequestNO { get; set; }
         public string ServiceCategoryName { get; set; }
         public string ServiceTypeName { get; set; }
         public string Name { get; set; }
