@@ -27,6 +27,10 @@ namespace ServiceApp.Domain.Abstract
 
         IEnumerable<EngineerRequestResponseAPI> GetEngineerRequests(string UpdatedUserID);
 
+        IEnumerable<UserRequestResponseAPI> GetUserCurrentRequests(string CreatedUserID);
+
+        IEnumerable<EngineerRequestResponseAPI> GetEngineerCurrentRequests(string UpdatedUserID);
+
         EngineerProfileInfo GetProfileInfo(string Email);
 
         RequestResponse UpdateEngineerAddress(string Email, string Address);

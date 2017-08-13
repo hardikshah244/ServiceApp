@@ -288,6 +288,73 @@ namespace ServiceApp.Domain.Concrete
             }
         }
 
+        public IEnumerable<UserRequestResponseAPI> GetUserCurrentRequests(string CreatedUserID)
+        {
+            try
+            {
+                IEnumerable<UserRequestResponseAPI> lstUserRequestResponse = (from SR in context.ServiceRequests
+                                                                              join STM in context.ServiceTypeMasters on SR.ServiceTypeID equals STM.ServiceTypeID
+                                                                              join SCM in context.ServiceCategoryMasters on SR.ServiceCategoryID equals SCM.ServiceCategoryID
+                                                                              join STTM in context.StatusTypeMasters on SR.StatusTypeID equals STTM.StatusTypeID
+                                                                              join USERS in context.AspNetUsers on SR.UpdatedUserID equals USERS.Id into CREATEDUSERS
+                                                                              from USERSD in CREATEDUSERS.DefaultIfEmpty()
+                                                                              where SR.CreatedUserID == CreatedUserID
+                                                                              && (SR.StatusTypeID == 1 || SR.StatusTypeID == 2)
+                                                                              select new UserRequestResponseAPI()
+                                                                              {
+                                                                                  ServiceRequestNO = SR.ServiceRequestNO,
+                                                                                  CreatedDateTime = SR.CreatedDateTime,
+                                                                                  Landmark = SR.Landmark,
+                                                                                  Remark = SR.Remark,
+                                                                                  ServiceTypeName = STM.ServiceTypeName,
+                                                                                  ServiceCategoryName = SCM.ServiceCategoryName,
+                                                                                  StatusTypeName = STTM.StatusTypeName,
+                                                                                  Name = USERSD.Name,
+                                                                                  StatusTypeID = STTM.StatusTypeID
+                                                                              }).AsEnumerable<UserRequestResponseAPI>();
+
+                return lstUserRequestResponse;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public IEnumerable<EngineerRequestResponseAPI> GetEngineerCurrentRequests(string UpdatedUserID)
+        {
+            try
+            {
+                IEnumerable<EngineerRequestResponseAPI> lstEngineerRequestResponse = (from SR in context.ServiceRequests
+                                                                                      join STM in context.ServiceTypeMasters on SR.ServiceTypeID equals STM.ServiceTypeID
+                                                                                      join SCM in context.ServiceCategoryMasters on SR.ServiceCategoryID equals SCM.ServiceCategoryID
+                                                                                      join STTM in context.StatusTypeMasters on SR.StatusTypeID equals STTM.StatusTypeID
+                                                                                      join USERS in context.AspNetUsers on SR.CreatedUserID equals USERS.Id into CREATEDUSERS
+                                                                                      from USERSD in CREATEDUSERS.DefaultIfEmpty()
+                                                                                      where SR.UpdatedUserID == UpdatedUserID
+                                                                                          && (SR.StatusTypeID == 1 || SR.StatusTypeID == 2)
+                                                                                      select new EngineerRequestResponseAPI()
+                                                                                      {
+                                                                                          ServiceRequestNO = SR.ServiceRequestNO,
+                                                                                          ServiceCategoryName = SCM.ServiceCategoryName,
+                                                                                          ServiceTypeName = STM.ServiceTypeName,
+                                                                                          Name = USERSD.Name,
+                                                                                          CreatedDateTime = SR.CreatedDateTime,
+                                                                                          UpdatedDateTime = SR.UpdatedDateTime,
+                                                                                          StatusTypeName = STTM.StatusTypeName,
+                                                                                          StatusTypeID = STTM.StatusTypeID,
+                                                                                          Landmark = SR.Landmark,
+                                                                                          Remark = SR.Remark
+                                                                                      }).AsEnumerable<EngineerRequestResponseAPI>();
+
+                return lstEngineerRequestResponse;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public EngineerProfileInfo GetProfileInfo(string Email)
         {
             try
