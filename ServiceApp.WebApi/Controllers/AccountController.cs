@@ -262,6 +262,26 @@ namespace ServiceApp.WebApi.Controllers
             }
         }
 
+        // POST api/Account/ChangePassword
+        [Authorize]
+        [Route("UpdateDeviceID")]
+        public HttpResponseMessage UpdateDeviceID(DeviceTokenRequest deviceTokenRequest)
+        {
+            HttpResponseMessage ObjHttpResponseMessage = new HttpResponseMessage();
+            try
+            {
+                ObjHttpResponseMessage = Request.CreateResponse<RequestResponse>(HttpStatusCode.OK, _repo.UpdateUserDeviceID(deviceTokenRequest));
+
+                return ObjHttpResponseMessage;
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(new Exception(ex.Message, ex.InnerException));
+
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Message :- " + ex.Message + "| InnerException :- " + ex.InnerException);
+            }
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

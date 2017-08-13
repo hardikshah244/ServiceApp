@@ -58,6 +58,25 @@ namespace ServiceApp.WebApi.Controllers
             }
         }
 
+        [Route("AcceptRequest/{ServiceRequestNO}")]
+        public HttpResponseMessage AcceptRequestByEngineer(string ServiceRequestNO)
+        {
+            HttpResponseMessage ObjHttpResponseMessage = new HttpResponseMessage();
+
+            try
+            {
+                ObjHttpResponseMessage = Request.CreateResponse<RequestResponse>(HttpStatusCode.OK, _engineerRepo.AcceptRequestByEngineer(ServiceRequestNO));
+
+                return ObjHttpResponseMessage;
+            }
+            catch (Exception ex)
+            {
+                Elmah.ErrorSignal.FromCurrentContext().Raise(new Exception(ex.Message, ex.InnerException));
+
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Message :- " + ex.Message + "| InnerException :- " + ex.InnerException);
+            }
+        }
+
         [Route("CloseRequest")]
         public HttpResponseMessage CloseRequestByEngineer(CloseRequest closeRequest)
         {

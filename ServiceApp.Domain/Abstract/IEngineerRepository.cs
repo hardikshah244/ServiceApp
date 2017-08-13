@@ -13,6 +13,7 @@ namespace ServiceApp.Domain.Abstract
         RaiseRequestResponse RaiseRequest(RaiseRequest raiseRequest);
 
         RequestResponse CancelRequestByEngineer(CancelRequest cancelRequest);
+        RequestResponse AcceptRequestByEngineer(string ServiceRequestNO);
 
         RequestResponse CloseRequestByEngineer(CloseRequest closeRequest);
 

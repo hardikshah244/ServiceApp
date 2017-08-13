@@ -1,6 +1,7 @@
 ﻿using ServiceApp.Domain.Entities;
 using ServiceApp.Web.Models;
 using System;
+using System.Configuration;
 using System.IO;
 using System.Net;
 using System.Web;
@@ -13,6 +14,7 @@ namespace ServiceApp.Web
 {
     public class MvcApplication : System.Web.HttpApplication
     {
+        string strSchedulerURL = ConfigurationManager.AppSettings["SchedulerURL"];
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -29,17 +31,17 @@ namespace ServiceApp.Web
 
             //AntiForgeryConfig.SuppressIdentityHeuristicChecks = true;
 
-            EngineerAssignmentRegisterCacheEntry();
+           // EngineerAssignmentRegisterCacheEntry();
         }
 
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
-            // If the dummy page is hit, then it means we want to add another item in cache
-            if (HttpContext.Current.Request.Url.ToString() == "http://localhost/Test/WebForm1.aspx")
-            {
-                // Add the item in cache and when succesful, do the work.
-                EngineerAssignmentRegisterCacheEntry();
-            }
+            //// If the dummy page is hit, then it means we want to add another item in cache
+            //if (HttpContext.Current.Request.Url.ToString() == strSchedulerURL)
+            //{
+            //    // Add the item in cache and when succesful, do the work.
+            //    EngineerAssignmentRegisterCacheEntry();
+            //}
         }
 
         protected void Session_Start()
@@ -92,7 +94,7 @@ namespace ServiceApp.Web
         private void HitPage()
         {
             WebClient client = new WebClient();
-            client.DownloadData("http://localhost/Test/WebForm1.aspx");
+            client.DownloadData(strSchedulerURL);
         }
 
 

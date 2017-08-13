@@ -462,6 +462,30 @@ namespace ServiceApp.Domain.Concrete
             }
         }
 
+        public RequestResponse UpdateUserDeviceID(DeviceTokenRequest deviceTokenRequestModel)
+        {
+            ServiceAppDBContext context = new ServiceAppDBContext();
+            RequestResponse ObjRequestResponse = new RequestResponse();
+
+            var RequestResult = context.AspNetUsers.Where(U => U.Email == deviceTokenRequestModel.Email).FirstOrDefault();
+
+            if (RequestResult != null)
+            {
+                RequestResult.DeviceID = deviceTokenRequestModel.DeviceID;
+
+                context.Entry(RequestResult).State = System.Data.Entity.EntityState.Modified;
+
+                int Cnt = context.SaveChanges();
+
+                if (Cnt > 0)
+                    ObjRequestResponse.Message = "DeviceID successfully updated";
+                else
+                    ObjRequestResponse.Message = "Unable to update DeviceID";
+            }
+
+            return ObjRequestResponse;
+        }
+
         #region RoleManager
 
         public string GetUsersRole(string userId)

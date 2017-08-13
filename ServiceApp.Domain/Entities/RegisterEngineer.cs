@@ -57,7 +57,6 @@ namespace ServiceApp.Domain.Entities
         public decimal Longitude { get; set; }
 
         [Required]
-        [MaxLength(50)]
         public string DeviceID { get; set; }
 
         //Engineer Membership Details

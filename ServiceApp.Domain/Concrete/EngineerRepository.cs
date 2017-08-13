@@ -96,6 +96,37 @@ namespace ServiceApp.Domain.Concrete
             return ObjRequestResponse;
         }
 
+        public RequestResponse AcceptRequestByEngineer(string ServiceRequestNO)
+        {
+            RequestResponse ObjRequestResponse = new RequestResponse();
+            try
+            {
+                var RequestResult = context.ServiceRequests.FirstOrDefault(cr => cr.ServiceRequestNO == ServiceRequestNO);
+
+                if (RequestResult != null)
+                {
+                    RequestResult.EngineerConfirmDateTime = DateTime.Now;
+
+                    int Cnt = context.SaveChanges();
+
+                    if (Cnt > 0)
+                        ObjRequestResponse.Message = "Success";
+                    else
+                        ObjRequestResponse.Message = "Failed";
+                }
+                else
+                {
+                    ObjRequestResponse.Message = "Failed";
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return ObjRequestResponse;
+        }
+
         public RequestResponse CloseRequestByEngineer(CloseRequest closeRequest)
         {
             RequestResponse ObjRequestResponse = new RequestResponse();

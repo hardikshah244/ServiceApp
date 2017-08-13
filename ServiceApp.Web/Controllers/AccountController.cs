@@ -51,7 +51,6 @@ namespace ServiceApp.Web.Controllers
 
         // GET: Account/Login
         [AllowAnonymous]
-        //[OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public ActionResult Login(string returnUrl)
         {
             if (Request.IsAuthenticated)
